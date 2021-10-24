@@ -5,9 +5,9 @@ using System.Text;
 using Uniart.DataAccess;
 using Uniart.DataAccess.ComisionRepos;
 using Uniart.DataAccess.Envio_Servicio_CiudadRepos;
-using Uniart.DataAccess.EnvioRepos;
 using Uniart.DataAccess.Variacion_DetalleRepos;
 using Uniart.Services.Variacion_DetalleServ;
+using Uniart.DataAccess.EnvioRepos;
 
 namespace Uniart.Services
 {
