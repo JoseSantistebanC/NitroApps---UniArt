@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Uniart.DataAccess;
@@ -40,6 +42,8 @@ namespace UniArt.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniArt.Api", Version = "v1" });
             });
+
+            services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +57,21 @@ namespace UniArt.Api
             }
 
             app.UseHttpsRedirection();
+            /*
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                //FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uniart API/UniArt.Api")),
+                FileProvider = new PhysicalFileProvider(env.ContentRootPath),
+                RequestPath = "/LANDING"
+            });*/
+            app.UseStaticFiles();
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(env.ContentRootPath, "Frontend")),
+                RequestPath = "/index.html",
+                //EnableDirectoryBrowsing = true
+            });
 
             app.UseRouting();
 
