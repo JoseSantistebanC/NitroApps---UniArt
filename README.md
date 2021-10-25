@@ -10,3 +10,4 @@
 ## Contenido:
  * Landing Page (imagenes, styles, .html)
  * API (Startup, Data Access, Dto, Entities, Services)
+ * Requirements Specification (Producto Backlogs, User Stories)
