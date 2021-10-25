@@ -5,7 +5,7 @@
  * Jurado Garay, Gonzalo Alejandro - u202010216
  * López Takahashi, Rodrigo Andrés - u201615003
  * Santisteban Cerna, José Mauricio - u201922760
- * Sandoval Ponce, Brandon Lee - u201823347
+ * Sandoval Ponce, Brando Lee - u201823347
 
 ## Contenido:
  * Landing Page (imagenes, styles, .html)
