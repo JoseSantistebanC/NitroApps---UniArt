@@ -43,7 +43,7 @@ namespace UniArt.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniArt.Api", Version = "v1" });
             });
 
-            services.AddDirectoryBrowser();
+            //services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
