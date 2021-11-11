@@ -8,10 +8,10 @@ import Header from './components/dashboard/header';
 import BodyCustom from './components/body-custom/body-custom';
 import Footer from './components/dashboard/footer';
 import './index.css';
-import { createBrowserHistory } from "history";
+//import { createBrowserHistory } from "history";
 import { Usuario } from './models/usuario';
 
-const customHistory = createBrowserHistory();
+//const customHistory = createBrowserHistory();
 //import reportWebVitals from './reportWebVitals';
 
 let usuario: Usuario = new Usuario();

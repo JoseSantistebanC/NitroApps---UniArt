@@ -5,18 +5,10 @@ import { Grid, } from '@mui/material';
 
 
 
-function ArtistCards() {
-  let aux: Artista = new Artista();
-  aux.nombre = "Artista";
-  aux.nombre_usuario = "prueba";
-  aux.password = "aaaa"
-  aux.id = 1;
-  
-  let top_artists = [aux,aux,aux];
-
+function ArtistCards(props: {max:number, list:Array<Artista>}) {  
   return (
-    <Grid container spacing={1}>
-      { top_artists.map( (a)=>
+    <Grid container spacing={1} sx={{columnGap: "0.5rem", rowGap: "0.5rem",}}>
+      { props.list.slice(0, props.max).map( (a)=>
         <ArtistCard {...a}/>
       ) }
     </Grid>

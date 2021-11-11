@@ -25,7 +25,6 @@ const typos = [
   '"Segoe UI Emoji"',
   '"Segoe UI Symbol"',
 ].join(',');
-const titlesTypo = '"Share Tech",' + typos;
 
 const whites = {
   dark: '#DEEAF4',
@@ -52,22 +51,38 @@ const themeMui = createTheme({
       light: '#76fdfa',
       main: '#37C9C7',
       dark: '#009896',
-      contrastText: '#000',
+      contrastText: blacks.main,
     },
+    info: {
+      main: '#FFD073',
+      contrastText: blacks.main,
+    }
   },
   status: {
-    danger: '#FFD073',
+    danger: blacks.main,
   },
   typography: {
     fontFamily: '"Maven Pro",' + typos,
     fontSize: 12,
+    h1: {
+      textAlign: "center" ,
+      color: "inherit",
+      marginBottom: "1rem",
+      textTransform: "uppercase",
+      fontWeight: "bold",
+    },
     h6: { fontSize: '0.9rem', },
   },
   components: {
     MuiListItem: {
       defaultProps: {
         disablePadding: true,
-      }
+      },
+      styleOverrides: {
+        root: {
+          width: "fit-content",
+        },
+      },
     },
     MuiListItemIcon: {
       styleOverrides: {
@@ -98,18 +113,37 @@ const themeMui = createTheme({
     MuiGrid: {
       styleOverrides: {
         root: {
-          columnGap: "0.5rem",
-          rowGap: "0.5rem",
+          justifyContent: "center",
+          alignItems: "center",
         }
       }
-    }
+    },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: false,
+      },
+      styleOverrides: {
+        root: {
+          padding: "2rem",
+          textAlign: "center",
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: "bold",
+          paddingLeft: "1rem",
+          paddingRight: "1rem",
+        }
+      }
+    },
   },
 });
 
-themeMui.typography.h1.fontFamily = themeMui.typography.h2.fontFamily
-  = themeMui.typography.h3.fontFamily = themeMui.typography.h4.fontFamily
-  = themeMui.typography.h5.fontFamily = themeMui.typography.h6.fontFamily
-  = '"Share Tech",' + typos;
+themeMui.typography.h2.fontFamily = themeMui.typography.h3.fontFamily
+  = themeMui.typography.h4.fontFamily = themeMui.typography.h5.fontFamily
+  = themeMui.typography.h6.fontFamily = '"Share Tech",' + typos;
 
 
 

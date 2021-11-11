@@ -2,20 +2,37 @@ import React from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+
+const styleList = { padding:"1rem", columnGap: "0.5rem",
+                    display: "flex", justifyContent: "center", };
+const styleItem = { display:"inline-flex", };
 
 function Footer() {
   return (
     <Grid container spacing={1}>
       <Grid item xs={6}>
-        <Box component="span">© 2021</Box>
-        <Box component="span">Condiciones de uso</Box>
-        <Box component="span">Privacidad</Box>
+        <List sx={styleList}>
+          <ListItem sx={styleItem}><ListItemText primary="© 2021" /></ListItem>
+          <ListItem sx={styleItem}><ListItemText primary="Condiciones de uso" /></ListItem>
+          <ListItem sx={styleItem}><ListItemText primary="Privacidad" /></ListItem>
+        </List>
       </Grid>
       <Grid item xs={6}>
-        <Box component="span">Síguenos en</Box>
-        <Box component="span"><FacebookIcon/> Facebook</Box>
-        <Box component="span"><InstagramIcon/> Instagram</Box>
+        <List sx={styleList}>
+          <ListItem sx={styleItem}><ListItemText primary="Síguenos en:" /></ListItem>
+          <ListItem sx={styleItem}>
+            <ListItemIcon> <FacebookIcon/> </ListItemIcon>
+            <ListItemText primary="Facebook" />
+          </ListItem>
+          <ListItem sx={styleItem}>
+            <ListItemIcon> <InstagramIcon/> </ListItemIcon>
+            <ListItemText primary="Instagram" />
+          </ListItem>
+        </List>
       </Grid>
     </Grid>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Tabs from '@mui/material/Tabs';
@@ -28,7 +27,7 @@ const top100 = [
 
 //function
 const Header = (props:Usuario) => {
-  let nomusu = props.id == 0? "Desconocido" : props.nombre_usuario;
+  let nomusu = props.id === 0? "Desconocido" : props.nombre_usuario;
 
   const navi = useNavigate();
   const [value, setValue] = React.useState(0);
@@ -56,10 +55,16 @@ const Header = (props:Usuario) => {
 
   return (
     <AppBar position="fixed">
-        <Tabs value={value} onChange={handleChange}
-          sx={{width:'100%', columnGap: "0.5rem", rowGap: "0.5rem",}}>
+        <Tabs value={value} onChange={handleChange} scrollButtons={false}
+          sx={{
+            '& .MuiTabs-flexContainer': {
+              alignItems: "center", width:'100%',
+              columnGap: "0.5rem", rowGap: "0.5rem", 
+            }
+          }}>
           <LinkTab href="/" icon={
-            <img src={process.env.PUBLIC_URL + '/images/logo.svg'} style={{height:'2rem',}}/>
+            <img src={process.env.PUBLIC_URL + '/images/logo.svg'}
+            style={{height:'2rem',}} alt="logo"/>
           }/>
 
           <Autocomplete freeSolo id="search" disableCloseOnSelect style={{ flexGrow: 1, }}
@@ -67,7 +72,7 @@ const Header = (props:Usuario) => {
           renderInput={(params) =>
             <TextField {...params} label="Nombre del servicio o artista" variant="standard" />}  
           />
-          <IconButton type="submit" aria-label="search" sx={{ marginLeft: '-2.5rem', }}> <SearchIcon /> </IconButton>
+          <IconButton type="submit" aria-label="search" sx={{ height: 'fit-content', }}> <SearchIcon /> </IconButton>
 
           <LinkTab label="Explorar" href="/explore" icon={<ExploreTTIcon />}/>
           <LinkTab label="Chat" href="/chat" icon={<ChatBubbleTTIcon />}/>
