@@ -28,22 +28,31 @@ function ArtistCard(props:Artista) {
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardActionArea>
-        <CardMedia component="img" height="200"
+        <CardMedia component="img" height="144"
           image={props.url_foto_portada} alt="portada" />
-        <CardContent>
+        <CardContent sx={{paddingTop: 0,}}>
           <Grid container spacing={1}>
-            <Grid item xs={4}>
-              <Avatar sx={{ bgcolor: themeMui.palette.primary.main, width: 32, height: 32 }}
+            <Grid item xs={5}>
+              <Avatar sx={{
+                bgcolor: themeMui.palette.primary.main,
+                width: 72, height: 72,
+                marginLeft: "-0.75rem",
+                marginTop: "-1rem",
+                border: " solid 4pt",
+              }}
                 alt={props.nombre_usuario} src=""  />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={7}>
               <Typography variant="h5" component="h5"> {props.nombre_usuario} </Typography>
-              <Typography component="p"><RoomIcon color="secondary"/> {props.ciudad_id} </Typography>
+              <ListItem>
+                <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
+                <ListItemText primary={props.ciudad_id} />
+              </ListItem>
             </Grid>
           </Grid>
-          <List>
+          <List sx={{padding: "0px",}}>
             { generate(
-              <ListItem>
+              <ListItem sx={{width: "fit-content",}}>
                 <ListItemIcon>
                   <CheckIcon color="primary"/>
                 </ListItemIcon>

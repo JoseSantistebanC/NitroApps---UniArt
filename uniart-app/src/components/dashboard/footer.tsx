@@ -11,9 +11,9 @@ const styleList = { padding:"1rem", columnGap: "0.5rem",
                     display: "flex", justifyContent: "center", };
 const styleItem = { display:"inline-flex", };
 
-function Footer() {
+function Footer(props:{className?:string}) {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} className={props.className}>
       <Grid item xs={6}>
         <List sx={styleList}>
           <ListItem sx={styleItem}><ListItemText primary="© 2021" /></ListItem>

@@ -67,7 +67,8 @@ const Header = (props:Usuario) => {
             style={{height:'2rem',}} alt="logo"/>
           }/>
 
-          <Autocomplete freeSolo id="search" disableCloseOnSelect style={{ flexGrow: 1, }}
+          <Autocomplete freeSolo id="search" style={{ flexGrow: 1, }}
+          value = "" 
           options={top100.map((option) => option.title)}
           renderInput={(params) =>
             <TextField {...params} label="Nombre del servicio o artista" variant="standard" />}  

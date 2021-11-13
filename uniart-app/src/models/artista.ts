@@ -9,7 +9,7 @@ export class Artista {
   url_foto_perfil: string = "";
   fecha_registro: Date = new Date();
   descripcion: string = "";
-  url_foto_portada: string = process.env.PUBLIC_URL + '/images/bgs/portada.png';
+  url_foto_portada: string = `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`;
   rating: number = 0;
   q_valoraciones: number = 0;
   //delete: boolean = false;

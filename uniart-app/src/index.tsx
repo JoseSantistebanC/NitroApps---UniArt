@@ -6,7 +6,6 @@ import { themeMui } from './themes/theme-mui';
 import { BrowserRouter } from "react-router-dom";
 import Header from './components/dashboard/header';
 import BodyCustom from './components/body-custom/body-custom';
-import Footer from './components/dashboard/footer';
 import './index.css';
 //import { createBrowserHistory } from "history";
 import { Usuario } from './models/usuario';
@@ -22,7 +21,6 @@ ReactDOM.render(
       <ThemeProvider theme={themeMui}>
         <Header {...usuario}/>
         <BodyCustom />
-        <Footer />
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,

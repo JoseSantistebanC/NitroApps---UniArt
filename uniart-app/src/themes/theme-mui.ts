@@ -70,18 +70,21 @@ const themeMui = createTheme({
       marginBottom: "1rem",
       textTransform: "uppercase",
       fontWeight: "bold",
+      fontSize: "4rem",
     },
     h6: { fontSize: '0.9rem', },
   },
   components: {
+    MuiTypography:{
+      styleOverrides: {
+        root: {
+          lineHeight: "1em",
+        }
+      }
+    },
     MuiListItem: {
       defaultProps: {
         disablePadding: true,
-      },
-      styleOverrides: {
-        root: {
-          width: "fit-content",
-        },
       },
     },
     MuiListItemIcon: {
@@ -124,7 +127,8 @@ const themeMui = createTheme({
       },
       styleOverrides: {
         root: {
-          padding: "2rem",
+          color: blacks.main,
+          padding: "4rem 3rem",
           textAlign: "center",
         }
       }
@@ -138,6 +142,39 @@ const themeMui = createTheme({
         }
       }
     },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          textAlign: "left",
+          display: "flex",
+          flexFlow: "column",
+          rowGap: "0.75rem",
+        }
+      }
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "0.5em",
+        }
+      }
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          padding: "0px 0.5em",
+        }
+      }
+    },
+    MuiPagination: {
+      styleOverrides: {
+        ul:{
+          justifyContent: "center",
+        }
+      }
+    }
   },
 });
 

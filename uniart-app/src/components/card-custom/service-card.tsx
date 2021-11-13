@@ -22,7 +22,7 @@ function ServiceCard(props:Servicio) {
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardActionArea>
-        <CardMedia component="img" height="200"
+        <CardMedia component="img" height="160"
           image={props.url_img_referencia} alt="portada" />
         <CardContent>
           <Typography variant="h5" component="div">

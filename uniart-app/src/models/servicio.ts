@@ -14,5 +14,5 @@ export class Servicio {
   acerca_servicio: string = "";
   q_revisiones: number = 0; //q_reviciones
 
-  url_img_referencia: string = process.env.PUBLIC_URL + '/images/bgs/portada.png'
+  url_img_referencia: string = `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`
 };

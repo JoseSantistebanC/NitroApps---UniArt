@@ -1,6 +1,7 @@
 body {
   margin: 0;
   background-color: #F2F6F9;
+  color: #002845;
   font-family: -apple-system, BlinkMacSystemFont, 'Maven Pro', 'Segoe UI', 'Roboto',
   'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -15,4 +16,42 @@ code {
 
 #root {
   margin-top: 4.5em;
+}
+
+strong {
+  font-weight: bold !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+.MuiDrawer-root > .MuiPaper-root {
+  width: 16em;
+  margin-top: 5em;
+  box-sizing: border-box;
+  padding: 2em 1em;
+  height: calc(100% - 5em);
+}
+.MuiDrawer-root .MuiPaper-root {
+  background-color: transparent;
+}
+.after-drawer {
+  margin-left: 16em !important;
+  width: calc(100% - 16em) !important;
+}
+
+.check-all-group {
+  display: flex;
+  flex-flow: column;
+  row-gap: 0.25em;
+}
+label {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.25em;
+  align-items: center;
+}
+input[type='number'] {
+  text-align: right;
 }

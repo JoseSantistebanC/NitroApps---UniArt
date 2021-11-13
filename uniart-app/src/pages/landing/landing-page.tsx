@@ -3,13 +3,19 @@ import { Button, Container, Divider, Grid, Paper, Typography } from '@mui/materi
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import CheckIcon from '@mui/icons-material/Check';
 import ArtistCards from '../../components/card-custom/artist-cards';
 import { Artista } from '../../models/artista';
 import ServiceCards from '../../components/card-custom/service-cards';
 import { Servicio } from '../../models/servicio';
 import { themeMui, blacks, whites } from '../../themes/theme-mui';
+import ListItemText from '@mui/material/ListItemText';
+import CheckIcon from '@mui/icons-material/Check';
+import AddIcon from '@mui/icons-material/Add';
+import ForumTTIcon from '@mui/icons-material/ForumTwoTone';
+import AssessmentTTIcon from '@mui/icons-material/AssessmentTwoTone';
+import FactCheckTTIcon from '@mui/icons-material/FactCheckTwoTone';
+import Footer from '../../components/dashboard/footer';
+
 
 function LandingPage() {
   let aux: Artista = new Artista();
@@ -32,60 +38,103 @@ function LandingPage() {
 
   return (
     <>
-    <Container>
-      <Paper elevation={1}>
-        <Typography variant="h1" component="h1">
-        UNIFICANDO PASIONES Y EMPRENDIMIENTOS.
-        </Typography>
-        <Typography component="p">
-          Únete a nuestra comunidad de artistas y emprendedores y podrás:
-        </Typography>
-        <List>
-          <ListItem>
-            <ListItemIcon> <CheckIcon color="primary"/> </ListItemIcon>
-            <ListItemText primary="Ver el progreso y estado de tus solicitudes de servicios" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon> <CheckIcon color="primary"/> </ListItemIcon>
-            <ListItemText primary="Comunicarte diréctamente con el artista comisionado" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon> <CheckIcon color="primary"/> </ListItemIcon>
-            <ListItemText primary="Encontrar artistas independientes variados" />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon> <CheckIcon color="primary"/> </ListItemIcon>
-            <ListItemText primary="ncontrar eficazmente el servicio artístico que buscas" />
-          </ListItem>
-        </List>
-      </Paper>
+    <Container style={{
+      backgroundImage: "linear-gradient(270deg, "+themeMui.palette.primary.main
+                      +" 0%, transparent 100%), url('"+process.env.PUBLIC_URL + "/images/bgs/portada.png')",
+      backgroundAttachment: "fixed",
+    }}>
+      <Grid container spacing={2}>
+        <Grid item xs={1}/>
+        <Grid item xs={6}>
+          <Paper elevation={1}
+          style={{backgroundColor: blacks.main, color: whites.main, padding:"2em 3em",}}>
+            <Typography component="h1">
+            <strong style={{fontSize:"3em", lineHeight:"1em",}}>UNIFICANDO PASIONES Y EMPRENDIMIENTOS.</strong>
+            </Typography>
+            <br/>
+            <Typography component="strong">
+              Únete a nuestra comunidad de artistas y emprendedores y podrás:
+            </Typography>
+            <br/><br/>
+            <List>
+              <ListItem>
+                <ListItemIcon> <CheckIcon color="info"/> </ListItemIcon>
+                <ListItemText primary="Ver el progreso y estado de tus solicitudes de servicios" />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon> <CheckIcon color="info"/> </ListItemIcon>
+                <ListItemText primary="Comunicarte diréctamente con el artista comisionado" />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon> <CheckIcon color="info"/> </ListItemIcon>
+                <ListItemText primary="Encontrar artistas independientes variados" />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon> <CheckIcon color="info"/> </ListItemIcon>
+                <ListItemText primary="ncontrar eficazmente el servicio artístico que buscas" />
+              </ListItem>
+            </List>
+          </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <img alt="background" src={process.env.PUBLIC_URL + "/images/icon_BIG.svg"}/>
+        </Grid>
+        <Grid item xs={1}/>
+      </Grid>
     </Container>
 
-    <Container sx={{
+    <Container style={{
       backgroundColor: themeMui.palette.secondary.main,
       color: themeMui.palette.secondary.contrastText,
       }}>
       <Typography variant="h1" component="h1">Servicios más populares</Typography>
-      <ArtistCards max={5} list={top_artists} />
+      <br/>
+      <ServiceCards max={5} list={top_services} />
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>
 
-    <Container sx={{
+    <Container style={{
       backgroundColor: themeMui.palette.primary.main,
       color: themeMui.palette.primary.contrastText,
       }}>
       <Typography variant="h1" component="h1">¡Artistas en estreno!</Typography>
-      <ServiceCards max={5} list={top_services} />
+      <br/>
+      <ArtistCards max={5} list={top_artists} />
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>
 
     <Container>
       <Typography variant="h1"> LO QUE MÁS REQUIERES PARA UN BUEN FREELO ARTÍSTICO: </Typography>
+      <br/><br/>
+      <Grid container spacing={1} >
+        <Grid item xs={2}>
+          <ForumTTIcon style={{fontSize:"6em",}}/><br/>Comunicación
+        </Grid>
+        <Grid item xs={1}><AddIcon style={{fontSize:"2em",}}/></Grid>
+        <Grid item xs={2}>
+          <AssessmentTTIcon style={{fontSize:"6em",}}/><br/>Organización
+        </Grid>
+        <Grid item xs={1}><AddIcon style={{fontSize:"2em",}}/></Grid>
+        <Grid item xs={2}>
+          <FactCheckTTIcon style={{fontSize:"6em",}}/><br/>Eficacia
+        </Grid>
+      </Grid>
+      <br/><br/><br/>
+      <Grid container spacing={1}>
+        <Grid item xs={5}>
+          <Typography variant="h2" color="secondary">EMPRENDEDORES TALENTOSOS</Typography>
+        </Grid>
+        <Grid item xs={2}><AddIcon style={{fontSize:"4em",}}/></Grid>
+        <Grid item xs={5}>
+          <Typography variant="h2" color="primary">ARTISTAS INDEPENDIENTES</Typography>
+        </Grid>
+      </Grid>
+      <br/>
     </Container>
 
-    <Container sx={{backgroundColor: blacks.main, color: whites.main}}>
+    <Container style={{backgroundColor: blacks.main, color: whites.main,}}>
       <Typography variant="h1"> ¿Cómo lo logramos? </Typography>
       <br/>
       <Grid container spacing={1}>
@@ -107,7 +156,7 @@ function LandingPage() {
           </List>
         </Grid>
         <Grid item xs={8}>
-          imagen
+        <img alt="background" src={process.env.PUBLIC_URL + "/images/landing/screens_communication.png"}/>
         </Grid>
       </Grid>
       <br/><Divider/><br/>
@@ -130,7 +179,7 @@ function LandingPage() {
           </List>
         </Grid>
         <Grid item xs={8}>
-          imagen
+        <img alt="background" src={process.env.PUBLIC_URL + "/images/landing/screens_organization.png"}/>
         </Grid>
       </Grid>
       <br/><Divider/><br/>
@@ -153,19 +202,24 @@ function LandingPage() {
           </List>
         </Grid>
         <Grid item xs={8}>
-          imagen
+        <img alt="background" src={process.env.PUBLIC_URL + "/images/landing/screens_efficacy.png"}/>
         </Grid>
       </Grid>
     </Container>
 
-    <Container sx={{
+    <Container style={{
       backgroundColor: themeMui.palette.info.main,
       paddingTop: "8rem",
       paddingBottom: "8rem",
     }}>
+      <img alt="coffetti" src={process.env.PUBLIC_URL + "/images/bgs/coffetti.svg"}/>
       <Typography variant="h1"> ¡ÚNETE A LA COMUNIDAD! </Typography>
       <Button variant="contained" color="primary">Descubrir más</Button>
+      <img alt="coffetti" src={process.env.PUBLIC_URL + "/images/bgs/coffetti.svg"}/>
     </Container>
+
+    
+    <Footer/>
   </>
   );
 };
