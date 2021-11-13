@@ -18,7 +18,7 @@
 * npm install
 * yarn install
 * npm install --global yarn
-* yarn create react-app my-app --template typescript
+* yarn create react-app uniart-app --template typescript
 * yarn add react-router-dom
 * yarn add @types/react-router-dom
 * yarn add @mui/material
