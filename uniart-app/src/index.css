@@ -1,7 +1,12 @@
+:root {
+  --white-main: #F2F6F9;
+  --black-main: #002845;
+}
+
 body {
   margin: 0;
-  background-color: #F2F6F9;
-  color: #002845;
+  background-color: var(--white-main);
+  color: var(--black-main);
   font-family: -apple-system, BlinkMacSystemFont, 'Maven Pro', 'Segoe UI', 'Roboto',
   'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -16,12 +21,15 @@ code {
 
 #root {
   margin-top: 4.5em;
+  color: #002845;
 }
 
 strong {
   font-weight: bold !important;
 }
-
+a {
+  color: inherit;
+}
 img {
   max-width: 100%;
 }
@@ -35,6 +43,7 @@ img {
 }
 .MuiDrawer-root .MuiPaper-root {
   background-color: transparent;
+  color: var(--black-main);
 }
 .after-drawer {
   margin-left: 16em !important;
@@ -54,4 +63,19 @@ label {
 }
 input[type='number'] {
   text-align: right;
+}
+
+li {
+  column-gap: 0.5em;
+}
+
+.filter-up { 
+  justify-content: space-between !important;
+  padding: 1em 0px;
+}
+.filter-up li { width: fit-content; }
+.cards {
+  padding: 1.5em 0px;
+  column-gap: 0.5em;
+  row-gap: 0.5em;
 }

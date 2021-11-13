@@ -66,12 +66,15 @@ const themeMui = createTheme({
     fontSize: 12,
     h1: {
       textAlign: "center" ,
-      color: "inherit",
       marginBottom: "1rem",
       textTransform: "uppercase",
       fontWeight: "bold",
       fontSize: "4rem",
     },
+    h2: { fontSize: '3rem', },
+    h3: { fontSize: '2rem', },
+    h4: { fontSize: '1.5rem', },
+    h5: { fontSize: '1.15rem', },
     h6: { fontSize: '0.9rem', },
   },
   components: {
@@ -142,13 +145,21 @@ const themeMui = createTheme({
         }
       }
     },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "inherit",
+        }
+      }
+    },
     MuiCardContent: {
       styleOverrides: {
         root: {
           textAlign: "left",
           display: "flex",
           flexFlow: "column",
-          rowGap: "0.75rem",
+          rowGap: "1rem",
+          color: blacks.main,
         }
       }
     },
@@ -174,14 +185,23 @@ const themeMui = createTheme({
           justifyContent: "center",
         }
       }
+    },
+    MuiSelect:{
+      styleOverrides: {
+        root: {
+          minWidth: "10rem !important",
+        }
+      }
     }
   },
 });
 
 themeMui.typography.h2.fontFamily = themeMui.typography.h3.fontFamily
   = themeMui.typography.h4.fontFamily = themeMui.typography.h5.fontFamily
-  = themeMui.typography.h6.fontFamily = '"Share Tech",' + typos;
+  = themeMui.typography.h6.fontFamily = '"Palanquin Dark",' + typos;
 
-
+themeMui.typography.h2.color = themeMui.typography.h3.color
+  = themeMui.typography.h4.color = themeMui.typography.h5.color
+  = themeMui.typography.h6.color = "inherit";
 
 export {themeMui, whites, blacks};

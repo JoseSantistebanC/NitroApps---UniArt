@@ -43,7 +43,7 @@ function ArtistCard(props:Artista) {
                 alt={props.nombre_usuario} src=""  />
             </Grid>
             <Grid item xs={7}>
-              <Typography variant="h5" component="h5"> {props.nombre_usuario} </Typography>
+              <Typography variant="h6" component="h6"> {props.nombre_usuario} </Typography>
               <ListItem>
                 <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
                 <ListItemText primary={props.ciudad_id} />

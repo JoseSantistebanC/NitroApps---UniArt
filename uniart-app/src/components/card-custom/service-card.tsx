@@ -1,5 +1,5 @@
 import React from 'react';
-import { themeMui } from '../../themes/theme-mui'
+import { themeMui, blacks } from '../../themes/theme-mui'
 import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -34,7 +34,9 @@ function ServiceCard(props:Servicio) {
                 alt="Artist" src={artist.url_foto_perfil}  />
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h6" component="span"> {artist.nombre_usuario} </Typography>
+              <Typography variant="h6" component="span" >
+                {artist.nombre_usuario}
+                </Typography>
             </Grid>
             <Grid item xs={4}>
               <ListItem>

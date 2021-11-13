@@ -11,7 +11,7 @@ function ServiceCards(props: {list:Array<Servicio>, max?:number, min?:number}) {
   if (end > props.list.length) { end = props.list.length; }
 
   return (
-    <Grid container spacing={1} sx={{columnGap: "0.5rem", rowGap: "0.5rem",}}>
+    <Grid container spacing={1} className="cards">
       { props.list.slice(0, end).map( (s)=>
         <ServiceCard {...s}/>
       ) }

@@ -5,8 +5,11 @@ import ChatP from '../../pages/chat/chat';
 import Commissions from '../../pages/comissions/in-progress';
 import Explore from '../../pages/explore/explore';
 import LandingPage from '../../pages/landing/landing-page';
-import Settings from '../../pages/settings/settings';
-import ArtistProfile from '../../pages/artist-profile/artist-profile';
+import Settings from '../../pages/user/settings';
+import ArtistProfile from '../../pages/user/artist-profile';
+import Login from '../../pages/session/login';
+import Logout from '../../pages/session/logout';
+import Signin from '../../pages/session/signin';
 
 function BodyCustom() {
   return (
@@ -16,8 +19,11 @@ function BodyCustom() {
       <Route path="/chat" element={< ChatP />} />
       <Route path="/commissions" element={< Commissions />} />
       <Route path="/cart" element={< HSCart />} />
-      <Route path="/settings" element={< Settings />} />
+      <Route path="/login" element={< Login />} />
+      <Route path="/signin" element={< Signin />} />
       <Route path="/artist-profile" element={< ArtistProfile />} />
+      <Route path="/settings" element={< Settings />} />
+      <Route path="/logout" element={< Logout />} />
     </Routes>
   );
 };
