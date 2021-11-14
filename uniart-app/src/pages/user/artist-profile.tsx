@@ -1,19 +1,19 @@
 import React from 'react';
-import { Avatar, Button, Container, Divider, FormControl, Grid, InputLabel, ListItem, ListItemIcon, ListItemText,
-  MenuItem,
-  Pagination,
-  Paper, Rating, Select, SelectChangeEvent, Typography } from '@mui/material';
-import { themeMui, blacks, whites } from '../../themes/theme-mui';
+import { Avatar, Divider,
+  Container, Grid, Paper,
+  FormControl, InputLabel, Button,
+  Select, SelectChangeEvent, 
+  ListItem, ListItemIcon, ListItemText,
+  MenuItem, Rating, Typography } from '@mui/material';
+import { blacks } from '../../themes/theme-mui';
 import { Artista } from '../../models/artista';
 import { RedSocial } from '../../models/red_social';
 import { Tema } from '../../models/tema';
-import { Servicio } from '../../models/servicio';
-import ServiceCards from '../../components/card-custom/service-cards';
-import { Review } from '../../models/review';
-import ReviewCards from '../../components/card-custom/review-cards';
 import RoomIcon from '@mui/icons-material/Room';
 import StarIcon from '@mui/icons-material/Star';
 import Footer from '../../components/dashboard/footer';
+import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
+import ReviewCardsConn from '../../components/card-custom/review-cards-conn';
 //import Box from '@mui/material/Box';
 
 function ArtistProfile(props:{artista?:Artista}) {
@@ -39,28 +39,7 @@ function ArtistProfile(props:{artista?:Artista}) {
     {id: 2, nombre: "Twitter", link:"..."},
   ];
 
-  let auxS: Servicio = new Servicio();
-  auxS.nombre = "Dibujos de anime";
-  auxS.duracion_esperada.days = 2;
-  auxS.precio_base = 10;
-  let top_services = [auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS];
-
-  let auxR: Review = {
-    id: 1,
-    rating_cliente: 2,
-    comentario: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
-    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    "Ut enim ad minim veniam, quis nisi ut aliquip ex ea commodo consequat.",
-    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum ",
-    "dolore eu fugiat nulla pariatur."].join(''),
-    fecha: new Date(),
-    valor_Positivo: 10,
-    valor_Negativo: 1,
-    url_img_referencia: `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`,
-  }
-  let top_reviews = [auxR,auxR,auxR,auxR,auxR,auxR,auxR,auxR,auxR,auxR,auxR,auxR];
-
-
+  
   const [orderbyS, setOrderbyS] = React.useState('1');
   const handleChangeOBS = (event: SelectChangeEvent) => {
     setOrderbyS(event.target.value);
@@ -153,7 +132,7 @@ function ArtistProfile(props:{artista?:Artista}) {
             <strong>Servicios</strong>
           </Grid>
           <Grid item xs={4} sx={{display: "flex", justifyContent: "flex-end",}}>
-            <FormControl variant="standard" >
+            <FormControl >
               <InputLabel id="order-by-label">Ordenar por</InputLabel>
               <Select labelId="order-by-label" id="order-by" 
                 value={orderbyS} onChange={handleChangeOBS} label="Más recientes" >
@@ -164,7 +143,7 @@ function ArtistProfile(props:{artista?:Artista}) {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <ServiceCards list={top_services} min={0} max={20}/>
+            <ServiceCardsConn/>
           </Grid>
 
           <Grid item xs={12}> <Divider/>  </Grid>
@@ -175,7 +154,7 @@ function ArtistProfile(props:{artista?:Artista}) {
               <StarIcon color="info"/>{artist.rating} ({artist.q_valoraciones})
             </ListItem>
 
-            <FormControl variant="standard" >
+            <FormControl >
               <InputLabel id="order-by-label">Ordenar por</InputLabel>
               <Select labelId="order-by-label" id="order-by" 
                 value={orderbyR} onChange={handleChangeOBR} label="Más recientes" >
@@ -187,9 +166,7 @@ function ArtistProfile(props:{artista?:Artista}) {
           </Grid>
 
           <Grid item xs={12}>
-            <ReviewCards list={top_reviews} min={0} max={10}/>
-            <br/><br/>
-            <Pagination count={10} showFirstButton showLastButton />
+            <ReviewCardsConn/>
           </Grid>
 
         </Grid>

@@ -49,7 +49,7 @@ function Filter() {
       <Typography variant="h4">Ilustraciones</Typography>
       <br/>
       
-      <FormControl variant="standard">
+      <FormControl>
         <InputLabel id="order-by-label">Ordenar por</InputLabel>
         <Select labelId="order-by-label" id="order-by"
           value={orderby} onChange={handleChangeOB} label="Más recientes" >

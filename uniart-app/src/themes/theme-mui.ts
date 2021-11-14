@@ -187,10 +187,31 @@ const themeMui = createTheme({
       }
     },
     MuiSelect:{
+      defaultProps: {
+        variant: 'standard',
+      },
       styleOverrides: {
         root: {
           minWidth: "10rem !important",
+          textAlign: "left",
         }
+      }
+    },
+    MuiTextField:{
+      defaultProps: {
+        variant:'standard',
+      }
+    },
+    MuiInput:{
+      styleOverrides: {
+        root: {
+          textAlign: "left",
+        }
+      }
+    },
+    MuiFormControl: {
+      defaultProps: {
+        variant: 'standard',
       }
     }
   },

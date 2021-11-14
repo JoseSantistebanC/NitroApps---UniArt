@@ -6,30 +6,28 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import RoomIcon from '@mui/icons-material/Room';
-import CheckIcon from '@mui/icons-material/Check';
-import { Artista } from '../../models/artista';
 
-function generate(element: React.ReactElement) {
-  return [0, 1].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
+interface ArtistCardProps {
+  id: number;
+  url_artist_img: string;
+  url_cover_img: string;
+  name: string;
+  country: string;
+  description: string;
+};
 
-function ArtistCard(props:Artista) {
+function ArtistCard(props:ArtistCardProps) {
 
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardActionArea>
         <CardMedia component="img" height="144"
-          image={props.url_foto_portada} alt="portada" />
+          image={props.url_cover_img} alt="portada" />
         <CardContent sx={{paddingTop: 0,}}>
           <Grid container spacing={1}>
             <Grid item xs={5}>
@@ -40,26 +38,20 @@ function ArtistCard(props:Artista) {
                 marginTop: "-1rem",
                 border: " solid 4pt",
               }}
-                alt={props.nombre_usuario} src=""  />
+                alt={props.name} src=""  />
             </Grid>
             <Grid item xs={7}>
-              <Typography variant="h6" component="h6"> {props.nombre_usuario} </Typography>
+              <Typography variant="h6" component="h6"> {props.name} </Typography>
               <ListItem>
                 <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
-                <ListItemText primary={props.ciudad_id} />
+                <ListItemText primary={props.country} />
               </ListItem>
             </Grid>
+
+            <Grid item xs={12}>
+              {props.description}
+            </Grid>
           </Grid>
-          <List sx={{padding: "0px",}}>
-            { generate(
-              <ListItem sx={{width: "fit-content",}}>
-                <ListItemIcon>
-                  <CheckIcon color="primary"/>
-                </ListItemIcon>
-                <ListItemText primary="Single-line item" />
-              </ListItem>,
-            ) }
-          </List>
         </CardContent>
       </CardActionArea>
     </Card>
@@ -67,3 +59,4 @@ function ArtistCard(props:Artista) {
 };
 
 export default ArtistCard;
+export type {ArtistCardProps};

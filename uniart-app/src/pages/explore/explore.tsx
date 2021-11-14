@@ -1,26 +1,17 @@
 import React from 'react';
 import { Container, Typography } from '@mui/material';
-import ArtistCards from '../../components/card-custom/artist-cards';
-import ServiceCards from '../../components/card-custom/service-cards';
 import Footer from '../../components/dashboard/footer';
-import { Artista } from '../../models/artista';
 import { Servicio } from '../../models/servicio';
 import { themeMui } from '../../themes/theme-mui';
 import Filter from './filter';
 import Fab from '@mui/material/Fab';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Pagination from '@mui/material/Pagination';
-import { Box } from '@mui/system';
+import ArtistCardsConn from '../../components/card-custom/artist-cards-conn';
+import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
 
 
 function Explore() {
 
-  let aux: Artista = new Artista();
-  aux.nombre = "Artista";
-  aux.nombre_usuario = "prueba";
-  aux.password = "aaaa"
-  aux.id = 1;
-  let top_artists = [aux,aux,aux,aux,aux,aux,aux,aux,aux,aux,aux,aux,aux];
   let auxS: Servicio = new Servicio();
   auxS.nombre = "Dibujos de anime";
   auxS.duracion_esperada.days = 2;
@@ -38,7 +29,7 @@ function Explore() {
   > 
     <Typography variant="h2" >¡Artistas en estreno!</Typography>
     <br/>
-    <ArtistCards list={top_artists} min={0} max={5}/>
+    <ArtistCardsConn/>
     <Fab color="primary" aria-label="add"
     sx={{position: "absolute", marginTop: "-10rem", right: "1rem",}}>
       <NavigateNextIcon />
@@ -46,9 +37,7 @@ function Explore() {
   </Container>
 
   <Container  className={"after-drawer"}>
-    <ServiceCards list={top_services} min={0} max={20}/>
-    <br/><br/>
-    <Pagination count={10} showFirstButton showLastButton />
+    <ServiceCardsConn/>
   </Container>
 
   <Footer className={"after-drawer"}/>

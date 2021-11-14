@@ -1,5 +1,7 @@
 export class Review {
   id: number = 0;
+  id_usuario: number = 0;
+  id_servicio: number = 0;
   rating_cliente: number = 0;
   comentario: string = "";
   fecha: Date = new Date();

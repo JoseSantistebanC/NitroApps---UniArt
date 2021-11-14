@@ -3,10 +3,6 @@ import { Button, Container, Divider, Grid, Paper, Typography } from '@mui/materi
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ArtistCards from '../../components/card-custom/artist-cards';
-import { Artista } from '../../models/artista';
-import ServiceCards from '../../components/card-custom/service-cards';
-import { Servicio } from '../../models/servicio';
 import { themeMui, blacks, whites } from '../../themes/theme-mui';
 import ListItemText from '@mui/material/ListItemText';
 import CheckIcon from '@mui/icons-material/Check';
@@ -15,20 +11,11 @@ import ForumTTIcon from '@mui/icons-material/ForumTwoTone';
 import AssessmentTTIcon from '@mui/icons-material/AssessmentTwoTone';
 import FactCheckTTIcon from '@mui/icons-material/FactCheckTwoTone';
 import Footer from '../../components/dashboard/footer';
+import ArtistCardsConn from '../../components/card-custom/artist-cards-conn';
+import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
 
 
 function LandingPage() {
-  let aux: Artista = new Artista();
-  aux.nombre = "Artista";
-  aux.nombre_usuario = "prueba";
-  aux.password = "aaaa"
-  aux.id = 1;
-  let top_artists = [aux,aux,aux,aux,aux,aux,aux,aux,aux,aux];
-  let auxS: Servicio = new Servicio();
-  auxS.nombre = "Dibujos de anime";
-  auxS.duracion_esperada.days = 2;
-  auxS.precio_base = 10;
-  let top_services = [auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS];
 
   const btnDBGStyle = {
     backgroundColor: whites.main,
@@ -89,7 +76,7 @@ function LandingPage() {
       }}>
       <Typography variant="h1" component="h1">Servicios más populares</Typography>
       <br/>
-      <ServiceCards max={5} list={top_services} />
+      <ServiceCardsConn/>
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>
@@ -100,7 +87,7 @@ function LandingPage() {
       }}>
       <Typography variant="h1" component="h1">¡Artistas en estreno!</Typography>
       <br/>
-      <ArtistCards max={5} list={top_artists} />
+      <ArtistCardsConn/>
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>

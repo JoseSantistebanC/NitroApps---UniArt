@@ -1,41 +1,34 @@
 import React from 'react';
-import { Avatar, Card, CardActionArea, CardContent, CardMedia, Grid, ListItem, ListItemIcon, ListItemText, Typography }
+import { Avatar, Card, CardContent, CardMedia, Grid, ListItem, ListItemIcon, ListItemText, Typography }
   from '@mui/material';
-import { themeMui, blacks, whites } from '../../themes/theme-mui';
-import { Review } from '../../models/review';
-import { Usuario } from '../../models/usuario';
+import { themeMui, blacks } from '../../themes/theme-mui';
 import StarIcon from '@mui/icons-material/Star';
 import Checkbox from '@mui/material/Checkbox';
 import ThumbUpOlIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownOlIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import ThumbUpFrIcon from '@mui/icons-material/ThumbUpAltRounded';
 import ThumbDownFrIcon from '@mui/icons-material/ThumbDownAltRounded';
-import { datediff } from '../utils/datediff';
 
 
-function ReviewCard(props:{review:Review, usuario?:Usuario}) {
-  const review:Review = props.review === undefined ? {
-    id: 1,
-    rating_cliente: 2,
-    comentario: "Genia!!!",
-    fecha: new Date(),
-    valor_Positivo: 10,
-    valor_Negativo: 1,
-    url_img_referencia: `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`,
-  } : props.review;
+interface ReviewCardProps {
+  id: number,
+  user_url_img: string,
+  user_name: string,
+  user_rating: number,
+  user_qreviews: number,
+  service_time_diff: string,
+  user_country: string,
+  service_details: {question:string, answer:string}[],
+  review: string,
+  valor_usuario: number,
+  valor_positivo: number,
+  valor_negativo: number,
+  url_img: string
+};
 
-  let user: Usuario = props.usuario === undefined? new Usuario() : props.usuario;
-  user.nombre_usuario = "Usuario Prueba";
+function ReviewCard(review:ReviewCardProps) {
 
-  const questions = [
-    {nq: 1, answer: "Respuesta 1"},
-    {nq: 2, answer: "Respuesta 2"},
-    {nq: 3, answer: "Respuesta 3"},
-  ];
-
-  const since = datediff(review.fecha);
-
-  const [like, setLike] = React.useState<string>('');
+  const [like, setLike] = React.useState<string>(review.valor_usuario+'');
   const handleChangeL = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.checked){ setLike(''); }
     else { setLike(event.target.value) };
@@ -57,35 +50,37 @@ function ReviewCard(props:{review:Review, usuario?:Usuario}) {
               <ListItem>
                 <ListItemIcon>
                   <Avatar sx={{ bgcolor: themeMui.palette.secondary.main, width: 24, height: 24 }}
-                  alt="Usuario" src={user.url_foto_perfil}  />
+                  alt="Usuario" src={review.user_url_img}  />
                 </ListItemIcon>
-                <ListItemText primary={ <Typography variant="h5"> {user.nombre_usuario} </Typography>}/>
+                <ListItemText primary={ <Typography variant="h5"> {review.user_name} </Typography>}/>
                 <ListItemIcon> <StarIcon color="info"/>  </ListItemIcon>
                 <ListItemText primary={"*/-"}/>
               </ListItem>
             </Grid>
             <Grid item xs={6} sx={{ color: blacks.light, fontSize: "0.9em", }}>
-              Hace {since} | {user.ciudad_id}
+              Hace {review.service_time_diff} | {review.user_country}
             </Grid>
           </Grid>
 
-          {questions.map((q,i)=>{ return (
+          {review.service_details.map((q,i)=>{ return (
             <ListItem>
-              <ListItemIcon><strong>Pregunta {i+1}</strong></ListItemIcon>
+              <ListItemIcon><strong>{q.question}</strong></ListItemIcon>
               <ListItemText primary={q.answer}/>
             </ListItem>
           )})}
 
           <Typography component="p">
-            {review.comentario}
+            {review.review}
           </Typography>
 
           <Grid container spacing={1}>
             <Grid item xs={2}>
+              {review.valor_positivo}
               <Checkbox {...controlProps('1')}
               icon={<ThumbUpOlIcon/>} checkedIcon={<ThumbUpFrIcon/>} />
             </Grid>
             <Grid item xs={2}>
+              {review.valor_negativo}
               <Checkbox {...controlProps('-1')}
               icon={<ThumbDownOlIcon/>} checkedIcon={<ThumbDownFrIcon/>} />
             </Grid>
@@ -93,9 +88,10 @@ function ReviewCard(props:{review:Review, usuario?:Usuario}) {
 
         </CardContent>
         <CardMedia component="img"  style={{width:"33%",}}
-          image={review.url_img_referencia} alt="portada" />
+          image={review.url_img} alt="portada" />
     </Card>
   );
 };
 
 export default ReviewCard;
+export type {ReviewCardProps};

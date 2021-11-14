@@ -5,13 +5,13 @@ import ChatP from '../../pages/chat/chat';
 import Commissions from '../../pages/comissions/in-progress';
 import Explore from '../../pages/explore/explore';
 import LandingPage from '../../pages/landing/landing-page';
-import Settings from '../../pages/user/settings';
+import Settings from '../../pages/user/settings-conn';
 import ArtistProfile from '../../pages/user/artist-profile';
 import Login from '../../pages/session/login';
 import Logout from '../../pages/session/logout';
 import Signin from '../../pages/session/signin';
 
-function BodyCustom() {
+const BodyCustom = () => {
   return (
     <Routes>
       <Route path="/" element={< LandingPage />} />
