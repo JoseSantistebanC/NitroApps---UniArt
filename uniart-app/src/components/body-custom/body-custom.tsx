@@ -10,6 +10,7 @@ import ArtistProfile from '../../pages/user/artist-profile';
 import Login from '../../pages/session/login';
 import Logout from '../../pages/session/logout';
 import Signin from '../../pages/session/signin';
+import NewService from '../../pages/service/new-service';
 
 const BodyCustom = () => {
   return (
@@ -24,6 +25,7 @@ const BodyCustom = () => {
       <Route path="/artist-profile" element={< ArtistProfile />} />
       <Route path="/settings" element={< Settings />} />
       <Route path="/logout" element={< Logout />} />
+      <Route path="/new-service" element={< NewService />} />
     </Routes>
   );
 };
