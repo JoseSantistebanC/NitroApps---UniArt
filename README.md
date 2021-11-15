@@ -18,6 +18,7 @@
 * npm install
 * yarn install
 * npm install --global yarn
+* SI SALE ERROR: eliminar **yarn.ps1** en C:\Users\[TU USUARIO]\AppData\Roaming\npm
 * yarn create react-app uniart-app --template typescript
 * yarn add react-router-dom
 * yarn add @types/react-router-dom
