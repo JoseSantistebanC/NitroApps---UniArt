@@ -56,6 +56,10 @@ const themeMui = createTheme({
     info: {
       main: '#FFD073',
       contrastText: blacks.main,
+    },
+    error: {
+      main: "#000",
+      contrastText: "#FFF",
     }
   },
   status: {
@@ -146,6 +150,9 @@ const themeMui = createTheme({
       }
     },
     MuiLink: {
+      defaultProps: {
+        underline: "none",
+      },
       styleOverrides: {
         root: {
           color: "inherit",

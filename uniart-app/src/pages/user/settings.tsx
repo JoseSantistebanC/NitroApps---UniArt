@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import Footer from '../../components/dashboard/footer';
 import { Pais } from '../../models/pais';
 import { Ciudad } from '../../models/ciudad';
@@ -9,7 +9,7 @@ function Settings(props:{countries:Pais[],cities:Ciudad[]}) {
   const citiesInCountry = (idCountry:number)=>{
     let _citiesInC: Ciudad[] = [];
     props.cities.forEach((c)=>{
-      if (c.pais_id == idCountry) { _citiesInC.push(c); }
+      if (c.pais_id === idCountry) { _citiesInC.push(c); }
     });
     return _citiesInC;
   };

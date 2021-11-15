@@ -4,13 +4,14 @@ import { Avatar, Divider,
   FormControl, InputLabel, Button,
   Select, SelectChangeEvent, 
   ListItem, ListItemIcon, ListItemText,
-  MenuItem, Rating, Typography } from '@mui/material';
+  MenuItem, Rating, Typography, ButtonBase, Link } from '@mui/material';
 import { blacks } from '../../themes/theme-mui';
 import { Artista } from '../../models/artista';
 import { RedSocial } from '../../models/red_social';
 import { Tema } from '../../models/tema';
 import RoomIcon from '@mui/icons-material/Room';
 import StarIcon from '@mui/icons-material/Star';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Footer from '../../components/dashboard/footer';
 import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
 import ReviewCardsConn from '../../components/card-custom/review-cards-conn';
@@ -128,10 +129,17 @@ function ArtistProfile(props:{artista?:Artista}) {
       <Grid item xs={9}>
         <Grid container spacing={2} sx={{padding:"1em 2em"}}>
 
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <strong>Servicios</strong>
           </Grid>
-          <Grid item xs={4} sx={{display: "flex", justifyContent: "flex-end",}}>
+          <Grid item xs={3}>
+            <Link href="/new-service" underline="none">
+              <Button variant="contained" endIcon={<AddCircleIcon/>}>
+                Publicar
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item xs={3} sx={{display: "flex", justifyContent: "flex-end",}}>
             <FormControl >
               <InputLabel id="order-by-label">Ordenar por</InputLabel>
               <Select labelId="order-by-label" id="order-by" 

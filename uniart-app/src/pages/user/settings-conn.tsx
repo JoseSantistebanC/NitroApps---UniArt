@@ -1,5 +1,7 @@
 import React from 'react';
 import Settings from './settings';
+
+//CONECAR CON LA BD
 const countries = [
   {id: 1, nombre: "Perú"},
   {id: 2, nombre: "Angentina"},

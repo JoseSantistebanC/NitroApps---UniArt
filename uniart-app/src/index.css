@@ -79,3 +79,16 @@ li {
   column-gap: 0.5em;
   row-gap: 0.5em;
 }
+
+p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/*.stack-chips > .MuiInput-root {
+  max-height: 5em;
+  overflow: auto;
+}
+.stack-chips > .MuiInput-root > input {
+  width: fit-content;
+}*/
