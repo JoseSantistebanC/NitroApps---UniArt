@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-axios.defaults.baseURL = "https://uniartapi.herokuapp.com/";
+axios.defaults.baseURL = "https://uniartapi.herokuapp.com/api/v1";
 
 const responseBody = <t>(response: AxiosResponse<t>) => response.data;
 const request = {
