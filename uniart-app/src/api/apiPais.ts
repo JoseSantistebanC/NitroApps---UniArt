@@ -17,6 +17,7 @@ export const ListPaises = () => {
 	function refreshPaises(){
     apiPais.list().then((res) => {
       setPaises(res);
+			console.log('paises:',res);
     });
   }
 	return {paises,refreshPaises};

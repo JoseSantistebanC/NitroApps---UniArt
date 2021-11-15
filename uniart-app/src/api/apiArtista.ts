@@ -18,6 +18,7 @@ export const ListArtistas = () => {
 	function refreshArtistas(){
     apiArtista.list().then((res) => {
       setArtistas(res);
+			console.log('artistas:',res);
     });
   }
 	return {artistas,refreshArtistas};

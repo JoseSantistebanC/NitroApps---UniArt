@@ -9,7 +9,7 @@ function ArtistCards(props: {max?:number}) {
   const {paises, refreshPaises} = ListPaises();
   const {ciudades, refreshCiudades} = ListCiudades();
   const {artistas, refreshArtistas} = ListArtistas();
-  const [list, setList] = React.useState<ArtistCardProps[]>([]);
+  const [list, setList] = React.useState(new Array<ArtistCardProps>());
 
   const getPaisByCiudadId = (id: number) => {
     ciudades.map((c) => {
@@ -37,11 +37,12 @@ function ArtistCards(props: {max?:number}) {
   }
   
   React.useEffect(() => {
+    console.log("cargó effect");
     refreshCiudades();
     refreshPaises();
     refreshArtistas();
     refreshCards();
-  }, []);
+  }, [artistas.length===0]);
 
 
   let end:number = (props.max === undefined)? 10 : props.max;

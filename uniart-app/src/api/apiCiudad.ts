@@ -18,6 +18,7 @@ export const ListCiudades = () => {
 	function refreshCiudades(){
     apiCiudad.list().then((res) => {
       setCiudades(res);
+			console.log('ciudades:',res);
     });
   }
 	return {ciudades,refreshCiudades};
