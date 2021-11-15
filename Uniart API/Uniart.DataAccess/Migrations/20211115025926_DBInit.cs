@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 namespace Uniart.DataAccess.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class DBInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +13,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,8 +26,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,8 +39,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,8 +52,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,9 +65,9 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    Link = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
+                    Link = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,10 +79,10 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Rating_cliente = table.Column<short>(type: "smallint", nullable: false),
-                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comentario = table.Column<string>(type: "text", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
                     Valor_Positivo = table.Column<int>(type: "int", nullable: false),
                     Valor_Negativo = table.Column<int>(type: "int", nullable: false)
                 },
@@ -95,8 +96,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,10 +109,10 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Numero_tarjeta = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
-                    Nombre_completo = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Fecha_vencimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Numero_tarjeta = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
+                    Nombre_completo = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Fecha_vencimiento = table.Column<DateTime>(type: "datetime", nullable: false),
                     Cvc = table.Column<short>(type: "smallint", nullable: false)
                 },
                 constraints: table =>
@@ -124,8 +125,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,8 +138,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,8 +151,8 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Pais_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -170,13 +171,13 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Porc_avance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Monto_pago_inicial = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Monto_pago_final = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_fin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Porc_avance = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Monto_pago_inicial = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Monto_pago_final = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Fecha_inicio = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Fecha_fin = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Fecha_entrega = table.Column<DateTime>(type: "datetime", nullable: false),
                     Review_id_ArtistaId = table.Column<int>(type: "int", nullable: true),
                     Review_id_ClienteId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -202,15 +203,15 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
                     Servicio_Caracteristica_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Caracteristicas_Opciones", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Caracteristicas_Opciones_Servicios_Caracteristicas_Servicio_Caracteristica_Id",
+                        name: "FK_Caracteristicas_Opciones_Servicios_Caracteristicas_Servicio_~",
                         column: x => x.Servicio_Caracteristica_Id,
                         principalTable: "Servicios_Caracteristicas",
                         principalColumn: "Id",
@@ -218,23 +219,126 @@ namespace Uniart.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre_usuario = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Password = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Email = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Ciudad_Id = table.Column<int>(type: "int", nullable: true),
+                    Url_foto_perfil = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Fecha_registro = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: true),
+                    Url_foto_portada = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
+                    Rating = table.Column<byte>(type: "tinyint unsigned", nullable: true),
+                    Q_valoraciones = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Ciudades_Ciudad_Id",
+                        column: x => x.Ciudad_Id,
+                        principalTable: "Ciudades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Envios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Comision_Id = table.Column<int>(type: "int", nullable: true),
+                    Url_imagen_enviada = table.Column<string>(type: "text", nullable: false),
+                    Descripcion = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Envios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Envios_Comisiones_Comision_Id",
+                        column: x => x.Comision_Id,
+                        principalTable: "Comisiones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Artista_Id = table.Column<int>(type: "int", nullable: true),
+                    Usuario_Id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Chats_Redes_Sociales_Artista_Id",
+                        column: x => x.Artista_Id,
+                        principalTable: "Redes_Sociales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Chats_Usuarios_Usuario_Id",
+                        column: x => x.Usuario_Id,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Redes_Sociales_Artistas",
+                columns: table => new
+                {
+                    Red_social_id = table.Column<int>(type: "int", nullable: false),
+                    Artista_id = table.Column<int>(type: "int", nullable: false),
+                    username = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Redes_Sociales_Artistas", x => new { x.Red_social_id, x.Artista_id });
+                    table.ForeignKey(
+                        name: "FK_Redes_Sociales_Artistas_Redes_Sociales_Red_social_id",
+                        column: x => x.Red_social_id,
+                        principalTable: "Redes_Sociales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Redes_Sociales_Artistas_Usuarios_Artista_id",
+                        column: x => x.Artista_id,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Servicios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Artista_Id = table.Column<int>(type: "int", nullable: true),
                     Duracion_esperada = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Precio_base = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Precio_base = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     Rating = table.Column<short>(type: "smallint", nullable: false),
                     Q_valoraciones = table.Column<int>(type: "int", nullable: false),
-                    Es_virtual = table.Column<bool>(type: "bit", nullable: false),
+                    Es_virtual = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Porc_adelanto = table.Column<int>(type: "int", nullable: false),
-                    acepta_rembolso = table.Column<bool>(type: "bit", nullable: false),
+                    acepta_rembolso = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Estilo_Id = table.Column<int>(type: "int", nullable: true),
                     Tecnica_Id = table.Column<int>(type: "int", nullable: true),
-                    Acerca_servicio = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Acerca_servicio = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: false),
                     Licencia_Id = table.Column<int>(type: "int", nullable: true),
                     Q_reviciones = table.Column<int>(type: "int", nullable: false)
                 },
@@ -254,67 +358,85 @@ namespace Uniart.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Servicios_Redes_Sociales_Artista_Id",
-                        column: x => x.Artista_Id,
-                        principalTable: "Redes_Sociales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Servicios_Tecnicas_Tecnica_Id",
                         column: x => x.Tecnica_Id,
                         principalTable: "Tecnicas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre_usuario = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Ciudad_Id = table.Column<int>(type: "int", nullable: true),
-                    Url_foto_perfil = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Fecha_registro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
-                    Url_foto_portada = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Rating = table.Column<byte>(type: "tinyint", nullable: true),
-                    Q_valoraciones = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Ciudades_Ciudad_Id",
-                        column: x => x.Ciudad_Id,
-                        principalTable: "Ciudades",
+                        name: "FK_Servicios_Usuarios_Artista_Id",
+                        column: x => x.Artista_Id,
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Envios",
+                name: "Usuarios_Tarjetas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Comision_Id = table.Column<int>(type: "int", nullable: true),
-                    Url_imagen_enviada = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Tarjeta_id = table.Column<int>(type: "int", nullable: false),
+                    Usuario_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Envios", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios_Tarjetas", x => new { x.Tarjeta_id, x.Usuario_id });
                     table.ForeignKey(
-                        name: "FK_Envios_Comisiones_Comision_Id",
-                        column: x => x.Comision_Id,
-                        principalTable: "Comisiones",
+                        name: "FK_Usuarios_Tarjetas_Tarjetas_Tarjeta_id",
+                        column: x => x.Tarjeta_id,
+                        principalTable: "Tarjetas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Tarjetas_Usuarios_Usuario_id",
+                        column: x => x.Usuario_id,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Valoraciones",
+                columns: table => new
+                {
+                    Usuario_id = table.Column<int>(type: "int", nullable: false),
+                    Review_id = table.Column<int>(type: "int", nullable: false),
+                    Es_like = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Valoraciones", x => new { x.Usuario_id, x.Review_id });
+                    table.ForeignKey(
+                        name: "FK_Valoraciones_Reviews_Review_id",
+                        column: x => x.Review_id,
+                        principalTable: "Reviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Valoraciones_Usuarios_Usuario_id",
+                        column: x => x.Usuario_id,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mensajes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Chat_Id = table.Column<int>(type: "int", nullable: true),
+                    Hora_mensaje = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Texto_mensaje = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mensajes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Mensajes_Chats_Chat_Id",
+                        column: x => x.Chat_Id,
+                        principalTable: "Chats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -325,8 +447,8 @@ namespace Uniart.DataAccess.Migrations
                 {
                     Servicio_id = table.Column<int>(type: "int", nullable: false),
                     Ciudad_id = table.Column<int>(type: "int", nullable: false),
-                    Costo_envio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Costo_envio = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -398,14 +520,14 @@ namespace Uniart.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Servicio_Id = table.Column<int>(type: "int", nullable: true),
-                    Incluir_editable = table.Column<bool>(type: "bit", nullable: false),
+                    Incluir_editable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Licencia_Id = table.Column<int>(type: "int", nullable: true),
                     Q_reviciones = table.Column<int>(type: "int", nullable: false),
                     Duracion_esperada = table.Column<TimeSpan>(type: "time", nullable: false),
-                    precio_base = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Url_imagen_referencia = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    precio_base = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Url_imagen_referencia = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -425,115 +547,15 @@ namespace Uniart.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Artista_Id = table.Column<int>(type: "int", nullable: true),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Chats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Chats_Redes_Sociales_Artista_Id",
-                        column: x => x.Artista_Id,
-                        principalTable: "Redes_Sociales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Chats_Usuarios_Usuario_Id",
-                        column: x => x.Usuario_Id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Redes_Sociales_Artistas",
-                columns: table => new
-                {
-                    Red_social_id = table.Column<int>(type: "int", nullable: false),
-                    Artista_id = table.Column<int>(type: "int", nullable: false),
-                    username = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Redes_Sociales_Artistas", x => new { x.Red_social_id, x.Artista_id });
-                    table.ForeignKey(
-                        name: "FK_Redes_Sociales_Artistas_Redes_Sociales_Red_social_id",
-                        column: x => x.Red_social_id,
-                        principalTable: "Redes_Sociales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Redes_Sociales_Artistas_Usuarios_Artista_id",
-                        column: x => x.Artista_id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios_Tarjetas",
-                columns: table => new
-                {
-                    Tarjeta_id = table.Column<int>(type: "int", nullable: false),
-                    Usuario_id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios_Tarjetas", x => new { x.Tarjeta_id, x.Usuario_id });
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Tarjetas_Tarjetas_Tarjeta_id",
-                        column: x => x.Tarjeta_id,
-                        principalTable: "Tarjetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Tarjetas_Usuarios_Usuario_id",
-                        column: x => x.Usuario_id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Valoraciones",
-                columns: table => new
-                {
-                    Usuario_id = table.Column<int>(type: "int", nullable: false),
-                    Review_id = table.Column<int>(type: "int", nullable: false),
-                    Es_like = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Valoraciones", x => new { x.Usuario_id, x.Review_id });
-                    table.ForeignKey(
-                        name: "FK_Valoraciones_Reviews_Review_id",
-                        column: x => x.Review_id,
-                        principalTable: "Reviews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Valoraciones_Usuarios_Usuario_id",
-                        column: x => x.Usuario_id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Propuestas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Usuario_Id = table.Column<int>(type: "int", nullable: true),
                     Servicio_Variacio_Id = table.Column<int>(type: "int", nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Descripcion = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -563,38 +585,17 @@ namespace Uniart.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Variacion_Detalles", x => new { x.Servicio_Variacion_id, x.Caracteristica_Opciones_id });
                     table.ForeignKey(
-                        name: "FK_Variacion_Detalles_Caracteristicas_Opciones_Caracteristica_Opciones_id",
+                        name: "FK_Variacion_Detalles_Caracteristicas_Opciones_Caracteristica_O~",
                         column: x => x.Caracteristica_Opciones_id,
                         principalTable: "Caracteristicas_Opciones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Variacion_Detalles_Servicios_Variaciones_Servicio_Variacion_id",
+                        name: "FK_Variacion_Detalles_Servicios_Variaciones_Servicio_Variacion_~",
                         column: x => x.Servicio_Variacion_id,
                         principalTable: "Servicios_Variaciones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Mensajes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Chat_Id = table.Column<int>(type: "int", nullable: true),
-                    Hora_mensaje = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Texto_mensaje = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Mensajes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Mensajes_Chats_Chat_Id",
-                        column: x => x.Chat_Id,
-                        principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -775,7 +776,7 @@ namespace Uniart.DataAccess.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Redes_Sociales");
 
             migrationBuilder.DropTable(
                 name: "Servicios_Caracteristicas");
@@ -784,19 +785,19 @@ namespace Uniart.DataAccess.Migrations
                 name: "Servicios");
 
             migrationBuilder.DropTable(
-                name: "Ciudades");
-
-            migrationBuilder.DropTable(
                 name: "Estilos");
 
             migrationBuilder.DropTable(
                 name: "Licencias");
 
             migrationBuilder.DropTable(
-                name: "Redes_Sociales");
+                name: "Tecnicas");
 
             migrationBuilder.DropTable(
-                name: "Tecnicas");
+                name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Ciudades");
 
             migrationBuilder.DropTable(
                 name: "Paises");

@@ -37,13 +37,13 @@ namespace UniArt.Api
             services.AddInjection();
 
             services.AddDbContext<UniartDbContext>(
-        options => options.UseSqlServer(@"Server = DESKTOP-RAJ8SM1; Database = UniartDb; Integrated Security = true;"));
+        options => options.UseMySQL(Configuration.GetConnectionString("DBConnection")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniArt.Api", Version = "v1" });
             });
 
-            //services.AddDirectoryBrowser();
+            services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,14 +65,19 @@ namespace UniArt.Api
                 RequestPath = "/LANDING"
             });*/
             app.UseStaticFiles();
-            app.UseFileServer(new FileServerOptions
+            /*app.UseFileServer(new FileServerOptions
             {
                 FileProvider = new PhysicalFileProvider(
             Path.Combine(env.ContentRootPath, "Frontend")),
                 RequestPath = "/index.html",
                 //EnableDirectoryBrowsing = true
+            });*/
+            app.UseCors(options =>
+            {
+                options.WithOrigins("http://localhost:3000");
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
             });
-
             app.UseRouting();
 
             app.UseAuthorization();

@@ -18,10 +18,10 @@ namespace Uniart.DataAccess
         
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder) 
-        {
-            optionBuilder.UseSqlServer(@"Server = DESKTOP-RAJ8SM1; Database = UniartDb; Integrated Security = true;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder) 
+        //{
+        //    optionBuilder.UseMySQL("Server=us-cdbr-east-04.cleardb.com; Port=3306; Database=database-uniart; user=b6d1bc5f06c54b; password=2bbfd927");
+        //}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Ciudad>().HasOne(p => p.Pais).WithMany(b => b.Ciudades).HasForeignKey(p=>p.Pais_id).IsRequired();
