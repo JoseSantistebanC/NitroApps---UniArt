@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,8 +34,9 @@ namespace UniArt.Api
         {
 
             services.AddControllers();
-
+            services.AddRazorPages();
             services.AddInjection();
+            services.AddAuthorization();
 
             services.AddDbContext<UniartDbContext>(
         options => options.UseMySQL(Configuration.GetConnectionString("DBConnection")));
@@ -42,13 +44,16 @@ namespace UniArt.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniArt.Api", Version = "v1" });
             });
-
+            services.AddRazorPages()
+        .AddMvcOptions(options => options.Filters.Add(new AuthorizeFilter()));
             services.AddDirectoryBrowser();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,21 +62,9 @@ namespace UniArt.Api
             }
 
             app.UseHttpsRedirection();
-            /*
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                //FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uniart API/UniArt.Api")),
-                FileProvider = new PhysicalFileProvider(env.ContentRootPath),
-                RequestPath = "/LANDING"
-            });*/
+        
             app.UseStaticFiles();
-            /*app.UseFileServer(new FileServerOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-            Path.Combine(env.ContentRootPath, "Frontend")),
-                RequestPath = "/index.html",
-                //EnableDirectoryBrowsing = true
-            });*/
+        
             app.UseCors(options =>
             {
                 options.WithOrigins("http://localhost:3000");
@@ -79,7 +72,7 @@ namespace UniArt.Api
                 options.AllowAnyHeader();
             });
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

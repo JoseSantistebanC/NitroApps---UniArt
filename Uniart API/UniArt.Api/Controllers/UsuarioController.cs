@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace UniArt.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class UsuarioController : ControllerBase
 {
         private readonly IUsuarioService _service;
@@ -19,6 +21,7 @@ namespace UniArt.Api.Controllers
             _service = service;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<UsuarioDto>> List([FromQuery] string filter)
         {
             return await _service.GetCollection(filter);
@@ -26,18 +29,21 @@ namespace UniArt.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        [AllowAnonymous]
         public async Task<ResponseDto<UsuarioDto>> Get(int id)
         {
             return await _service.GetUsuario(id);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task Create([FromBody] UsuarioDto request)
         {
             await _service.Create(request);
         }
 
         [HttpPut]
+        [AllowAnonymous]
         public async Task<ActionResult<UsuarioDto>> Put(int id, [FromBody] UsuarioDto request)
         {
             if (id != request.Id)
@@ -48,6 +54,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<UsuarioDto>> Delete(int id)
         {
             var userToDelete = _service.GetUsuario(id);
