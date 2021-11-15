@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Grid, Typography,
   Stepper, Step, StepLabel, Container, StepContent, Divider, Link } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import NewSGeneralConn from './new-general-conn';
-import NewSVariationsConn from './new-variation-conn';
+import NewSGeneralConn from '../../api-conn/new-general-conn';
+import NewSVariationsConn from '../../api-conn/new-variation-conn';
 import FullFeaturedCrudGrid from '../../components/form/data-grid';
 
 function NewService() {

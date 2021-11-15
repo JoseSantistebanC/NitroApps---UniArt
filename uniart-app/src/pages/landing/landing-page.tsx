@@ -11,8 +11,8 @@ import ForumTTIcon from '@mui/icons-material/ForumTwoTone';
 import AssessmentTTIcon from '@mui/icons-material/AssessmentTwoTone';
 import FactCheckTTIcon from '@mui/icons-material/FactCheckTwoTone';
 import Footer from '../../components/dashboard/footer';
-import ArtistCardsConn from '../../components/card-custom/artist-cards-conn';
-import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
+import ArtistCardsConn from '../../components/card-custom/artist-cards';
+import ServiceCardsConn from '../../api-conn/service-cards-conn';
 
 
 function LandingPage() {
@@ -87,7 +87,7 @@ function LandingPage() {
       }}>
       <Typography variant="h1" component="h1">¡Artistas en estreno!</Typography>
       <br/>
-      <ArtistCardsConn/>
+      {<ArtistCardsConn/>}
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>

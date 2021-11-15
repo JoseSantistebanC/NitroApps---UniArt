@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Ciudad } from "../models/ciudad";
 import request from './api';
 
@@ -10,3 +11,14 @@ const apiCiudad = {
 };
 
 export default apiCiudad;
+
+
+export const ListCiudades = () => {
+  const [ciudades, setCiudades] = React.useState<Ciudad[]>([]);
+	function refreshCiudades(){
+    apiCiudad.list().then((res) => {
+      setCiudades(res);
+    });
+  }
+	return {ciudades,refreshCiudades};
+};

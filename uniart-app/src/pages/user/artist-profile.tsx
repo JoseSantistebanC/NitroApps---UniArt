@@ -13,8 +13,8 @@ import RoomIcon from '@mui/icons-material/Room';
 import StarIcon from '@mui/icons-material/Star';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Footer from '../../components/dashboard/footer';
-import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
-import ReviewCardsConn from '../../components/card-custom/review-cards-conn';
+import ServiceCardsConn from '../../api-conn/service-cards-conn';
+import ReviewCardsConn from '../../api-conn/review-cards-conn';
 //import Box from '@mui/material/Box';
 
 function ArtistProfile(props:{artista?:Artista}) {

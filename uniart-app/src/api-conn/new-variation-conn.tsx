@@ -1,5 +1,5 @@
 import React from 'react';
-import NewVariation from './new-variation';
+import NewVariation from '../pages/service/new-variation';
 
 interface ServGralProps{
   name: string, //nombre servicio

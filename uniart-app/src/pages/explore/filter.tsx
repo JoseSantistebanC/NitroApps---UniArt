@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -31,10 +30,10 @@ function Filter() {
       setExpanded(isExpanded ? panel : false);
     };
 
-  const [checked, setChecked] = React.useState([true, true]);
+  /*const [checked, setChecked] = React.useState([true, true]);
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked]);
-  };
+  };*/
 
   const colores = [
     {id: 0, nombre:"Boceto"},

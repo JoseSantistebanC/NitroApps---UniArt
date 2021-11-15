@@ -1,12 +1,12 @@
 import React from 'react';
-import { datediff } from '../utils/datediff';
-import { ReviewCardProps } from './review-card';
-import { Review } from '../../models/review';
-import { Usuario } from '../../models/usuario';
-import { Pais } from '../../models/pais';
-import { Comision } from '../../models/comision';
-import { Valoracion } from '../../models/valoracion';
-import ReviewCards from './review-cards';
+import { datediff } from '../components/utils/datediff';
+import { ReviewCardProps } from '../components/card-custom/review-card';
+import { Review } from '../models/review';
+import { Usuario } from '../models/usuario';
+import { Pais } from '../models/pais';
+import { Comision } from '../models/comision';
+import { Valoracion } from '../models/valoracion';
+import ReviewCards from '../components/card-custom/review-cards';
 
 //const since = datediff(review.fecha);
 
@@ -89,7 +89,7 @@ function ReviewCardsConn(props:{id_artista?:number,id_servicio?:number}) {
   const getUrlImagenBase = (id:number) => { //id del servicio
      //reemplazar por el get en la BD
     //obtener solo el 1ero de la base de datos
-    let c = new Comision();
+    //let c = new Comision();
     //debería revisar la imagen entregada y si no existe, la imagen default del servicio
     return url_img_base;
   };

@@ -22,7 +22,8 @@ interface ArtistCardProps {
 };
 
 function ArtistCard(props:ArtistCardProps) {
-
+  console.log('artista',props);
+  
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardActionArea>

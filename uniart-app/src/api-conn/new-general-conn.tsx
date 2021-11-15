@@ -1,10 +1,10 @@
 import React from 'react';
-import { Formato } from '../../models/formato';
-import { Estilo } from '../../models/estilo';
-import { Tecnica } from '../../models/tecnica';
-import { Tema } from '../../models/tema';
-import { Licencia } from '../../models/licencia';
-import NewSGeneral from './new-general';
+import { Formato } from '../models/formato';
+import { Estilo } from '../models/estilo';
+import { Tecnica } from '../models/tecnica';
+import { Tema } from '../models/tema';
+import { Licencia } from '../models/licencia';
+import NewSGeneral from '../pages/service/new-general';
 
 //reemplazar con datos de la BD
 let formatos:Formato[] = [

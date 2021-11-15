@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { Formato } from '../../models/formato';
 import { Estilo } from '../../models/estilo';
 import { Tecnica } from '../../models/tecnica';
@@ -47,7 +47,6 @@ const NewSGeneral = ( props:{ id?:string,
   const maxChars = 5;
   const isOK = (check:any, isList?:boolean) => {
     //console.log(check);
-    isList = isList === undefined ? false : isList;
     if (check === null || check === undefined
       || check === "" || check === -1 ) {
         return false;

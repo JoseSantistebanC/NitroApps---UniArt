@@ -6,17 +6,15 @@ import { themeMui } from '../../themes/theme-mui';
 import Filter from './filter';
 import Fab from '@mui/material/Fab';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import ArtistCardsConn from '../../components/card-custom/artist-cards-conn';
-import ServiceCardsConn from '../../components/card-custom/service-cards-conn';
+import ArtistCardsConn from '../../components/card-custom/artist-cards';
+import ServiceCardsConn from '../../api-conn/service-cards-conn';
 
 
-function Explore() {
-
-  let auxS: Servicio = new Servicio();
-  auxS.nombre = "Dibujos de anime";
-  auxS.duracion_esperada.days = 2;
-  auxS.precio_base = 10;
-  let top_services = [auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS,auxS];
+function Explore() { 
+  
+  //const  = ;
+  //const [artists, setArtists] = React.useState('');
+  
 
   return (<>
   <Filter/>
@@ -29,7 +27,8 @@ function Explore() {
   > 
     <Typography variant="h2" >¡Artistas en estreno!</Typography>
     <br/>
-    <ArtistCardsConn/>
+    {<ArtistCardsConn/>}
+    <br/>
     <Fab color="primary" aria-label="add"
     sx={{position: "absolute", marginTop: "-10rem", right: "1rem",}}>
       <NavigateNextIcon />

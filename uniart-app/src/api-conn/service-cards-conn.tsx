@@ -1,10 +1,10 @@
 import React from 'react'
-import { Pais } from '../../models/pais';
-import { Artista } from '../../models/artista';
-import { Servicio } from '../../models/servicio';
-import ServiceCards from './service-cards';
-import { ServiceCardProps } from './service-card';
-import { ServicioVariacion } from '../../models/servicio_variacion';
+import { Pais } from '../models/pais';
+import { Artista } from '../models/artista';
+import { Servicio } from '../models/servicio';
+import ServiceCards from '../components/card-custom/service-cards';
+import { ServiceCardProps } from '../components/card-custom/service-card';
+import { ServicioVariacion } from '../models/servicio_variacion';
 
 const ServiceCardsConn = (props:{id_artist?:number}) => {
 

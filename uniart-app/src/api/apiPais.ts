@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Pais } from "../models/pais";
 import request from './api';
 
@@ -10,3 +11,13 @@ const apiPais = {
 };
 
 export default apiPais;
+
+export const ListPaises = () => {
+  const [paises, setPaises] = React.useState<Pais[]>([]);
+	function refreshPaises(){
+    apiPais.list().then((res) => {
+      setPaises(res);
+    });
+  }
+	return {paises,refreshPaises};
+};

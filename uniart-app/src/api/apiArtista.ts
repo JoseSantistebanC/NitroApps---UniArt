@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Artista } from "../models/artista";
 import request from './api';
 
@@ -10,3 +11,26 @@ const apiArtista = {
 };
 
 export default apiArtista;
+
+//LIST
+export const ListArtistas = () => {
+  const [artistas, setArtistas] = React.useState<Artista[]>([]);
+	function refreshArtistas(){
+    apiArtista.list().then((res) => {
+      setArtistas(res);
+    });
+  }
+	return {artistas,refreshArtistas};
+};
+
+
+//CREATE
+
+
+
+//UPDATE
+
+
+
+
+//DELETE
