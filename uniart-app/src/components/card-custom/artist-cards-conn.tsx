@@ -6,100 +6,71 @@ import { Artista } from '../../models/artista';
 import apiArtista from '../../api/apiArtista';
 import apiPais from '../../api/apiPais';
 import apiCiudad from '../../api/apiCiudad';
-import { Api } from '@mui/icons-material';
-import { Usuario } from '../../models/usuario';
-import { useNavigate } from "react-router-dom";
-
-import { get } from 'https';
 import { Ciudad } from '../../models/ciudad';
 
 const ArtistCardsConn = () => {
+  const [paises, setPaises] = React.useState<Pais[]>([]);
+  const [ciudades, setCiudades] = React.useState<Ciudad[]>([]);
+  const [artistas, setArtistas] = React.useState<Artista[]>([]);
+  const [list, setList] = React.useState<ArtistCardProps[]>([]);
 
-    //BORRAR
-    //let aux: Artista = new Artista();
-    //aux.nombre = "Artista";
-    //aux.nombre_usuario = "hombre";
-    //aux.password = "aaaa"
-    //aux.id = 1;
+  const getPaisByCiudadId = (id: number) => {
+    ciudades.map((c) => {
+      if (c.id === id) {
+        paises.map((p)=>{
+          if (p.id === c.pais_id) {return c.nombre;}
+        })
+      }
+    });
+    return "";
+  }
 
-    //reemplazar por el get en la BD
-
-    /*let topArtists: Artista[] = new Array<Artista>(5);*/
-
-
-    /* const [custom] = useState<Usuario>(new Usuario());*/
-    //custom.id = 4;
-    //const history = useNavigate();
-    //let i = 0;
-    //while (i++ < 5) {
-    //    topArtists[i] = {
-    //        id: i,
-    //        nombre_usuario: "Artista",
-    //        password: "",
-    //        email: "",
-    //        nombre: "",
-    //        apellido: "",
-    //        ciudad_id: 15,
-    //        url_foto_perfil: "",
-    //        fecha_registro: new Date(),
-    //        descripcion: "",
-    //        url_foto_portada: `images/bgs/PortadaBg.svg`,
-    //        rating: 0,
-    //        q_valoraciones: 0,
-    //    };
-    /*apiUsuario.add(custom).then(() => { history.p("/usuario/add");});*/
-
-    let paises: Pais[] = [];
-
+  function refreshPaises() {
     apiPais.list().then((res) => {
-        res.map((r, i) => {
-            paises.push(r);
-        });
+      setPaises(res);
     });
-
-    let ciudades: Ciudad[] = [];
-
+  }
+  function refreshCiudades(){
     apiCiudad.list().then((res) => {
-        res.map((r, i) => {
-            ciudades.push(r);
-        });
+      setCiudades(res);
     });
+  }
+  function refreshArtistas(){
+    apiArtista.list().then((res) => {
+      setArtistas(res);
+    });
+  }
+  function refreshCards(){
+    let tac = new Array<ArtistCardProps>(0);
+    apiArtista.list().then((res) => {
+      console.log('axios',res);
+      res.map((a, i) => {
+          tac.push({
+              id: a.id,
+              url_artist_img: a.url_foto_perfil,
+              url_cover_img: a.url_foto_portada,
+              name: a.nombre_usuario,
+              country: getPaisByCiudadId(a.ciudad_id),
+              description: a.descripcion.substr(0, 144)
+          });
+      });
+      setList(tac);
+    })
+    .catch(()=>{
+        console.log("No se recibió la tabla artistas");
+    })
+    .then(()=>{/*nada*/});
+  }
+  
 
+  React.useEffect(() => {
+    refreshPaises();
+    refreshCiudades();
+    refreshArtistas();
+    refreshCards();
+  }, []);
 
-    /*let top_artists = [aux,aux,aux,aux];*/
-    /*   CONECTAR CON LA BD Y OBTENER 5 ARTISTAS*/
-
-    const getPaisByCiudadId = (id: number) => {
-        paises.map((r, i) => {
-            if (r.id == id) { return r.nombre; }
-        });
-        return "";
-    }
-
-    //pasandolo a un formato para las cards
-    const topArtistsCards = () => {
-        let tac: ArtistCardProps[] = new Array<ArtistCardProps>(0);
-        apiArtista.list().then((res) => {
-            console.log(res);
-            res.map((a, i) => {
-                tac.push({
-                    id: a.id,
-                    url_artist_img: a.url_foto_perfil,
-                    url_cover_img: a.url_foto_portada,
-                    name: a.nombre_usuario,
-                    country: getPaisByCiudadId(a.ciudad_id),
-                    description: a.descripcion.substr(0, 144)
-                });
-            });
-        });
-        console.log(tac);
-        return tac;
-    };
-
-
-    return (
-        <ArtistCards list={topArtistsCards()} />
-    )
+  return <ArtistCards list={list}/>;
 };
 
 export default ArtistCardsConn;
