@@ -11,6 +11,7 @@ import Login from '../../pages/session/login';
 import Logout from '../../pages/session/logout';
 import Signin from '../../pages/session/signin';
 import NewService from '../../pages/service/new-service';
+import CRUDprueba from '../../api/probar_apis';
 
 const BodyCustom = () => {
   return (
@@ -26,6 +27,7 @@ const BodyCustom = () => {
       <Route path="/settings" element={< Settings />} />
       <Route path="/logout" element={< Logout />} />
       <Route path="/new-service" element={< NewService />} />
+      <Route path="/crud-prueba" element={<CRUDprueba/>} />
     </Routes>
   );
 };
