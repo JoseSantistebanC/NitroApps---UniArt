@@ -61,7 +61,7 @@ namespace UniArt.Api.Controllers
             var artistTodelete =  _service.GetArtista(id);
             if (artistTodelete == null)
                 return NotFound();
-            await _service.Delete(artistTodelete.Id);
+            await _service.Delete(id);//artistTodelete.Id
             return NoContent();
         }
 

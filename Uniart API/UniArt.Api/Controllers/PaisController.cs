@@ -60,7 +60,7 @@ namespace UniArt.Api.Controllers
             var paisToDelete = _service.GetPais(id);
             if (paisToDelete == null)
                 return NotFound();
-            await _service.Delete(paisToDelete.Id);
+            await _service.Delete(id);
             return NoContent();
         }
     }

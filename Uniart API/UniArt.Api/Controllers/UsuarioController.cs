@@ -60,7 +60,7 @@ namespace UniArt.Api.Controllers
             var userToDelete = _service.GetUsuario(id);
             if (userToDelete == null)
                 return NotFound();
-            await _service.Delete(userToDelete.Id);
+            await _service.Delete(id);
             return NoContent();
         }
     }
