@@ -57,7 +57,7 @@ namespace UniArt.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<UsuarioDto>> Delete(int id)
         {
-            var userToDelete = _service.GetUsuario(id);
+            var userToDelete = await _service.GetUsuario(id);
             if (userToDelete == null)
                 return NotFound();
             await _service.Delete(id);

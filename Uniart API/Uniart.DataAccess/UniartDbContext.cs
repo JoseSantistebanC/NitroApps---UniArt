@@ -1,12 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Uniart.DataAccess.Config;
 using Uniart.Entities;
+using Uniart.Entities.identity;
 
 namespace Uniart.DataAccess
 {
-    public class UniartDbContext:DbContext
+    public class UniartDbContext: IdentityDbContext
     {
         public UniartDbContext(DbContextOptions<UniartDbContext>options):base(options)
         {
@@ -18,12 +22,28 @@ namespace Uniart.DataAccess
         
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder) 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         //{
-        //    optionBuilder.UseMySQL("Server=us-cdbr-east-04.cleardb.com; Port=3306; Database=database-uniart; user=b6d1bc5f06c54b; password=2bbfd927");
+        //    if (!optionBuilder.IsConfigured)
+        //    {
+        //        optionBuilder.UseMySQL("Server=us-cdbr-east-04.cleardb.com; Port=3306; Database=heroku_b281a3c727808fc; user=b348795db55ea8; password=5e8d388e");
+        //    }
         //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            base.OnModelCreating(modelBuilder);
+            new ApplicationUserConfig(modelBuilder.Entity<ApplicationUser>());
+            new ApplicationRoleConfig(modelBuilder.Entity<ApplicationRole>());
             modelBuilder.Entity<Ciudad>().HasOne(p => p.Pais).WithMany(b => b.Ciudades).HasForeignKey(p=>p.Pais_id).IsRequired();
             modelBuilder.Entity<Pais>().Navigation(b => b.Ciudades).UsePropertyAccessMode(PropertyAccessMode.Property);
             modelBuilder.Entity<Envio_Servicio_Ciudad>().HasKey(sc => new { sc.Servicio_id, sc.Ciudad_id });
@@ -33,6 +53,8 @@ namespace Uniart.DataAccess
             modelBuilder.Entity<Usuario_Tarjeta>().HasKey(sc => new { sc.Tarjeta_id, sc.Usuario_id });
             modelBuilder.Entity<Variacion_Detalle>().HasKey(sc => new { sc.Servicio_Variacion_id, sc.Caracteristica_Opciones_id });
             modelBuilder.Entity<Valoracion>().HasKey(sc => new { sc.Usuario_id, sc.Review_id });
+
+            
         }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Caracteristica_Opciones> Caracteristicas_Opciones { get; set; }

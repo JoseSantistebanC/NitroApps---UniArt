@@ -58,10 +58,10 @@ namespace UniArt.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ArtistaDto>> Delete(int id)
         {
-            var artistTodelete =  _service.GetArtista(id);
+            var artistTodelete = await _service.GetArtista(id);
             if (artistTodelete == null)
                 return NotFound();
-            await _service.Delete(id);//artistTodelete.Id
+            await _service.Delete(id);//sql server = artistTodelete.Id , mysql = id
             return NoContent();
         }
 
