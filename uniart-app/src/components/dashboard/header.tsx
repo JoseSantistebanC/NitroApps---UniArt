@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -17,17 +17,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Login from '@mui/icons-material/Login';
-import { Usuario } from '../../models/usuario';
-
-const top100 = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 }
-];
+import { useUser } from '../../pages/session/userContext';
 
 interface LinkTabProps {
   value?: number;
@@ -36,26 +26,37 @@ interface LinkTabProps {
   icon?: string | React.ReactElement<any,string> | undefined;
 };
 
-const tabItems: Array<LinkTabProps> = [
-  { label:"Explorar", href:"/explore", icon:<ExploreTTIcon /> },
-  { label:"Chat", href:"/chat", icon:<ChatBubbleTTIcon /> },
-  { label:"Comisiones", href:"/commissions", icon:<AssessmentTTIcon /> },
-  { label:"Compras", href:"/cart", icon:<ShoppingCartTTIcon /> },
-];
-
-const userMenuItems: Array<LinkTabProps> = [
-  { label:"Iniciar sesion", href:"/login", icon:<Login fontSize="small" />  },
-  { label:"Crear cuenta", href:"/signin", icon:<PersonAdd fontSize="small" /> },
-  { label:"Perfil", href:"/artist-profile", icon:<AccountCircle fontSize="small" /> },
-  { label:"Configuración", href:"/settings", icon:<Settings fontSize="small" />  },
-  { label:"Cerrar Sesión", href:"/logout", icon:<Logout fontSize="small" />  },
-];
-
-const Header = (props:Usuario) => {
-  let nomusu = props.id === 0? "Desconocido" : props.nombre_usuario;
+const Header = () => {
+  const {user, logout} = useUser();
   const navi = useNavigate();
+  const defaultName = "Desconocido";
+  const nomusu = user === undefined || user === null?
+  defaultName : user.nombre_usuario === ""? defaultName : user.nombre_usuario ;
+  
+  const tabItems: Array<LinkTabProps> = [
+    { label:"Explorar", href:"/explore", icon:<ExploreTTIcon /> },
+    { label:"Chat", href:"/chat", icon:<ChatBubbleTTIcon /> },
+    { label:"Comisiones", href:"/commissions", icon:<AssessmentTTIcon /> },
+    { label:"Compras", href:"/cart", icon:<ShoppingCartTTIcon /> },
+  ];
+  const userMenuItems: Array<LinkTabProps> = 
+  nomusu === defaultName ? [ 
+    { label:"Crear cuenta", href:"/signin", icon:<PersonAdd fontSize="small" /> },
+    { label:"Iniciar sesion", href:"/login", icon:<Login fontSize="small" />  },
+  ] : [
+    { label:"Perfil", href: user === undefined? "/login": `/${user.id}`, icon:<AccountCircle fontSize="small" /> },
+    { label:"Configuración", href:"/settings", icon:<Settings fontSize="small" />  },
+  ];
+  //CAMBIAR POR NOMUSU
+
+  const sugerencias = [ //Temas, estilos, técnicas
+    "personajes", "anime", "videojuegos", "avatar", "stickers",
+    "comic", "diseño UI", "logo", "logotipo", "seirrealismo"
+  ]
+
 
   const checkTab = () => { //__dirname
+    if (window.location.pathname === nomusu) {return tabItems.length+1;}
     for (let i = 0; i < tabItems.length; i++) {
       if (tabItems[i].href === window.location.pathname) {return i;}
     }
@@ -64,15 +65,20 @@ const Header = (props:Usuario) => {
         return tabItems.length+1;
       }
     }
-    return -1;
+    return 0;
   };
   
-  const [value, setValue] = React.useState(checkTab);
+  const [tabIdx, setTabIdx] = useState(checkTab);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    setTabIdx(newValue);
   };
+  const handleLogout = () => {
+    logout();
+    navi('/', { replace: true });
+  };
+  const [search, setSearch] = useState("");
   
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -126,14 +132,23 @@ const Header = (props:Usuario) => {
       <Link href="/"><img src={process.env.PUBLIC_URL + '/images/logo.svg'}
             style={{height:'2rem',}} alt="logo"/></Link>
       <Autocomplete freeSolo id="search" style={{ flexGrow: 1, }}
-          value = "" 
-          options={top100.map((option) => option.title)}
+          value = {search} options={sugerencias}
+          onChange = { (e: React.SyntheticEvent<Element, Event>, value:string|null)=>{
+            console.log(value);
+            if(value!=null) { setSearch(value);}
+          } }
           renderInput={(params) =>
             <TextField {...params} label="Nombre del servicio o artista" variant="standard" />}  
           />
-      <IconButton type="submit" aria-label="search" sx={{ height: 'fit-content', }}> <SearchIcon /> </IconButton>
+      <IconButton type="submit" aria-label="search"
+      sx={{ height: 'fit-content', }}
+      onClick={
+        ()=>{ navi(`/explore?q=${search}`,{replace:true}); }
+      }>
+        <SearchIcon />
+      </IconButton>
 
-        <Tabs value={value} onChange={handleChange} scrollButtons={false}
+        <Tabs value={tabIdx} onChange={handleChange} scrollButtons={false}
           sx={{
             '& .MuiTabs-flexContainer': {
               alignItems: "center", width:'100%',
@@ -154,7 +169,10 @@ const Header = (props:Usuario) => {
           })}
 
           <Tab label={nomusu} onClick={handleProfileMenuOpen}
-          icon={<Avatar alt={nomusu} sx={{ width: '1.5rem', height: '1.5rem'}}/>}
+          icon={
+            <Avatar alt={nomusu} src={user?.url_foto_perfil}
+            sx={{ width: '1.5rem', height: '1.5rem'}}
+          />}
           aria-controls={menuId} aria-haspopup="true" value={5} />
           <Menu id={menuId} anchorEl={anchorEl} keepMounted PaperProps={menuPaperProps}
           anchorOrigin={{ vertical: 'top', horizontal: 'right', }}
@@ -167,6 +185,10 @@ const Header = (props:Usuario) => {
               </MenuItem>
             </Link>
           )} )}
+            { nomusu === defaultName ? <></> :
+              <MenuItem onClick={handleLogout}>
+              <Logout fontSize="small" /> Cerrar Sesión
+            </MenuItem>}
           </Menu>
 
         </Tabs>
@@ -177,3 +199,4 @@ const Header = (props:Usuario) => {
 
 
 export default Header;
+export {};

@@ -18,10 +18,38 @@ import DoubleRangeSlider from '../../components/form/double-range-slider';
 import CheckParentAll from '../../components/form/check-all-group';
 import StarIcon from '@mui/icons-material/Star';
 
-function Filter() {
-  const [orderby, setOrderby] = React.useState('');
+interface checkOpt {
+  value:number,
+  label:string,
+  checked:boolean
+}
+interface range {
+  min:number,
+  max:number,
+}
+export interface filterProps {
+  orderBy: {
+    options: {value:number, label:string}[],
+    selected: number
+  }
+  themes: checkOpt[],
+  styles: checkOpt[],
+  techniques: checkOpt[],
+  countries:  checkOpt[],
+  ratingR: range,
+  priceR: range,
+  duration: range,
+}
+
+
+function Filter(props:{filters:filterProps,
+  //handleChangeOrderBy:(event: SelectChangeEvent) => void,
+  setFilters:(filters:filterProps)=>void,
+}) {
+
   const handleChangeOB = (event: SelectChangeEvent) => {
-    setOrderby(event.target.value);
+    props.filters.orderBy.selected = +event.target.value;
+    props.setFilters(props.filters);
   };
 
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
@@ -35,13 +63,6 @@ function Filter() {
     setChecked([event.target.checked, event.target.checked]);
   };*/
 
-  const colores = [
-    {id: 0, nombre:"Boceto"},
-    {id: 1, nombre:"Lineart"},
-    {id: 5, nombre:"Escala de grises"},
-    {id: 8, nombre:"Colores planos"},
-  ];
-
   return (
     <Drawer variant="permanent" sx={{ flexShrink: 0,
       [`& .MuiDrawer-paper`]: { backgroundColor: whites.main } }}>
@@ -51,10 +72,11 @@ function Filter() {
       <FormControl>
         <InputLabel id="order-by-label">Ordenar por</InputLabel>
         <Select labelId="order-by-label" id="order-by"
-          value={orderby} onChange={handleChangeOB} label="Más recientes" >
-          <MenuItem value={10}>Más recientes</MenuItem>
-          <MenuItem value={20}>Más antiguos</MenuItem>
-          <MenuItem value={30}>Más económicos</MenuItem>
+          value={props.filters.orderBy.selected+''}
+          onChange={handleChangeOB} label="Más recientes" >
+          {props.filters.orderBy.options.map((o)=>{
+            <MenuItem value={o.value}>{o.label}</MenuItem>
+          })}
         </Select>
       </FormControl>
       <br/>
@@ -67,19 +89,13 @@ function Filter() {
         <AccordionDetails>
 
           <Typography component="strong">Tema</Typography>
-          <CheckParentAll id="Tema" list={[
-            {id:0, nombre:"Concept Art"},
-            {id:1, nombre:"Fondo"}
-          ]} />
+          <CheckParentAll id="Tema" list={props.filters.themes} />
 
           <Typography component="strong">Estilo</Typography>
-          <CheckParentAll id="Estilo" list={[
-            {id:0, nombre:"Fondo"},
-            {id:2, nombre:"GIF"}
-          ]} /> 
+          <CheckParentAll id="Estilo" list={props.filters.styles} /> 
 
-          <Typography component="strong">Colores</Typography>
-          <CheckParentAll id="Colores" list={colores} />
+          <Typography component="strong">Técnicas</Typography>
+          <CheckParentAll id="Colores" list={props.filters.techniques} />
           </AccordionDetails>
           
         </Accordion>
@@ -93,17 +109,16 @@ function Filter() {
           <AccordionDetails> 
 
             <Typography component="strong">Pais</Typography>
-            <CheckParentAll id="Pais" list={[
-              {id:0, nombre:"Perú"},
-              {id:1, nombre:"Mexico"},
-              {id:2, nombre:"Argentina"}
-            ]} /> 
+            <CheckParentAll id="Pais" list={props.filters.countries} /> 
             
             <ListItem>
               <ListItemIcon><StarIcon color="info"/></ListItemIcon>
               <ListItemText><strong>Rating</strong></ListItemText>
             </ListItem>
-            <DoubleRangeSlider min={1} max={5} current={[0,5]} step={1} format=""/>
+            <DoubleRangeSlider
+            min={props.filters.ratingR.min} max={props.filters.ratingR.max}
+            current={[props.filters.ratingR.min,props.filters.ratingR.max]}
+            step={1} format=""/>
 
           </AccordionDetails>
         </Accordion>
@@ -114,7 +129,10 @@ function Filter() {
               <Typography>Rango de Precio ($)</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <DoubleRangeSlider min={1} max={1000} current={[0,1000]} format="$/."/>
+            <DoubleRangeSlider
+            min={props.filters.priceR.min} max={props.filters.priceR.max}
+            current={[props.filters.priceR.min,props.filters.priceR.max]}
+            format="$/."/>
           </AccordionDetails>
         </Accordion>
 
@@ -124,7 +142,10 @@ function Filter() {
               <Typography>Rango de Duración</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <DoubleRangeSlider min={1} max={1000} current={[0,1000]} format="D"/>
+            <DoubleRangeSlider
+            min={props.filters.priceR.min} max={props.filters.priceR.max}
+            current={[props.filters.priceR.min,props.filters.priceR.max]}
+            format="D"/>
           </AccordionDetails>
         </Accordion>
     </Drawer >

@@ -19,21 +19,21 @@ let formatos:Formato[] = [
   {id: 8, nombre: "Photoshop"},
 ];
 let estilos:Estilo[] = [
-  {id: 1, nombre: "Anime"},
-  {id: 2, nombre: "Cartoon"},
-  {id: 3, nombre: "Cuentos infantiles"},
-  {id: 4, nombre: "Vector"},
-  {id: 5, nombre: "Oscuro"},
-  {id: 6, nombre: "Boceto"},
-  {id: 7, nombre: "Lineart"},
-  {id: 8, nombre: "Colores planos"},
-  {id: 9, nombre: "Full color"},
+  {id: 1, nombre: "anime"},
+  {id: 2, nombre: "cartoon"},
+  {id: 3, nombre: "cuentos infantiles"},
+  {id: 4, nombre: "vector"},
+  {id: 5, nombre: "oscuro"},
+  {id: 6, nombre: "boceto"},
+  {id: 7, nombre: "lineart"},
+  {id: 8, nombre: "colores planos"},
+  {id: 9, nombre: "full color"},
 ];
 let tecnicas:Tecnica[] = [
-  {id: 0, nombre: "Técnica mixta"},
-  {id: 1, nombre: "Acuarelas"},
-  {id: 2, nombre: "Digital"},
-  {id: 3, nombre: "Acrílico"},
+  {id: 0, nombre: "tecnica mixta"},
+  {id: 1, nombre: "acuarelas"},
+  {id: 2, nombre: "digital"},
+  {id: 3, nombre: "acrílico"},
 ];
 let temas:Tema[] = [
   {id: 0, nombre: "personajes"},
@@ -50,10 +50,10 @@ let temas:Tema[] = [
 ];
 
 let licencias:Licencia[] = [
-  {id: 0, nombre: "Uso Personal"},
-  {id: 1, nombre: "Creative commons"},
-  {id: 2, nombre: "Uso comercial con comisión"},
-  {id: 3, nombre: "Uso comercial"},
+  {id: 0, nombre: "uso personal"},
+  {id: 1, nombre: "creative commons"},
+  {id: 2, nombre: "uso comercial con comisión"},
+  {id: 3, nombre: "uso comercial"},
 ];
 
 function NewSGeneralConn(props:{id?:string}) {

@@ -5,23 +5,24 @@ import { ThemeProvider } from '@mui/material/styles';
 import { themeMui } from './themes/theme-mui';
 import { BrowserRouter } from "react-router-dom";
 import Header from './components/dashboard/header';
-import BodyCustom from './components/body-custom/body-custom';
+import BodyCustom from './components/dashboard/body-custom';
 import './index.css';
 //import { createBrowserHistory } from "history";
 import { Usuario } from './models/usuario';
+import {UserProvider} from './pages/session/userContext';
 
 //const customHistory = createBrowserHistory();
 //import reportWebVitals from './reportWebVitals';
-
-let usuario: Usuario = new Usuario();
-
+  
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <UserProvider>
       <ThemeProvider theme={themeMui}>
-        <Header {...usuario}/>
+        <Header/>
         <BodyCustom />
       </ThemeProvider>
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

@@ -22,13 +22,16 @@ interface ArtistCardProps {
 };
 
 function ArtistCard(props:ArtistCardProps) {
-  console.log('artista',props);
+  //console.log('artista',props);
   
   return (
     <Card sx={{ maxWidth: 200 }}>
       <CardActionArea>
         <CardMedia component="img" height="144"
-          image={props.url_cover_img} alt="portada" />
+          image={props.url_cover_img===''?
+          `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`:
+          props.url_cover_img}
+        alt="portada" />
         <CardContent sx={{paddingTop: 0,}}>
           <Grid container spacing={1}>
             <Grid item xs={5}>
@@ -50,7 +53,7 @@ function ArtistCard(props:ArtistCardProps) {
             </Grid>
 
             <Grid item xs={12}>
-              {props.description}
+              <>{props.description}</>
             </Grid>
           </Grid>
         </CardContent>
