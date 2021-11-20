@@ -65,7 +65,8 @@ namespace UniArt.Api.Controllers
             await _service.Delete(id);
             return NoContent();
         }
-        [HttpGet]
+  
+        [HttpGet("artista/{artistid:int}")]
         [AllowAnonymous]
         public async Task<IEnumerable<ServicioDto>> GetServxArtista(int artistid)
         {
