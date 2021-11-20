@@ -42,36 +42,9 @@ namespace Uniart.Services
 
         }
 
-        public async Task<ResponseDto<ArtistaDto>> GetArtista(int id)
+        public async Task<Artista> GetArtista(int id)
         {
-            var response = new ResponseDto<ArtistaDto>();
-            var artista = await _repository.GetArtista(id);
-
-            if (artista == null)
-            {
-                response.Success = false;
-                return response;
-            }
-
-            response.Result = new ArtistaDto
-            {
-                Id = artista.Id,
-                nombre_usuario = artista.Nombre_usuario,
-                password = artista.Password,
-                email = artista.Email,
-                nombre = artista.Nombre,
-                apellido = artista.Apellido,
-                url_foto_perfil = artista.Url_foto_perfil,
-                fecha_registro = artista.Fecha_registro,
-                Descripcion = artista.Descripcion,
-                Url_foto_portada = artista.Url_foto_portada,
-                Rating = artista.Rating,
-                Q_valoraciones = artista.Q_valoraciones
-            };
-
-            response.Success = true;
-
-            return response;
+            return await _repository.GetArtista(id);
         }
 
         public async Task Create(ArtistaDto request)

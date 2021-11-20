@@ -35,8 +35,9 @@ namespace Uniart.Services
                     acepta_rembolso = request.acepta_rembolso,
                     Acerca_servicio = request.Acerca_servicio,
                     Q_reviciones = request.Q_reviciones,
+                    url_imagen = request.url_imagen
 
-                });
+    });
             }
             catch (Exception ex)
             {
@@ -73,6 +74,7 @@ namespace Uniart.Services
                 acepta_rembolso = request.acepta_rembolso,
                 Acerca_servicio = request.Acerca_servicio,
                 Q_reviciones = request.Q_reviciones,
+                url_imagen = request.url_imagen
             };
 
             response.Success = true;
@@ -98,6 +100,7 @@ namespace Uniart.Services
                     acepta_rembolso = request.acepta_rembolso,
                     Acerca_servicio = request.Acerca_servicio,
                     Q_reviciones = request.Q_reviciones,
+                    url_imagen = request.url_imagen
                 })
                 .ToList();
         }
@@ -118,6 +121,7 @@ namespace Uniart.Services
                 acepta_rembolso = request.acepta_rembolso,
                 Acerca_servicio = request.Acerca_servicio,
                 Q_reviciones = request.Q_reviciones,
+                url_imagen = request.url_imagen
 
             });
         }

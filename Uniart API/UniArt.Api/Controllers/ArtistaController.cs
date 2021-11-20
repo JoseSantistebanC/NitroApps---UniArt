@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Uniart.Dto;
+using Uniart.Entities;
 using Uniart.Services;
 
 namespace UniArt.Api.Controllers
@@ -30,7 +31,7 @@ namespace UniArt.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("{id:int}")]
-        public async Task<ResponseDto<ArtistaDto>> Get(int id)
+        public async Task<Artista> Get(int id)
         {
             return await _service.GetArtista(id);
         }

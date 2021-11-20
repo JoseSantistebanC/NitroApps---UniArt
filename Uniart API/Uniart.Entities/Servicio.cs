@@ -46,6 +46,8 @@ namespace Uniart.Entities
 
         [Required]
         public int Q_reviciones { get; set; }
+        
+        public string url_imagen { get; set; }
 
         public IList<Servicio_Formato> Servicios_Formatos { get; set; }
         public IList<Servicio_Tema> Servicios_Temas { get; set; }
