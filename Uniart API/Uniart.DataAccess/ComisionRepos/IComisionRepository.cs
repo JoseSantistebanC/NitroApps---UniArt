@@ -8,8 +8,7 @@ namespace Uniart.DataAccess.ComisionRepos
 {
     public interface IComisionRepository
     {
-        Task<ICollection<Servicio>> GetCollection(string filter);
-        
+
         Task<Comision> GetComision(int id);
 
         Task Create(Comision entity);

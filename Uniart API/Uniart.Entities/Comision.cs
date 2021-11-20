@@ -28,8 +28,7 @@ namespace Uniart.Entities
         public Review Review_id_Artista { get; set; }
 
         public Review Review_id_Cliente { get; set; }
-
-        public ICollection<Servicio> Servicios { get; set; }
+        public IList<Servicio> Servicios { get; set; }
 
     }
 }

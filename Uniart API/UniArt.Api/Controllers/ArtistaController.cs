@@ -13,7 +13,7 @@ namespace UniArt.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    
     public class ArtistaController : ControllerBase
     {
         private readonly IArtistaService _service;
@@ -45,7 +45,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpPut]
-        [AllowAnonymous]
+       [Authorize]
         public async Task<ActionResult<ArtistaDto>> PutArtista(int id, [FromBody] ArtistaDto request)
         {
             if (id != request.Id)
@@ -56,7 +56,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [AllowAnonymous]
+       [Authorize]
         public async Task<ActionResult<ArtistaDto>> Delete(int id)
         {
             var artistTodelete = await _service.GetArtista(id);
