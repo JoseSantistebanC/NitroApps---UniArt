@@ -1,11 +1,12 @@
 import React from 'react';
 import ArtistCard, { ArtistCardProps } from './artist-card';
 import { Grid, Pagination, } from '@mui/material'; 
-import { ListArtistas } from '../../api/apiArtista';
+import { CreateArtista, DeleteArtista, GetArtista, ListArtistas, UpdateArtista } from '../../api/apiArtista';
 import { ListCiudades } from '../../api/apiCiudad';
 import { ListPaises } from '../../api/apiPais';
 
 function ArtistCards(props: {max?:number}) {
+  
   const {paises, refreshPaises} = ListPaises();
   const {ciudades, refreshCiudades} = ListCiudades();
   const {artistas, refreshArtistas} = ListArtistas();
@@ -15,7 +16,7 @@ function ArtistCards(props: {max?:number}) {
     ciudades.map((c) => {
       if (c.id === id) {
         paises.map((p)=>{
-          if (p.id === c.pais_id) {return c.nombre;}
+          if (p.id === c.pais_id) {return p.nombre;}
         })
       }
     });
@@ -35,14 +36,18 @@ function ArtistCards(props: {max?:number}) {
     });
     setList(list);
   }
-  
+
   React.useEffect(() => {
     console.log("cargó effect");
     refreshCiudades();
     refreshPaises();
     refreshArtistas();
     refreshCards();
-  }, [artistas.length===0]);
+  }, [artistas.length===0]); //
+
+  // React.useEffect(() => {
+  //   console.log("cargó effect",artistas);
+  // }, [artistas.length===0]);
 
 
   let end:number = (props.max === undefined)? 10 : props.max;
@@ -67,3 +72,4 @@ function ArtistCards(props: {max?:number}) {
 };
 
 export default ArtistCards;
+export {};

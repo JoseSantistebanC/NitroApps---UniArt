@@ -10,15 +10,19 @@ interface checkbox {
   label?: string
 };
 
-function CheckParentAll (props:{id:string,list:Array<{id:number,nombre:string}>}) {
+function CheckParentAll (props:{
+  id:string,
+  list:Array<checkbox>,
+  onchange?: string,
+}) {
   
   let checkboxes_vals = Array<checkbox>(props.list.length);
   props.list.forEach(c => {
     checkboxes_vals.push({
       checked:false,
       disabled:false,
-      value: c.id+'',
-      label: c.nombre
+      value: c.value+'',
+      label: c.label
     });
   });
 

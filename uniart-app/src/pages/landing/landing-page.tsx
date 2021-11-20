@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Container, Divider, Grid, Paper, Typography } from '@mui/material';
+import { Button, Container, Divider, Grid, Link, Paper, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,8 +11,8 @@ import ForumTTIcon from '@mui/icons-material/ForumTwoTone';
 import AssessmentTTIcon from '@mui/icons-material/AssessmentTwoTone';
 import FactCheckTTIcon from '@mui/icons-material/FactCheckTwoTone';
 import Footer from '../../components/dashboard/footer';
-import ArtistCardsConn from '../../components/card-custom/artist-cards';
-import ServiceCardsConn from '../../api-conn/service-cards-conn';
+import ArtistCards from '../../components/card-custom/artist-cards';
+import ServiceCards from '../../components/card-custom/service-cards';
 
 
 function LandingPage() {
@@ -76,9 +76,9 @@ function LandingPage() {
       }}>
       <Typography variant="h1" component="h1">Servicios más populares</Typography>
       <br/>
-      <ServiceCardsConn/>
+      <ServiceCards/>
       <br/>
-      <Button sx={btnDBGStyle}>Descubrir más</Button>
+      <Link href="/explore"><Button sx={btnDBGStyle}>Descubrir más</Button></Link>
     </Container>
 
     <Container style={{
@@ -87,7 +87,7 @@ function LandingPage() {
       }}>
       <Typography variant="h1" component="h1">¡Artistas en estreno!</Typography>
       <br/>
-      {<ArtistCardsConn/>}
+      <ArtistCards/>
       <br/>
       <Button sx={btnDBGStyle}>Descubrir más</Button>
     </Container>

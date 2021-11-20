@@ -1,23 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import Footer from '../../components/dashboard/footer';
-import { Servicio } from '../../models/servicio';
 import { themeMui } from '../../themes/theme-mui';
 import Filter from './filter';
 import Fab from '@mui/material/Fab';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import ArtistCardsConn from '../../components/card-custom/artist-cards';
-import ServiceCardsConn from '../../api-conn/service-cards-conn';
+import ArtistCards from '../../components/card-custom/artist-cards';
+import ServiceCards from '../../components/card-custom/service-cards';
+import { ListTema } from '../../api/apiTema';
+import { ListEstilo } from '../../api/apiEstilo';
+import { ListTecnica } from '../../api/apiTecnica';
+import { ListPaises } from '../../api/apiPais';
 
 
 function Explore() { 
-  
-  //const  = ;
-  //const [artists, setArtists] = React.useState('');
-  
+  const [search, setSearch] = useState('');
+  const {tema, refreshTema} = ListTema();
+  const {estilo, refreshEstilo} = ListEstilo();
+  const {tecnica, refreshTecnica} = ListTecnica();
+  const {paises, refreshPaises} = ListPaises();
+
+  const defaultCheck = {value: 0, label:"", checked: true};
+  const defaultFilters = {
+    orderBy: {
+      options: [
+        {value:0, label:"Más recientes"},
+        {value:1, label:"Más antiguos"},
+        {value:2, label:"Más económicos"},
+      ],
+      selected: 0
+    },
+    themes: [ defaultCheck ],
+    styles:  [ defaultCheck ],
+    techniques: [ defaultCheck ],
+    countries: [ defaultCheck ],
+    ratingR: { min:0, max:5 },
+    priceR: { min:1, max:10000 },
+    duration: { min:0, max:60 }
+  }
+  const [filters, setFilters] = useState(defaultFilters);
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    setSearch(q?q: "");
+  }, [])
+
+  const toCheckBox = (vals:{id:number,nombre:string}[])=>{
+    let aux = new Array<{value:number, label:string, checked:boolean}>();
+    vals.forEach((v)=>{
+      aux.push({value:v.id, label:v.nombre, checked:true});
+    });
+    return aux;
+  }
+  React.useEffect(()=>{
+    refreshTema();
+    filters.themes = toCheckBox(tema);
+    setFilters(filters);
+  },[tema.length===0,tema===null,tema===undefined]);
+  React.useEffect(()=>{
+    refreshEstilo();
+    filters.styles = toCheckBox(estilo);
+    setFilters(filters);
+  },[estilo.length===0,estilo===null,estilo===undefined]);
+  React.useEffect(()=>{
+    refreshTecnica();
+    filters.techniques = toCheckBox(tecnica);
+    setFilters(filters);
+  },[tecnica.length===0,tecnica===null,tecnica===undefined]);
+  React.useEffect(()=>{
+    refreshPaises();
+    filters.countries = toCheckBox(paises);
+    setFilters(filters);
+  },[paises.length===0,paises===null,paises===undefined]);
 
   return (<>
-  <Filter/>
+  <Filter filters={filters} setFilters={setFilters}/>
 
   <Container className={"after-drawer"} sx={{
     backgroundColor:themeMui.palette.primary.main,
@@ -27,7 +85,7 @@ function Explore() {
   > 
     <Typography variant="h2" >¡Artistas en estreno!</Typography>
     <br/>
-    {<ArtistCardsConn/>}
+    {<ArtistCards max={5}/>}
     <br/>
     <Fab color="primary" aria-label="add"
     sx={{position: "absolute", marginTop: "-10rem", right: "1rem",}}>
@@ -36,7 +94,7 @@ function Explore() {
   </Container>
 
   <Container  className={"after-drawer"}>
-    <ServiceCardsConn/>
+    <ServiceCards max={20} search={search} filters={filters}/>
   </Container>
 
   <Footer className={"after-drawer"}/>

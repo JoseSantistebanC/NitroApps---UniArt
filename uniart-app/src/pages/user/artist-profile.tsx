@@ -13,20 +13,48 @@ import RoomIcon from '@mui/icons-material/Room';
 import StarIcon from '@mui/icons-material/Star';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Footer from '../../components/dashboard/footer';
-import ServiceCardsConn from '../../api-conn/service-cards-conn';
+import ServiceCards from '../../components/card-custom/service-cards';
 import ReviewCardsConn from '../../api-conn/review-cards-conn';
+import { useUser } from '../session/userContext';
+import { useParams } from 'react-router';
+import apiArtista, { GetArtista } from '../../api/apiArtista';
 //import Box from '@mui/material/Box';
 
-function ArtistProfile(props:{artista?:Artista}) {
 
-  const isUserProfile = props.artista === undefined? true:false;
 
-  let artist:Artista = props.artista === undefined? new Artista() : props.artista;
-  artist.nombre_usuario = "Prueba Artista";
-  artist.ciudad_id = 1;
-  artist.rating = 4;
-  artist.descripcion = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore, sed do eiusmod tempor.";
+function ArtistProfile(props:any) { //{artist:Artista}
+
+  let auxartist:Artista = new Artista();
+  auxartist.nombre_usuario = "";
+  auxartist.ciudad_id = 1;
+  auxartist.rating = 4;
+  auxartist.descripcion = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore, sed do eiusmod tempor.";
+  auxartist.fecha_registro = new Date();
   //console.log(artist.fecha_registro.toString());
+
+  let {username} = useParams(); //cambia el username del router en path... :username
+  const today = new Date();
+  const {user} = useUser();
+  //const {artista,refreshArtista} = GetArtista(username===undefined?45:+username);
+  const [artista, setArtista] = React.useState<Artista>(auxartist);  
+  
+  React.useEffect(()=>{
+    //en getArtista debería enviar username
+    //alert(artista.nombre_usuario);
+    apiArtista.detail(username===undefined?4:+username).then((res)=>{
+      setArtista(res);
+    }).catch( ()=>{"no mostró artista"} );
+  },[artista.nombre_usuario === ""]);
+  React.useEffect(()=>{
+    console.log('art...',artista);
+    setArtista(artista);
+  },[JSON.stringify(artista)]);
+
+
+
+  const isOwner = (user === undefined || user === null?
+                false : (user.nombre_usuario === artista.nombre_usuario?
+                true : false));
   
   let temas: Tema[] = [
     {id: 0, nombre: "Concept Art"},
@@ -54,7 +82,7 @@ function ArtistProfile(props:{artista?:Artista}) {
     <>
     <Container sx={{
       backgroundColor: blacks.main,
-      backgroundImage: `url("${process.env.PUBLIC_URL}/images/bgs/portada.png")`,
+      backgroundImage: `url("${artista.url_foto_portada}")`,
       backgroundAttachment: "fixed",
       height: "12em",
     }}></Container>
@@ -66,33 +94,37 @@ function ArtistProfile(props:{artista?:Artista}) {
             
           <Grid container spacing={2} >
             <Grid item xs={5} >
-              <Avatar alt={artist.nombre_usuario} sx={{
-                width: "7rem", height:"7rem",
-                marginTop: "-2em",
-                }}/>
+              <Avatar alt={artista.nombre_usuario}
+              src={artista.url_foto_perfil}
+              sx={{ width: "7rem", height:"7rem",
+                marginTop: "-2em", }}/>
             </Grid>
             <Grid item xs={7}>
               <Grid container spacing={1} >
                 <Grid item xs={12}>
-                  <Typography variant="h4">{artist.nombre_usuario}</Typography>
+                  <Typography variant="h4">{artista.nombre_usuario}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Rating value={artist.rating} readOnly/>
-                  {artist.rating} ({artist.q_valoraciones})
+                  <Rating value={artista.rating} readOnly/>
+                  {artista.rating} ({artista.q_valoraciones})
+                  
                 </Grid>
               </Grid>
             </Grid>
 
             <Grid item xs={12} >
-              <Typography component="p">{artist.descripcion}</Typography>
+              <Typography component="p">{artista.descripcion}</Typography>
               <br/>
                   <ListItem>
                     <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
-                    <ListItemText primary={artist.ciudad_id} />
+                    <ListItemText primary={artista.ciudad_id} />
                   </ListItem>
                   <br/>
               <Typography component="p">
-                Se unió en {artist.fecha_registro.toLocaleDateString()}
+                Se unió en {
+                  artista.fecha_registro === undefined? today.toLocaleDateString() 
+                  : artista.fecha_registro.toLocaleDateString()
+                }
               </Typography>
 
               <br/> <Divider/> <br/>
@@ -151,7 +183,7 @@ function ArtistProfile(props:{artista?:Artista}) {
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <ServiceCardsConn/>
+            <ServiceCards/>
           </Grid>
 
           <Grid item xs={12}> <Divider/>  </Grid>
@@ -159,7 +191,7 @@ function ArtistProfile(props:{artista?:Artista}) {
           <Grid container className="filter-up">
             <ListItem>
               <ListItemText><strong>Reseñas como vendedor</strong></ListItemText>
-              <StarIcon color="info"/>{artist.rating} ({artist.q_valoraciones})
+              <StarIcon color="info"/>{artista.rating} ({artista.q_valoraciones})
             </ListItem>
 
             <FormControl >

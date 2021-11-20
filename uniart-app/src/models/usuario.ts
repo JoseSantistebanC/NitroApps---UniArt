@@ -1,6 +1,6 @@
 export class Usuario {
   id: number = 0;
-  nombre_usuario: string = "Usuario";
+  nombre_usuario: string = "";
   password: string = "";
   email: string = "";
   nombre: string = "";

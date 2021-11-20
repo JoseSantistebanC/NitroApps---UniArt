@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Grid, Typography,
   Stepper, Step, StepLabel, Container, StepContent, Divider, Link } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import NewSGeneralConn from '../../api-conn/new-general-conn';
 import NewSVariationsConn from '../../api-conn/new-variation-conn';
 import FullFeaturedCrudGrid from '../../components/form/data-grid';
+import { Formato } from '../../models/formato';
+import { Estilo } from '../../models/estilo';
+import { Tecnica } from '../../models/tecnica';
+import { Tema } from '../../models/tema';
+import { Licencia } from '../../models/licencia';
+import { Servicio } from '../../models/servicio';
+import { ServicioVariacion } from '../../models/servicio_variacion';
+import { ServicioCaracteristica } from '../../models/servicio_caracteristica';
+import { CaracteristicaOpciones } from '../../models/caracteristica_opciones';
+
+interface NewServiceProps {
+  service: Servicio,
+  themes: Tema[],//Servicio Temas
+  formats: Formato[],//Servicio Formatos
+};
 
 function NewService() {
+
 
   const stepsLabels = ["Características generales","Características específicas"];
   //const generalS = React.createRef(); //.useRef(<NewSGeneralConn/>);

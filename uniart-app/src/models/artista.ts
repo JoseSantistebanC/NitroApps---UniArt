@@ -1,6 +1,6 @@
 export class Artista {
   id: number = 0;
-  nombre_usuario: string = "Artista";
+  nombre_usuario: string = "";
   password: string = "";
   email: string = "";
   nombre: string = "";
