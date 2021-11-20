@@ -42,5 +42,14 @@ namespace Uniart.DataAccess.ComisionRepos
             await _context.SaveChangesAsync();
         }
 
+        public async Task<ICollection<Servicio>> GetCollection(String filter)
+        {
+            var collection = await _context.Servicios
+                .Where(c => c.Nombre.Contains(filter))
+                .ToListAsync();
+
+            return collection;
+        }
+
     }
 }

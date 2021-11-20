@@ -52,5 +52,8 @@ namespace Uniart.Entities
         public IList<Servicio_Formato> Servicios_Formatos { get; set; }
         public IList<Servicio_Tema> Servicios_Temas { get; set; }
         public IList<Envio_Servicio_Ciudad> Envios_Servicios_Ciudades { get; set; }
+
+        public int Comision_id { get; set; }
+        public Comision comision { get; set; }
     }
 }
