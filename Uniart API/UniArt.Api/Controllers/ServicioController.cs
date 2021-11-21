@@ -21,12 +21,12 @@ namespace UniArt.Api.Controllers
         {
             _service = service;
         }
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<IEnumerable<ServicioDto>> List([FromQuery] string filter)
-        //{
-        //    return await _service.GetCollection(filter);
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IEnumerable<ServicioDto>> List([FromQuery] string filter)
+        {
+            return await _service.GetCollection(filter);
+        }
 
         [HttpGet]
         [AllowAnonymous]
