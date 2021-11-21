@@ -49,8 +49,6 @@ namespace Uniart.Services
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IRed_Social_ArtistaRepository, Red_Social_ArtistaRepository>();
             services.AddTransient<IRed_Social_ArtistaService, Red_Social_ArtistaService>();
-            services.AddTransient<IPropuestaRepository, PropuestaRepository>();
-            services.AddTransient<IPropuestaService, PropuestaService>();
             services.AddTransient<IMensajeRepository, MensajeRepository>();
             services.AddTransient<IMensajeService, MensajeService>();
             services.AddTransient<ILicenciaRepository, LicenciaRepository>();

@@ -37,7 +37,7 @@ namespace Uniart.Services
                     Acerca_servicio = request.Acerca_servicio,
                     Q_reviciones = request.Q_reviciones,
                     url_imagen = request.url_imagen,
-                    Comision_id = request.Comision_id
+                   
 
                  });
             }
@@ -78,7 +78,7 @@ namespace Uniart.Services
                 Acerca_servicio = request.Acerca_servicio,
                 Q_reviciones = request.Q_reviciones,
                 url_imagen = request.url_imagen,
-                Comision_id = request.Comision_id
+              
             };
 
             response.Success = true;
@@ -106,7 +106,7 @@ namespace Uniart.Services
                     Acerca_servicio = request.Acerca_servicio,
                     Q_reviciones = request.Q_reviciones,
                     url_imagen = request.url_imagen,
-                    Comision_id = request.Comision_id
+                    
                 })
                 .ToList();
         }
@@ -129,7 +129,7 @@ namespace Uniart.Services
                 Acerca_servicio = request.Acerca_servicio,
                 Q_reviciones = request.Q_reviciones,
                 url_imagen = request.url_imagen,
-                Comision_id = request.Comision_id
+                
 
             });
         }
@@ -152,7 +152,7 @@ namespace Uniart.Services
                     Acerca_servicio = request.Acerca_servicio,
                     Q_reviciones = request.Q_reviciones,
                     url_imagen = request.url_imagen,
-                    Comision_id = request.Comision_id
+                    
                 })
                 .ToList();
 

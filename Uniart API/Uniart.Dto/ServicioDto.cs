@@ -21,6 +21,6 @@ namespace Uniart.Dto
         public String Acerca_servicio { get; set; }
         public int Q_reviciones { get; set; }
         public string url_imagen { get; set; }
-        public int Comision_id { get; set; }
+        
     }
 }

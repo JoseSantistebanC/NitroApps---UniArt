@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Uniart.DataAccess.Config;
 using Uniart.Entities;
@@ -41,6 +42,10 @@ namespace Uniart.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
             base.OnModelCreating(modelBuilder);
             new ApplicationUserConfig(modelBuilder.Entity<ApplicationUser>());
@@ -55,7 +60,11 @@ namespace Uniart.DataAccess
             modelBuilder.Entity<Usuario_Tarjeta>().HasKey(sc => new { sc.Tarjeta_id, sc.Usuario_id });
             modelBuilder.Entity<Variacion_Detalle>().HasKey(sc => new { sc.Servicio_Variacion_id, sc.Caracteristica_Opciones_id });
             modelBuilder.Entity<Valoracion>().HasKey(sc => new { sc.Usuario_id, sc.Review_id });
-
+            modelBuilder.Entity<Comision>().HasOne(p => p.Servicio_).WithMany(b => b.Comisiones).HasForeignKey(p => p.Servicio_id).IsRequired();
+           // modelBuilder.Entity<Comision>().HasOne(p => p.Review_id_Artista).WithMany(b => b.Comisiones).HasForeignKey(p => p.Review_Artista_id).IsRequired();
+            modelBuilder.Entity<Comision>().HasOne(p => p.Review_id_Cliente).WithMany(b => b.Comisiones).HasForeignKey(p => p.Review_Usuario_id).IsRequired();
+            modelBuilder.Entity<Comision>().HasOne(p => p.Usuario_).WithMany(b => b.ComisionesU).HasForeignKey(p => p.Usuario_id);
+            modelBuilder.Entity<Comision>().HasOne(p => p.Servicio_Variacio_).WithMany(b => b.ComisionSV).HasForeignKey(p => p.Servicio_Variacion_id).IsRequired();
         }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Caracteristica_Opciones> Caracteristicas_Opciones { get; set; }
@@ -69,7 +78,7 @@ namespace Uniart.DataAccess
         public DbSet<Licencia> Licencias { get; set; }
         public DbSet<Mensaje> Mensajes { get; set; }
         public DbSet<Pais> Paises { get; set; }
-        public DbSet<Propuesta> Propuestas { get; set; }
+        //public DbSet<Propuesta> Propuestas { get; set; }
         public DbSet<Red_Social> Redes_Sociales { get; set; }
         public DbSet<Red_Social_Artista> Redes_Sociales_Artistas { get; set; }
         public DbSet<Review> Reviews { get; set; }

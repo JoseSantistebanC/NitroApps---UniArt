@@ -37,6 +37,7 @@ namespace Uniart.Entities
         public DateTime Fecha_registro { get; set; }
         public IList<Usuario_Tarjeta> Usuarios_Tarjetas { get; set; }
         public IList<Valoracion> Valoraciones { get; set; }
+        public IList<Comision> ComisionesU { get; set; }
 
     }
 }

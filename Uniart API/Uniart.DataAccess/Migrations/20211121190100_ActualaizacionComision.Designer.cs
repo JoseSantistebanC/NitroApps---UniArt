@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uniart.DataAccess;
 
 namespace Uniart.DataAccess.Migrations
 {
     [DbContext(typeof(UniartDbContext))]
-    partial class UniartDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211121190100_ActualaizacionComision")]
+    partial class ActualaizacionComision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,11 +309,6 @@ namespace Uniart.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
                     b.Property<DateTime>("Fecha_entrega")
                         .HasColumnType("datetime2");
 
@@ -330,27 +327,22 @@ namespace Uniart.DataAccess.Migrations
                     b.Property<decimal>("Porc_avance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Review_Usuario_id")
+                    b.Property<int?>("Review_id_ArtistaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Servicio_Variacion_id")
+                    b.Property<int?>("Review_id_ClienteId")
                         .HasColumnType("int");
 
                     b.Property<int>("Servicio_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Usuario_id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Review_Usuario_id");
+                    b.HasIndex("Review_id_ArtistaId");
 
-                    b.HasIndex("Servicio_Variacion_id");
+                    b.HasIndex("Review_id_ClienteId");
 
                     b.HasIndex("Servicio_id");
-
-                    b.HasIndex("Usuario_id");
 
                     b.ToTable("Comisiones");
                 });
@@ -495,6 +487,36 @@ namespace Uniart.DataAccess.Migrations
                     b.ToTable("Paises");
                 });
 
+            modelBuilder.Entity("Uniart.Entities.Propuesta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Servicio_Variacio_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Usuario_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Servicio_Variacio_Id");
+
+                    b.HasIndex("Usuario_Id");
+
+                    b.ToTable("Propuestas");
+                });
+
             modelBuilder.Entity("Uniart.Entities.Red_Social", b =>
                 {
                     b.Property<int>("Id")
@@ -578,6 +600,9 @@ namespace Uniart.DataAccess.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<int>("Artista_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Comision_id")
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("Duracion_esperada")
@@ -984,8 +1009,7 @@ namespace Uniart.DataAccess.Migrations
                 {
                     b.HasOne("Uniart.Entities.Servicio_Caracteristica", "Servicio_Caracteristica_")
                         .WithMany()
-                        .HasForeignKey("Servicio_Caracteristica_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Servicio_Caracteristica_Id");
 
                     b.Navigation("Servicio_Caracteristica_");
                 });
@@ -994,13 +1018,11 @@ namespace Uniart.DataAccess.Migrations
                 {
                     b.HasOne("Uniart.Entities.Red_Social", "Artista_")
                         .WithMany()
-                        .HasForeignKey("Artista_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Artista_Id");
 
                     b.HasOne("Uniart.Entities.Usuario", "Usuario_")
                         .WithMany()
-                        .HasForeignKey("Usuario_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Usuario_Id");
 
                     b.Navigation("Artista_");
 
@@ -1012,7 +1034,7 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Pais", "Pais")
                         .WithMany("Ciudades")
                         .HasForeignKey("Pais_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Pais");
@@ -1020,45 +1042,32 @@ namespace Uniart.DataAccess.Migrations
 
             modelBuilder.Entity("Uniart.Entities.Comision", b =>
                 {
-                    b.HasOne("Uniart.Entities.Review", "Review_id_Cliente")
-                        .WithMany("Comisiones")
-                        .HasForeignKey("Review_Usuario_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("Uniart.Entities.Review", "Review_id_Artista")
+                        .WithMany()
+                        .HasForeignKey("Review_id_ArtistaId");
 
-                    b.HasOne("Uniart.Entities.Servicio_Variacion", "Servicio_Variacio_")
-                        .WithMany("ComisionSV")
-                        .HasForeignKey("Servicio_Variacion_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("Uniart.Entities.Review", "Review_id_Cliente")
+                        .WithMany()
+                        .HasForeignKey("Review_id_ClienteId");
 
                     b.HasOne("Uniart.Entities.Servicio", "Servicio_")
                         .WithMany("Comisiones")
                         .HasForeignKey("Servicio_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Uniart.Entities.Usuario", "Usuario_")
-                        .WithMany("ComisionesU")
-                        .HasForeignKey("Usuario_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Review_id_Artista");
 
                     b.Navigation("Review_id_Cliente");
 
                     b.Navigation("Servicio_");
-
-                    b.Navigation("Servicio_Variacio_");
-
-                    b.Navigation("Usuario_");
                 });
 
             modelBuilder.Entity("Uniart.Entities.Envio", b =>
                 {
                     b.HasOne("Uniart.Entities.Comision", "Comision_")
                         .WithMany()
-                        .HasForeignKey("Comision_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Comision_Id");
 
                     b.Navigation("Comision_");
                 });
@@ -1068,13 +1077,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Ciudad", "Ciudad")
                         .WithMany()
                         .HasForeignKey("Ciudad_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Servicio", "Servicio")
                         .WithMany("Envios_Servicios_Ciudades")
                         .HasForeignKey("Servicio_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ciudad");
@@ -1086,10 +1095,24 @@ namespace Uniart.DataAccess.Migrations
                 {
                     b.HasOne("Uniart.Entities.Chat", "Chat_")
                         .WithMany()
-                        .HasForeignKey("Chat_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Chat_Id");
 
                     b.Navigation("Chat_");
+                });
+
+            modelBuilder.Entity("Uniart.Entities.Propuesta", b =>
+                {
+                    b.HasOne("Uniart.Entities.Servicio_Variacion", "Servicio_Variacio_")
+                        .WithMany()
+                        .HasForeignKey("Servicio_Variacio_Id");
+
+                    b.HasOne("Uniart.Entities.Usuario", "Usuario_")
+                        .WithMany()
+                        .HasForeignKey("Usuario_Id");
+
+                    b.Navigation("Servicio_Variacio_");
+
+                    b.Navigation("Usuario_");
                 });
 
             modelBuilder.Entity("Uniart.Entities.Red_Social_Artista", b =>
@@ -1097,13 +1120,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Artista", "Artista")
                         .WithMany("Redes_Sociales_Artistas")
                         .HasForeignKey("Artista_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Red_Social", "Red_Social")
                         .WithMany("Redes_Sociales_Artistas")
                         .HasForeignKey("Red_social_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Artista");
@@ -1116,23 +1139,20 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Artista", "Artista")
                         .WithMany("Servicios")
                         .HasForeignKey("Artista_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Estilo", "Estilo_")
                         .WithMany()
-                        .HasForeignKey("Estilo_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Estilo_Id");
 
                     b.HasOne("Uniart.Entities.Licencia", "Licencia_")
                         .WithMany()
-                        .HasForeignKey("Licencia_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Licencia_Id");
 
                     b.HasOne("Uniart.Entities.Tecnica", "Tecnica_")
                         .WithMany()
-                        .HasForeignKey("Tecnica_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Tecnica_Id");
 
                     b.Navigation("Artista");
 
@@ -1148,13 +1168,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Formato", "Formato_")
                         .WithMany("Servicios_Formatos")
                         .HasForeignKey("Formato_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Servicio", "Servicio_")
                         .WithMany("Servicios_Formatos")
                         .HasForeignKey("Servicio_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Formato_");
@@ -1167,13 +1187,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Servicio", "Servicio")
                         .WithMany("Servicios_Temas")
                         .HasForeignKey("Servicio_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Tema", "Tema")
                         .WithMany("Servicios_Temas")
                         .HasForeignKey("Tema_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Servicio");
@@ -1185,13 +1205,11 @@ namespace Uniart.DataAccess.Migrations
                 {
                     b.HasOne("Uniart.Entities.Licencia", "Licencia_")
                         .WithMany()
-                        .HasForeignKey("Licencia_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Licencia_Id");
 
                     b.HasOne("Uniart.Entities.Servicio", "Servicio_")
                         .WithMany()
-                        .HasForeignKey("Servicio_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Servicio_Id");
 
                     b.Navigation("Licencia_");
 
@@ -1202,8 +1220,7 @@ namespace Uniart.DataAccess.Migrations
                 {
                     b.HasOne("Uniart.Entities.Ciudad", "Ciudad_")
                         .WithMany()
-                        .HasForeignKey("Ciudad_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("Ciudad_Id");
 
                     b.Navigation("Ciudad_");
                 });
@@ -1213,13 +1230,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Tarjeta", "Tarjeta")
                         .WithMany("Usuarios_Tarjetas")
                         .HasForeignKey("Tarjeta_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Usuario", "Usuario")
                         .WithMany("Usuarios_Tarjetas")
                         .HasForeignKey("Usuario_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tarjeta");
@@ -1232,13 +1249,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Review", "Review")
                         .WithMany("Valoraciones")
                         .HasForeignKey("Review_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Usuario", "Usuario")
                         .WithMany("Valoraciones")
                         .HasForeignKey("Usuario_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Review");
@@ -1251,13 +1268,13 @@ namespace Uniart.DataAccess.Migrations
                     b.HasOne("Uniart.Entities.Caracteristica_Opciones", "Caracteristica_Opciones")
                         .WithMany("Variacion_Detalles")
                         .HasForeignKey("Caracteristica_Opciones_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Uniart.Entities.Servicio_Variacion", "Servicio_Variacion")
                         .WithMany("Variacion_Detalles")
                         .HasForeignKey("Servicio_Variacion_id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Caracteristica_Opciones");
@@ -1306,8 +1323,6 @@ namespace Uniart.DataAccess.Migrations
 
             modelBuilder.Entity("Uniart.Entities.Review", b =>
                 {
-                    b.Navigation("Comisiones");
-
                     b.Navigation("Valoraciones");
                 });
 
@@ -1324,8 +1339,6 @@ namespace Uniart.DataAccess.Migrations
 
             modelBuilder.Entity("Uniart.Entities.Servicio_Variacion", b =>
                 {
-                    b.Navigation("ComisionSV");
-
                     b.Navigation("Variacion_Detalles");
                 });
 
@@ -1341,8 +1354,6 @@ namespace Uniart.DataAccess.Migrations
 
             modelBuilder.Entity("Uniart.Entities.Usuario", b =>
                 {
-                    b.Navigation("ComisionesU");
-
                     b.Navigation("Usuarios_Tarjetas");
 
                     b.Navigation("Valoraciones");
