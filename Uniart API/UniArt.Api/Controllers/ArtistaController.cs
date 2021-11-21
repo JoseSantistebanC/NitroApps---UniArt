@@ -23,7 +23,7 @@ namespace UniArt.Api.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<ArtistaDto>> List([FromQuery] string filter)
+        public async Task<IEnumerable<ArtistaDto>> List([FromQuery]string filter)
         {
             return await _service.GetCollection(filter);
         }
