@@ -22,7 +22,7 @@ export const ListRedesSociales = (from?:number,to?:number) => {
 			console.log('l redes:',res);
     });
   }
-	return { redes, refreshRedesSociales};
+	return {redes, refreshRedesSociales};
 };
 
 //READ ONE (DETAILS)

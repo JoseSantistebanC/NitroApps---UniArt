@@ -2,17 +2,19 @@ import React from 'react';
 import ServiceCard, { ServiceCardProps } from './service-card';
 import { Grid, Pagination, } from '@mui/material';
 import { filterProps } from '../../pages/explore/filter';
-import { ListServicios } from '../../api/apiServicio';
+import { ListServicios, ListServiciosArtista } from '../../api/apiServicio';
 import { Servicio } from '../../models/servicio';
 import { ListArtistas } from '../../api/apiArtista';
 import { Artista } from '../../models/artista';
 
 
 function ServiceCards(props: { //
+  artistid?:number,
   max?:number, search?:string,
   filters?: filterProps
 }) { 
   const {servicio, refreshServicio} = ListServicios();
+  const {servicioByA, refreshServicioByA} = ListServiciosArtista(props.artistid===undefined?0:props.artistid);
   const {artistas, refreshArtistas} = ListArtistas();
   const [list, setList] = React.useState(new Array<ServiceCardProps>());
   const [pagination, setPagination] = React.useState(<></>);
@@ -54,8 +56,9 @@ function ServiceCards(props: { //
   };
 
   React.useEffect(()=>{
-    refreshArtistas(); //CAMBIAR POR EL GET
-    refreshServicio();
+    console.log(servicio);
+    props.artistid === undefined? refreshServicio() : refreshServicioByA();
+    refreshArtistas();
     setList( toServiceCards(servicio) );
     setPagination(getPages(servicio.length));
   },[servicio.length===0,servicio===null,servicio===undefined]);
