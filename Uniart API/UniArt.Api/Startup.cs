@@ -44,8 +44,8 @@ namespace UniArt.Api
             services.AddAuthorization();
 
             services.AddDbContext<UniartDbContext>(options =>
-            {
-                options.UseSqlServer(@"Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
+            { //Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b
+                options.UseSqlServer("Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
             });
             //services.AddDbContext<UniartDbContext>(
             //    options => options.UseMySQL(Configuration.GetConnectionString("DBConnection")));
@@ -88,6 +88,26 @@ namespace UniArt.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniArt.Api", Version = "v1" });
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "JWT Authentication",
+                    Description = "Enter JWT Bearer token **_only_**",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer", // must be lower case
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {securityScheme, new string[] { }}
+    });
+
             });
             services.AddRazorPages()
         .AddMvcOptions(options => options.Filters.Add(new AuthorizeFilter()));

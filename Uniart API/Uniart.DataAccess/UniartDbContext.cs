@@ -34,7 +34,8 @@ namespace Uniart.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
+                //"Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b"
+                optionsBuilder.UseSqlServer(@"Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
             }
         }
 
@@ -46,6 +47,7 @@ namespace Uniart.DataAccess
             new ApplicationRoleConfig(modelBuilder.Entity<ApplicationRole>());
             modelBuilder.Entity<Ciudad>().HasOne(p => p.Pais).WithMany(b => b.Ciudades).HasForeignKey(p=>p.Pais_id).IsRequired();
             modelBuilder.Entity<Pais>().Navigation(b => b.Ciudades).UsePropertyAccessMode(PropertyAccessMode.Property);
+            modelBuilder.Entity<Servicio>().HasOne(p => p.Artista).WithMany(b => b.Servicios).HasForeignKey(p => p.Artista_id).IsRequired();
             modelBuilder.Entity<Envio_Servicio_Ciudad>().HasKey(sc => new { sc.Servicio_id, sc.Ciudad_id });
             modelBuilder.Entity<Red_Social_Artista>().HasKey(sc => new { sc.Red_social_id, sc.Artista_id });
             modelBuilder.Entity<Servicio_Formato>().HasKey(sc => new { sc.Formato_id, sc.Servicio_id });
@@ -54,7 +56,6 @@ namespace Uniart.DataAccess
             modelBuilder.Entity<Variacion_Detalle>().HasKey(sc => new { sc.Servicio_Variacion_id, sc.Caracteristica_Opciones_id });
             modelBuilder.Entity<Valoracion>().HasKey(sc => new { sc.Usuario_id, sc.Review_id });
 
-            
         }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Caracteristica_Opciones> Caracteristicas_Opciones { get; set; }

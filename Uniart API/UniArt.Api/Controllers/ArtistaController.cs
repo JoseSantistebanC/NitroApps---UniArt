@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Uniart.Dto;
+using Uniart.Entities;
 using Uniart.Services;
 
 namespace UniArt.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    
     public class ArtistaController : ControllerBase
     {
         private readonly IArtistaService _service;
@@ -30,7 +31,7 @@ namespace UniArt.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("{id:int}")]
-        public async Task<ResponseDto<ArtistaDto>> Get(int id)
+        public async Task<Artista> Get(int id)
         {
             return await _service.GetArtista(id);
         }
@@ -44,7 +45,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpPut]
-        [AllowAnonymous]
+       [Authorize]
         public async Task<ActionResult<ArtistaDto>> PutArtista(int id, [FromBody] ArtistaDto request)
         {
             if (id != request.Id)
@@ -55,7 +56,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [AllowAnonymous]
+       [Authorize]
         public async Task<ActionResult<ArtistaDto>> Delete(int id)
         {
             var artistTodelete = await _service.GetArtista(id);

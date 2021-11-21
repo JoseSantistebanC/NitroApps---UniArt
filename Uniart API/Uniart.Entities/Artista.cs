@@ -20,5 +20,6 @@ namespace Uniart.Entities
         public byte Rating { get; set; }
         public int Q_valoraciones { get; set; }
         public IList<Red_Social_Artista> Redes_Sociales_Artistas { get; set; }
+        public IList<Servicio> Servicios { get; set; }
     }
 }

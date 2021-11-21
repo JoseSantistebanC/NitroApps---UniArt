@@ -16,16 +16,17 @@ namespace UniArt.Api.Controllers
     public class ServicioController : ControllerBase
     {
         private readonly IServicioService _service;
+        
         public ServicioController(IServicioService service)
         {
             _service = service;
         }
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IEnumerable<ServicioDto>> List([FromQuery] string filter)
-        {
-            return await _service.GetCollection(filter);
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IEnumerable<ServicioDto>> List([FromQuery] string filter)
+        //{
+        //    return await _service.GetCollection(filter);
+        //}
 
         [HttpGet]
         [AllowAnonymous]
@@ -63,6 +64,14 @@ namespace UniArt.Api.Controllers
                 return NotFound();
             await _service.Delete(id);
             return NoContent();
+        }
+  
+        [HttpGet("artista/{artistid:int}")]
+        [AllowAnonymous]
+        public async Task<IEnumerable<ServicioDto>> GetServxArtista(int artistid)
+        {
+            return await _service.GetServxArtista(artistid);
+
         }
 
     }

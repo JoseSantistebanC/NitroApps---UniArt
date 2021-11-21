@@ -592,7 +592,13 @@ namespace Uniart.DataAccess.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
-                    b.Property<int?>("Artista_Id")
+                    b.Property<int>("Artista_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ComisionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Comision_id")
                         .HasColumnType("int");
 
                     b.Property<TimeSpan>("Duracion_esperada")
@@ -633,9 +639,14 @@ namespace Uniart.DataAccess.Migrations
                     b.Property<bool>("acepta_rembolso")
                         .HasColumnType("bit");
 
+                    b.Property<string>("url_imagen")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Artista_Id");
+                    b.HasIndex("Artista_id");
+
+                    b.HasIndex("ComisionId");
 
                     b.HasIndex("Estilo_Id");
 
@@ -1115,9 +1126,15 @@ namespace Uniart.DataAccess.Migrations
 
             modelBuilder.Entity("Uniart.Entities.Servicio", b =>
                 {
-                    b.HasOne("Uniart.Entities.Artista", "Artista_")
-                        .WithMany()
-                        .HasForeignKey("Artista_Id");
+                    b.HasOne("Uniart.Entities.Artista", "Artista")
+                        .WithMany("Servicios")
+                        .HasForeignKey("Artista_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Uniart.Entities.Comision", "Comision")
+                        .WithMany("Servicios")
+                        .HasForeignKey("ComisionId");
 
                     b.HasOne("Uniart.Entities.Estilo", "Estilo_")
                         .WithMany()
@@ -1131,7 +1148,9 @@ namespace Uniart.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("Tecnica_Id");
 
-                    b.Navigation("Artista_");
+                    b.Navigation("Artista");
+
+                    b.Navigation("Comision");
 
                     b.Navigation("Estilo_");
 
@@ -1283,6 +1302,11 @@ namespace Uniart.DataAccess.Migrations
                     b.Navigation("Variacion_Detalles");
                 });
 
+            modelBuilder.Entity("Uniart.Entities.Comision", b =>
+                {
+                    b.Navigation("Servicios");
+                });
+
             modelBuilder.Entity("Uniart.Entities.Formato", b =>
                 {
                     b.Navigation("Servicios_Formatos");
@@ -1347,6 +1371,8 @@ namespace Uniart.DataAccess.Migrations
             modelBuilder.Entity("Uniart.Entities.Artista", b =>
                 {
                     b.Navigation("Redes_Sociales_Artistas");
+
+                    b.Navigation("Servicios");
                 });
 #pragma warning restore 612, 618
         }

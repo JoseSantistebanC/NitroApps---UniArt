@@ -13,7 +13,7 @@ namespace UniArt.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    
     public class Variacion_DetalleController : ControllerBase
     {
         private readonly IVariacion_DetalleService _service;
@@ -39,7 +39,7 @@ namespace UniArt.Api.Controllers
         }
 
         [HttpPut]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult<ArtistaDto>> Put(int id, int id2,  [FromBody] Variacion_DetalleDto request)
         {
             if (id != request.Caracteristica_Opciones_id || id2 != request.Servicio_Variacion_id )
