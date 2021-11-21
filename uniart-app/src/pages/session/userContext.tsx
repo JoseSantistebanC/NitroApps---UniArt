@@ -56,7 +56,11 @@ export function UserProvider(props:any) {
   async function login(username:string, password:string){
     //Recibir los datos del usuario enviandole email password
     //funcion login en user y artista
-    const data:userLog = {token:"", user: new Usuario()};
+    let auxUs =  new Usuario();
+    auxUs.nombre_usuario = username;
+    auxUs.password = password;
+    const data:userLog = {token:"", user: auxUs};
+    //andres string
     setUser(data.user);//apiArtista. post?
     //setToken(data.token)
   }

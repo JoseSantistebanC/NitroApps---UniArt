@@ -15,10 +15,11 @@ import { ListPaises } from '../../api/apiPais';
 
 function Explore() { 
   const [search, setSearch] = useState('');
-  const {tema, refreshTema} = ListTema();
+  const {temas, refreshTemas} = ListTema();
   const {estilo, refreshEstilo} = ListEstilo();
   const {tecnica, refreshTecnica} = ListTecnica();
   const {paises, refreshPaises} = ListPaises();
+  
 
   const defaultCheck = {value: 0, label:"", checked: true};
   const defaultFilters = {
@@ -54,10 +55,10 @@ function Explore() {
     return aux;
   }
   React.useEffect(()=>{
-    refreshTema();
-    filters.themes = toCheckBox(tema);
+    refreshTemas();
+    filters.themes = toCheckBox(temas);
     setFilters(filters);
-  },[tema.length===0,tema===null,tema===undefined]);
+  },[temas.length===0,temas===null,temas===undefined]);
   React.useEffect(()=>{
     refreshEstilo();
     filters.styles = toCheckBox(estilo);

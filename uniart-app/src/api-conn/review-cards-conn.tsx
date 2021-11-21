@@ -1,5 +1,5 @@
 import React from 'react';
-import { datediff } from '../components/utils/datediff';
+import {dateDiff} from '../utils/dateFx';
 import { ReviewCardProps } from '../components/card-custom/review-card';
 import { Review } from '../models/review';
 import { Usuario } from '../models/usuario';
@@ -28,8 +28,8 @@ function ReviewCardsConn(props:{id_artista?:number,id_servicio?:number}) {
   //BORRAR
   let auxR: Review = {
     id: 1,
-    id_servicio: 1,
-    id_usuario: 1,
+    //id_servicio: 1,
+    //id_usuario: 1,
     rating_cliente: 2,
     comentario: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
     "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -39,7 +39,7 @@ function ReviewCardsConn(props:{id_artista?:number,id_servicio?:number}) {
     fecha: new Date(),
     valor_Positivo: 10,
     valor_Negativo: 1,
-    url_img_referencia: `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`,
+    //url_img_referencia: `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`,
   };
 
   
@@ -98,18 +98,18 @@ function ReviewCardsConn(props:{id_artista?:number,id_servicio?:number}) {
   const servCards = () => {
     let rs:ReviewCardProps[] = new Array<ReviewCardProps>(0);
     reviews.map((r,i)=>{
-      let u = getUser(r.id_usuario);
+      //let u = getUser(r.id_usuario);
       rs.push({
         id: r.id,
-        user_url_img: u.url_foto_perfil,
-        user_name: u.nombre_usuario,
+        user_url_img: "u.url_foto_perfil",
+        user_name: "u.nombre_usuario",
         user_rating: 5, //el usuario no tiene rating, debería
         user_qreviews: 10,  //el usuario no tiene cantidad de reviews, debería
-        service_time_diff: datediff(r.fecha),
-        user_country: getCountryByCityId(u.ciudad_id),
+        service_time_diff: dateDiff(r.fecha),
+        user_country: "", // getCountryByCityId(u.ciudad_id),
         service_details: getServiceDetails(r.id),
         review: r.comentario,
-        valor_usuario: getValorUsuario(u.id,r.id),
+        valor_usuario: 0, //getValorUsuario(u.id,r.id),
         valor_positivo: r.valor_Positivo,
         valor_negativo: r.valor_Negativo,
         url_img: getUrlImagenBase(r.id),

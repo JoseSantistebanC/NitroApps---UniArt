@@ -8,6 +8,8 @@ const apiArtista = {
 	edit: (data: Artista) => request.put(`/Artista/${data.id}`, data),
 	delete: (id: number) => request.delete(`/Artista/${id}`),
 	detail: (id: number) => request.get<Artista>(`/Artista/${id}`),
+	detailByUsername: (uname: string) => request.get<Artista[]>(`/Artista/?filter=${uname}`),
+	//https://localhost:44362/api/v1/Artista?filter=andres
 };
 export default apiArtista;
 
@@ -36,6 +38,19 @@ export const GetArtista = (id:number) => {
 	}
 	return {artista,refreshArtista};
 };
+
+//READ ONE (DETAILS) BY NOMBREUSUARIO
+export const GetArtistaUsername = (username:string) => {
+	const [artistaBUN, setArtista] = React.useState<Artista>(new Artista);
+	function refreshArtistaBUN(){
+		apiArtista.detailByUsername(username).then((res)=>{
+			setArtista(res[0]);
+			console.log('bu artista:',res[0]);
+		}).catch( ()=>{"no listó artista"} );
+	}
+	return {artistaBUN,refreshArtistaBUN};
+};
+ 
 
 //CREATE
 export const CreateArtista = (artista:Artista) => {

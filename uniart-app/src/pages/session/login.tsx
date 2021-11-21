@@ -4,10 +4,6 @@ import { useUser } from './userContext';
 import Footer from '../../components/dashboard/footer';
 import { Button, Container, FormControl, InputLabel, Link, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 
-interface userLogin {
-  username: string,
-  password: string
-}
 
 const Login = () => {
   const {user, login} = useUser();
@@ -18,7 +14,7 @@ const Login = () => {
 
   if (user !== undefined && user.nombre_usuario!=""){ // || 
     console.log(user);
-    navi('/', { replace: true });
+    navi('/explore', { replace: true });
     return <></>
   }
 
@@ -27,7 +23,7 @@ const Login = () => {
       //validar usuario
       login(username,password);
       //Si se pudo loguear
-      navi('/', { replace: true });
+      navi('/explore', { replace: true });
     }
   };
 
@@ -54,7 +50,7 @@ const Login = () => {
     }/>
 
     <br/>
-    <Button variant="contained"> onClick={handleLogin}
+    <Button variant="contained" onClick={handleLogin}> 
       Iniciar Sesión
     </Button>
     <br/><br/>

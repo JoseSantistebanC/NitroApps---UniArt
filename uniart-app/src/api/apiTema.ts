@@ -16,15 +16,15 @@ export default apiTema;
 //READ LIST
 export const ListTema=(from?:number,to?:number)=>{
     if(from===undefined) from=0;
-    const [tema, setTema] = React.useState<Tema[]>([]);
-    function refreshTema(){
+    const [temas, setTemas] = React.useState<Tema[]>([]);
+    function refreshTemas(){
         apiTema.list().then((res)=>{
-            to===undefined?setTema(res.slice(from,res.length))
-            :setTema(res.slice(from,to));
+            to===undefined?setTemas(res.slice(from,res.length))
+            :setTemas(res.slice(from,to));
             console.log('l tema:', res);
         });
     }
-    return {tema, refreshTema};
+    return {temas, refreshTemas};
 };
 
 //READ ONE 

@@ -16,15 +16,15 @@ export default apiReview;
 //READ LIST
 export const ListReview=(from?:number,to?:number)=>{
     if(from===undefined) from=0;
-    const [review, setReview] = React.useState<Review[]>([]);
-    function refreshReview(){
+    const [reviews, setReview] = React.useState<Review[]>([]);
+    function refreshReviews(){
         apiReview.list().then((res)=>{
             to===undefined?setReview(res.slice(from,res.length))
             :setReview(res.slice(from,to));
             console.log('l review:', res);
         });
     }
-    return {review, refreshReview};
+    return {reviews, refreshReviews};
 };
 
 //READ ONE 

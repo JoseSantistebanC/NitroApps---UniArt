@@ -21,13 +21,16 @@ import { ListFormato } from '../../api/apiFormato';
 import { ListLicencia } from '../../api/apiLicencia';
 import { ListEstilo } from '../../api/apiEstilo';
 import { ListTecnica } from '../../api/apiTecnica';
+import { useUser } from '../session/userContext';
+import { CreateServicio } from '../../api/apiServicio';
+import { CreateServicioTema } from '../../api/apiServicioTema';
+import { CreateServicioFormato } from '../../api/apiServicioFormato';
 
 function NewService() {
   const navi = useNavigate();
   
   const defaultServ = {
     service: {
-      id: 0,
       nombre: "",
       artista_id: 0,
       duracion_esperada: new Duracion(),
@@ -42,30 +45,33 @@ function NewService() {
       acerca_servicio: "",
       licencia: new Licencia(),
       q_revisiones: 0, //q_reviciones
+      url_img: "",
     },
     themes: new Array<Tema>(),
     formats: new Array<Formato>()
   };
 
   const [newServ, setNewServ] = useState(defaultServ);
+  const {user} = useUser();
   const {formato, refreshFormato} = ListFormato();
   const {estilo, refreshEstilo} = ListEstilo();
   const {licencia, refreshLicencia} = ListLicencia();
   const {tecnica, refreshTecnica} = ListTecnica();
-  const {tema, refreshTema} = ListTema();
+  const {temas, refreshTemas} = ListTema();
 
   React.useEffect(() => {
     refreshFormato();
     refreshEstilo();
     refreshLicencia();
     refreshTecnica();
-    refreshTema();
+    refreshTemas();
     setNewServ({...newServ, service: {
       ...newServ.service,
+      artista_id: user === undefined ? 0 : user.id,
       licencia: licencia[0],
       duracion_esperada: { ...newServ.service.duracion_esperada, days:4 },
     }});
-  }, [tema.length===0])
+  }, [temas.length===0])
   
   const isOK = (check:any, isList?:boolean) => {
     //console.log(check);
@@ -89,6 +95,26 @@ function NewService() {
     //&& isOK(servGral.chars?.name)
     ){
       console.log('ok',newServ);
+      // CreateServicio ({
+      //   id: 0,
+      //   nombre: newServ.service.nombre,
+      //   artista_id: newServ.service.artista_id,
+      //   duracion_esperada: new Duracion(),
+      //   precio_base: newServ.service.precio_base,
+      //   rating: 0,
+      //   q_valoraciones: 0,
+      //   es_virtual: newServ.service.es_virtual,
+      //   porc_adelanto: newServ.service.porc_adelanto,
+      //   acepta_rembolso: newServ.service.acepta_rembolso,
+      //   estilo_id: newServ.service.estilo.id,
+      //   tecnica_id: newServ.service.tecnica.id,
+      //   acerca_servicio: newServ.service.acerca_servicio,
+      //   licencia_id: newServ.service.licencia.id,
+      //   q_revisiones: newServ.service.q_revisiones,
+      //   url_imagen: string = "";
+      // });
+      // CreateServicioTema( {tema_id: 0, servicio_id: 0} );
+      // CreateServicioFormato( {formato_id: 0, servicio_id: 0} );
       //navi('/artist-profile', { replace: true });
     } else {
       console.log('nooo',newServ);
@@ -196,7 +222,7 @@ function NewService() {
         <FormControl required fullWidth>
           <Stack spacing={3}>
             <Autocomplete multiple id="temas" freeSolo
-            options={tema} filterSelectedOptions
+            options={temas} filterSelectedOptions
             value={newServ.themes}
             getOptionLabel={
               (option) => typeof option === 'string' ?
@@ -299,6 +325,13 @@ function NewService() {
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           newServ.service.q_revisiones = +event.target.value;
           setNewServ(newServ);
+        }}/>
+        
+        <TextField fullWidth id="img_url" type="url"
+        label="URL de la imagen del servicio" required
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setNewServ({...newServ, service: {...newServ.service, 
+          url_img: event.target.value}});
         }}/>
 
 

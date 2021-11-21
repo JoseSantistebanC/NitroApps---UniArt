@@ -16,4 +16,5 @@ export class Servicio {
   acerca_servicio: string = "";
   licencia_id: number = 0;
   q_revisiones: number = 0; //q_reviciones
+  url_imagen: string = "";
 };

@@ -14,17 +14,17 @@ const apiComision={
 export default apiComision;
 
 //READ LIST
-export const ListComisiones=(from?:number,to?:number)=>{
+export const ListComision=(from?:number,to?:number)=>{
     if(from===undefined) from=0;
-    const [comision, setComision] = React.useState<Comision[]>([]);
-    function refreshComision(){
+    const [comisiones, setComisiones] = React.useState<Comision[]>([]);
+    function refreshComisiones(){
         apiComision.list().then((res)=>{
-            to===undefined?setComision(res.slice(from,res.length))
-            :setComision(res.slice(from,to));
-            console.log('l comision:', res);
+            to===undefined?setComisiones(res.slice(from,res.length))
+            :setComisiones(res.slice(from,to));
+            console.log('l Comision:', res);
         });
     }
-    return {comision, refreshComision};
+    return {comisiones, refreshComisiones};
 };
 
 //READ ONE 
@@ -33,8 +33,8 @@ export const GetComision = (id: number)=>{
     function refreshComision(){
         apiComision.detail(id).then((res)=>{
             setComision(res);
-            console.log('i comision:',res);
-        }).catch(()=>{"no listó comision"});
+            console.log('i Comision:',res);
+        }).catch(()=>{"no listó Comision"});
     }
     return {comision, refreshComision};
 };
@@ -42,17 +42,17 @@ export const GetComision = (id: number)=>{
 //CREATE
 export const CreateComision=(comision:Comision)=>{
     apiComision.add(comision).then(()=>{    
-    }).catch(()=>{console.log("no creó comision")});
+    }).catch(()=>{console.log("no creó Comision")});
 };
 
 //UPDATE
 export const UpdateComision = (comision:Comision)=>{
     apiComision.edit(comision).then(()=>{
-    }).catch(()=>{console.log("no actualizó comision");});
+    }).catch(()=>{console.log("no actualizó Comision");});
 };
 
 //DELETE
 export const DeleteComision=(id:number)=>{
     apiComision.delete(id).then(()=>{
-    }).catch(()=>{"no eliminó comision"});
+    }).catch(()=>{"no eliminó Comision"});
 };

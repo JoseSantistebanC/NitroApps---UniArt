@@ -17,7 +17,10 @@ import ServiceCards from '../../components/card-custom/service-cards';
 import ReviewCardsConn from '../../api-conn/review-cards-conn';
 import { useUser } from '../session/userContext';
 import { useParams } from 'react-router';
-import apiArtista, { GetArtista } from '../../api/apiArtista';
+import apiArtista, { GetArtistaUsername } from '../../api/apiArtista';
+import { ListRedesSociales } from '../../api/apiRedes_Sociales';
+import { ListTema } from '../../api/apiTema';
+import { dateToStr } from '../../utils/dateFx';
 //import Box from '@mui/material/Box';
 
 
@@ -32,41 +35,42 @@ function ArtistProfile(props:any) { //{artist:Artista}
   auxartist.fecha_registro = new Date();
   //console.log(artist.fecha_registro.toString());
 
-  let {username} = useParams(); //cambia el username del router en path... :username
-  const today = new Date();
+  const {username} = useParams(); //cambia el username del router en path... :username
   const {user} = useUser();
-  //const {artista,refreshArtista} = GetArtista(username===undefined?45:+username);
-  const [artista, setArtista] = React.useState<Artista>(auxartist);  
+  const today = new Date();
+  const {artistaBUN,refreshArtistaBUN} = GetArtistaUsername(username===undefined?"":username);
+  //const [artista, setArtista] = React.useState<Artista>(auxartist);  
+  const {redes, refreshRedesSociales} = ListRedesSociales();
+  const {temas, refreshTemas} = ListTema();
+
+  React.useEffect(() => {
+    console.log('us',user,'uname',username);
+  }, [])
   
   React.useEffect(()=>{
     //en getArtista debería enviar username
     //alert(artista.nombre_usuario);
-    apiArtista.detail(username===undefined?4:+username).then((res)=>{
-      setArtista(res);
-    }).catch( ()=>{"no mostró artista"} );
-  },[artista.nombre_usuario === ""]);
-  React.useEffect(()=>{
-    console.log('art...',artista);
-    setArtista(artista);
-  },[JSON.stringify(artista)]);
-
-
+    // apiArtista.detail(+username).then((res)=>{
+    //   setArtista(res);
+    // }).catch( ()=>{"no mostró artista"} );
+    refreshTemas();
+    refreshRedesSociales();
+    refreshArtistaBUN();
+  },[temas.length === 0]);
+  // React.useEffect(()=>{
+  //   console.log('art...',artista);
+  //   setArtista(artista);
+  // },[JSON.stringify(artista)]);
 
   const isOwner = (user === undefined || user === null?
-                false : (user.nombre_usuario === artista.nombre_usuario?
+                false : (user.nombre_usuario === artistaBUN.nombre_usuario?
                 true : false));
   
-  let temas: Tema[] = [
+  /*let temas: Tema[] = [
     {id: 0, nombre: "Concept Art"},
     {id: 0, nombre: "Fondos"},
     {id: 0, nombre: "Personakes"},
-  ];
-
-  let redesSociales:RedSocial[] = [
-    {id: 0, nombre: "Facebook", link:"..."},
-    {id: 1, nombre: "Instagram", link:"..."},
-    {id: 2, nombre: "Twitter", link:"..."},
-  ];
+  ];*/ 
 
   
   const [orderbyS, setOrderbyS] = React.useState('1');
@@ -82,7 +86,7 @@ function ArtistProfile(props:any) { //{artist:Artista}
     <>
     <Container sx={{
       backgroundColor: blacks.main,
-      backgroundImage: `url("${artista.url_foto_portada}")`,
+      backgroundImage: `url("${artistaBUN.url_foto_portada}")`,
       backgroundAttachment: "fixed",
       height: "12em",
     }}></Container>
@@ -93,37 +97,40 @@ function ArtistProfile(props:any) { //{artist:Artista}
           marginTop: "-1rem", padding:"0.5rem",}}>
             
           <Grid container spacing={2} >
-            <Grid item xs={5} >
-              <Avatar alt={artista.nombre_usuario}
-              src={artista.url_foto_perfil}
-              sx={{ width: "7rem", height:"7rem",
-                marginTop: "-2em", }}/>
+            <Grid item xs={4} >
+              <Avatar alt={artistaBUN.nombre_usuario}
+              src={artistaBUN.url_foto_perfil}
+              sx={{ width: "5rem", height:"5rem",
+                marginTop: "-2em", marginLeft:"-0.5em"}}/>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={8}>
               <Grid container spacing={1} >
                 <Grid item xs={12}>
-                  <Typography variant="h4">{artista.nombre_usuario}</Typography>
+                  <Typography variant="h4">{artistaBUN.nombre_usuario}</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Rating value={artista.rating} readOnly/>
-                  {artista.rating} ({artista.q_valoraciones})
-                  
+                  <ListItem>
+                    {artistaBUN.rating === 0? <></> :<>
+                    <ListItemIcon><Rating value={artistaBUN.rating} readOnly/></ListItemIcon>
+                    <ListItemText primary={`${artistaBUN.rating} (${artistaBUN.q_valoraciones})`} />
+                    </>}
+                  </ListItem>
                 </Grid>
               </Grid>
             </Grid>
 
             <Grid item xs={12} >
-              <Typography component="p">{artista.descripcion}</Typography>
+              <Typography component="p">{artistaBUN.descripcion}</Typography>
               <br/>
                   <ListItem>
                     <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
-                    <ListItemText primary={artista.ciudad_id} />
+                    <ListItemText primary={artistaBUN.ciudad_id} />
                   </ListItem>
                   <br/>
               <Typography component="p">
-                Se unió en {
-                  artista.fecha_registro === undefined? today.toLocaleDateString() 
-                  : artista.fecha_registro.toLocaleDateString()
+                Se unió {
+                  artistaBUN.fecha_registro === undefined? dateToStr(today) 
+                  : dateToStr(artistaBUN.fecha_registro)
                 }
               </Typography>
 
@@ -164,6 +171,7 @@ function ArtistProfile(props:any) { //{artist:Artista}
           <Grid item xs={6}>
             <strong>Servicios</strong>
           </Grid>
+          {isOwner?
           <Grid item xs={3}>
             <Link href="/new-service" underline="none">
               <Button variant="contained" endIcon={<AddCircleIcon/>}>
@@ -171,6 +179,7 @@ function ArtistProfile(props:any) { //{artist:Artista}
               </Button>
             </Link>
           </Grid>
+          : <></> }
           <Grid item xs={3} sx={{display: "flex", justifyContent: "flex-end",}}>
             <FormControl >
               <InputLabel id="order-by-label">Ordenar por</InputLabel>
@@ -191,7 +200,7 @@ function ArtistProfile(props:any) { //{artist:Artista}
           <Grid container className="filter-up">
             <ListItem>
               <ListItemText><strong>Reseñas como vendedor</strong></ListItemText>
-              <StarIcon color="info"/>{artista.rating} ({artista.q_valoraciones})
+              <StarIcon color="info"/>{artistaBUN.rating} ({artistaBUN.q_valoraciones})
             </ListItem>
 
             <FormControl >

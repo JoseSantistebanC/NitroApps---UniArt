@@ -12,21 +12,22 @@ import Signin from '../../pages/session/signin';
 import NewService from '../../pages/service/new-service-sum';
 import CRUDprueba from '../../api/probar_apis2';
 import Pruebas from '../utils/pruebas';
+import Service from '../../pages/service/service';
 
 const BodyCustom = () => {
-  const fil = {
-    allChecked: true,
-    options: [
-      {checked:true,label:"aaaa"},
-      {checked:true,label:"bbbb"},
-      {checked:true,label:"cc"},
-    ]};
-  const[a,setA] = React.useState('wop');
-  const[aC,setAC] = React.useState(fil);
+  // const fil = {
+  //   allChecked: true,
+  //   options: [
+  //     {checked:true,label:"aaaa"},
+  //     {checked:true,label:"bbbb"},
+  //     {checked:true,label:"cc"},
+  //   ]};
+  // const[a,setA] = React.useState('wop');
+  // const[aC,setAC] = React.useState(fil);
 
-  React.useEffect(()=>{
-    console.log('uf',aC);
-  },[aC]);
+  // React.useEffect(()=>{
+  //   console.log('uf',aC);
+  // },[aC]);
 
   return (
     <Routes>
@@ -40,10 +41,11 @@ const BodyCustom = () => {
       <Route path="/settings" element={< Settings />} />
       <Route path="/new-service" element={< NewService />} />
       <Route path="/crud-prueba" element={<CRUDprueba/>} />
-      <Route path="/pruebas" element={<Pruebas a={a} setA={setA} setFilters={setAC} filters={aC}/>} />
       <Route path="/:username" element={< ArtistProfile />} />
+      <Route path="/service/:service" element={< Service />} />
     </Routes>
   );
 };
 //<Route path="/artist-profile" element={< ArtistProfile />} />
+//<Route path="/pruebas" element={<Pruebas a={a} setA={setA} setFilters={setAC} filters={aC}/>} />
 export default BodyCustom;

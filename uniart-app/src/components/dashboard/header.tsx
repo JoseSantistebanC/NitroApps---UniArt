@@ -43,8 +43,8 @@ const Header = () => {
   nomusu === defaultName ? [ 
     { label:"Crear cuenta", href:"/signin", icon:<PersonAdd fontSize="small" /> },
     { label:"Iniciar sesion", href:"/login", icon:<Login fontSize="small" />  },
-  ] : [
-    { label:"Perfil", href: user === undefined? "/login": `/${user.id}`, icon:<AccountCircle fontSize="small" /> },
+  ] : [ //deberia recoger el username
+    { label:"Perfil", href: user === undefined? "/login": `/${user.nombre_usuario}`, icon:<AccountCircle fontSize="small" /> },
     { label:"Configuración", href:"/settings", icon:<Settings fontSize="small" />  },
   ];
   //CAMBIAR POR NOMUSU
