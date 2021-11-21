@@ -1,4 +1,8 @@
 {
+  "name": "uniart-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://josesantistebanc.github.io/NitroApps---UniArt/",
   "dependencies": {
     "@createnl/grouped-checkboxes": "^1.2.0",
     "@emotion/react": "^11.6.0",
@@ -8,5 +12,13 @@
     "@types/react-router-dom": "^5.3.2",
     "axios": "^0.24.0",
     "react-router-dom": "^6.0.2"
+  },
+  "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   }
 }
