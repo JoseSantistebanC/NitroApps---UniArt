@@ -8,7 +8,7 @@ const logout = () => {
   const navi = useNavigate();
   
   logout();
-  navi('/', { replace: true });
+  navi('/explore', { replace: true });
 
   return (<></>);
 };

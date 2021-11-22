@@ -48,7 +48,7 @@ export const GetArtistaUsername = (username:string) => {
 			setArtista(res[0]);
 			console.log('bu artista:',res[0]);
 		}).catch( ()=>{"no listó artista"} );
-	}
+	} 
 	return {artistaBUN,refreshArtistaBUN};
 }; 
  
@@ -71,4 +71,4 @@ export const DeleteArtista = (id:number) => {
 	}).catch( ()=>{"no eliminó artista"} );
 };
 
-export {};
+export {}; 

@@ -1,14 +1,15 @@
 import React, {useState, useEffect, useMemo} from "react";
 import { Usuario } from "../../models/usuario";
 import { Artista } from "../../models/artista";
-import { CreateArtista, ListArtistas } from "../../api/apiArtista";
+import apiArtista, { CreateArtista, GetArtistaUsername, ListArtistas } from "../../api/apiArtista";
 import { CreateUsuario } from "../../api/apiUsuario";
+import { useNavigate } from "react-router";
 //import { CreateU } from "../../api/apiUsuario";
 
 
 interface userLog {
   token: string,
-  user: Usuario|Artista,
+  user?: Usuario|Artista,
 }
 interface userOpts {
   user: Usuario|Artista,
@@ -23,7 +24,11 @@ const UserContext = React.createContext<userOpts|null>(null);
 export function UserProvider(props:any) {
   const [user,setUser] = React.useState<Usuario|Artista>();
   const [loadingUser,setLoadingUser] = React.useState(true);
-  const {artistas,refreshArtistas} = ListArtistas();
+  const navi = useNavigate();
+  //const {artistaBUN,refreshArtistaBUN} = GetArtistaUsername(user?user.nombre_usuario:'');
+  //const {artistas,refreshArtistas} = ListArtistas();
+  
+  
 
   // const uaux:Usuario = { //borrar[
   //   id: 0,
@@ -36,7 +41,19 @@ export function UserProvider(props:any) {
   //   url_foto_perfil: "",
   //   fecha_registro: new Date(),
   // };  //]borrar
-  
+
+  function refreshArtista(uname:string) {
+    apiArtista.detailByUsername(uname).then((res)=>{
+      //if (res[0] !== undefined)
+      setUser(res[0]);
+      console.log('en load user:',res[0]);
+    }).catch( ()=>{"no listó artista"} );
+  }
+
+  React.useEffect(()=>{
+    window.localStorage.setItem('user', JSON.stringify(user));
+  },[user]); 
+
   React.useEffect(() => {
     async function loadUser() {
       //token para comprobar la app
@@ -45,11 +62,20 @@ export function UserProvider(props:any) {
       try {
         // apiArtista/ api.... deberia enviar algun token en lugar de id
         // y devolverme el usuario o artista correspondiente
-        //setUser(uaux);
-        
+        //setUser(uaux);        
+        const wluser = window.localStorage.getItem('user');
+        if (wluser !== undefined && wluser !== null) {
+          const wluserA:Artista = JSON.parse(wluser);
+          setUser(wluserA);
+          refreshArtista(wluserA.nombre_usuario);          
+        } else {
+          setUser(undefined);
+          window.localStorage.removeItem('user'); 
+        }
         setLoadingUser(false);
       } catch (error) {
         console.log(error);
+        window.localStorage.removeItem('user');
       }
     }
     loadUser();
@@ -59,12 +85,14 @@ export function UserProvider(props:any) {
   async function login(username:string, password:string){
     //Recibir los datos del usuario enviandole email password
     //funcion login en user y artista
-    let auxUs =  new Usuario();
-    auxUs.nombre_usuario = username;
-    auxUs.password = password;
-    const data:userLog = {token:"", user: auxUs};
-    //andres string
-    setUser(data.user);//apiArtista. post?
+    // let auxUs =  new Usuario();
+    // auxUs.nombre_usuario = username;
+    // auxUs.password = password;
+    //const data:userLog = {token:"", user: artistaBUN};
+    //andres string 
+    //setUser(data.user);//apiArtista. post?
+    refreshArtista(username);
+    window.localStorage.setItem('user', JSON.stringify(user));
     //setToken(data.token)
   }
   async function signup(usuario:Usuario|Artista, isArtist?:boolean){
@@ -78,7 +106,9 @@ export function UserProvider(props:any) {
     //setToken(data.token)
   }
   function logout(){
-    setUser(undefined);
+    setUser(undefined);   
+    navi('/explore', { replace: true });
+    window.localStorage.removeItem('user'); 
     //deleteToken();
   }
 
@@ -105,3 +135,4 @@ export function useUser() {
   return context; 
 }
 
+export {};

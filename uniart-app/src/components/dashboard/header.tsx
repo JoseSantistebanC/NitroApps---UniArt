@@ -27,7 +27,7 @@ interface LinkTabProps {
 };
 
 const Header = () => {
-  const {user} = useUser();
+  const {user, logout} = useUser();
   const navi = useNavigate();
   const defaultName = "Desconocido";
   const nomusu = user === undefined || user === null?
@@ -46,7 +46,7 @@ const Header = () => {
   ] : [ //deberia recoger el username
     { label:"Perfil", href: user === undefined? "/login": `/${user.nombre_usuario}`, icon:<AccountCircle fontSize="small" /> },
     { label:"Configuración", href:"/settings", icon:<Settings fontSize="small" />  },
-    { label:"Cerrar Sesión", href:"/logout", icon:<Logout fontSize="small" />  }
+    //{ label:"Cerrar Sesión", href:"/logout", icon:<Logout fontSize="small" />  }
   ];
   //CAMBIAR POR NOMUSU
 
@@ -176,6 +176,17 @@ const Header = () => {
                 {umi.icon} {umi.label}
               </MenuItem>
           )} )}
+          {
+            nomusu !== defaultName ?
+              <MenuItem onClick={()=>{
+                logout();
+                navi('/explore', { replace: true });
+              }}> 
+                <Logout fontSize="small" /> Cerrar Sesión
+              </MenuItem>
+              : <></>
+          }
+
           </Menu>
 
         </Tabs>

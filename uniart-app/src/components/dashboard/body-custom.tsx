@@ -13,6 +13,7 @@ import NewService from '../../pages/service/new-service-sum';
 import CRUDprueba from '../../api/probar_apis2';
 import Pruebas from '../utils/pruebas';
 import Service from '../../pages/service/service';
+import Logout from '@mui/icons-material/Logout';
 
 const BodyCustom = () => {
   // const fil = {
@@ -37,6 +38,7 @@ const BodyCustom = () => {
       <Route path="/commissions" element={< Commissions />} />
       <Route path="/cart" element={< HSCart />} />
       <Route path="/login" element={< Login />} />
+      <Route path="/logout" element={< Logout />} />
       <Route path="/signin" element={< Signin />} />
       <Route path="/settings" element={< Settings />} />
       <Route path="/new-service" element={< NewService />} />

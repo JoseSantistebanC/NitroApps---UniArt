@@ -5,7 +5,7 @@ import Footer from '../../components/dashboard/footer';
 import { Button, ButtonBase, Container, FormControl, Grid, InputLabel, Link, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { blacks, themeMui, whites } from '../../themes/theme-mui';
 import { Box, styled } from '@mui/system';
-import { Usuario } from '../../models/usuario';
+//import { Usuario } from '../../models/usuario';
 import { Artista } from '../../models/artista';
 import CountryCity from '../../components/form/country-city';
 //import { CreateUsuario } from "../../api/apiUsuario";
@@ -18,7 +18,7 @@ const Signin = () => {
   const navi = useNavigate();
   const [ isArtist, setIsArtist ] = useState(true);
   const [ newUser, setNewUser ] = useState(defaulArtist);
-  const [city, setCity] = React.useState(0);
+  const [city, setCity] = useState(0);
 
   React.useEffect(()=>{
     console.log(city);
@@ -30,6 +30,19 @@ const Signin = () => {
     navi('/', { replace: true });
     return <></>
   }
+
+  const avatarsPred = [
+    "https://pbs.twimg.com/media/FEwk6p4XsAYlQmZ?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwk6p6WUAA86l4?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwk6p5X0AQ_Qf-?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwk6p5XMAMnRHX?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlDKGWYAM5Qy0?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlDKwXsAMvz05?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlDLBXMAwAzHB?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlAInWYAkd3si?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlAI7WUAIOxqB?format=png&name=small",
+    "https://pbs.twimg.com/media/FEwlAJxX0A4KrQa?format=png&name=small"
+  ];
   
   const handleSignIn = () => {
     console.log('creando a...',newUser);
@@ -42,6 +55,10 @@ const Signin = () => {
     ) {
       alert("datos incompletos");
       return;
+    }
+    if ( newUser.url_foto_perfil === "" ) {
+      const randpos = Math.random() * (avatarsPred.length -1);
+      newUser.url_foto_perfil = avatarsPred[randpos];
     }
     if (isArtist && newUser.descripcion === "" ){
       alert("Completar descripción");
