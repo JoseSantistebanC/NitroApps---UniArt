@@ -4,7 +4,7 @@ export class Servicio {
   id: number = 0;
   nombre: string = "";
   artista_id: number = 0;
-  duracion_esperada: Duracion = new Duracion();
+  duracion_esperada: Duracion = {days:0}//new Duracion();
   precio_base: number = 0;
   rating: number = 0;
   q_valoraciones: number = 0;

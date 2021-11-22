@@ -62,8 +62,10 @@ export function UserProvider(props:any) {
       try {
         // apiArtista/ api.... deberia enviar algun token en lugar de id
         // y devolverme el usuario o artista correspondiente
-        //setUser(uaux);        
+        //setUser(uaux);
         const wluser = window.localStorage.getItem('user');
+        console.log(wluser);
+
         if (wluser !== undefined && wluser !== null) {
           const wluserA:Artista = JSON.parse(wluser);
           setUser(wluserA);
@@ -93,6 +95,7 @@ export function UserProvider(props:any) {
     //setUser(data.user);//apiArtista. post?
     refreshArtista(username);
     window.localStorage.setItem('user', JSON.stringify(user));
+    console.log("loagueado: ", window.localStorage.getItem('user'));
     //setToken(data.token)
   }
   async function signup(usuario:Usuario|Artista, isArtist?:boolean){
@@ -106,9 +109,11 @@ export function UserProvider(props:any) {
     //setToken(data.token)
   }
   function logout(){
-    setUser(undefined);   
+    console.log('en logout',window.localStorage.getItem('user'));
+    setUser(undefined);
     navi('/explore', { replace: true });
     window.localStorage.removeItem('user'); 
+    console.log("ahora es ", window.localStorage.getItem('user'));
     //deleteToken();
   }
 

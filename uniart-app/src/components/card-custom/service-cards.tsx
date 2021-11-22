@@ -35,16 +35,15 @@ function ServiceCards(props: { //
   const toServiceCards = (servs:Servicio[])=>{
     let aux = new Array<ServiceCardProps>();
     servs.forEach((s)=>{ 
-      const a = getArtista(s.artista_id);
-      console.log(a.id);
       aux.push({
         id: s.id,
-        url_img: "",
+        url_img: s.url_imagen,
         name: s.nombre,
-        artist_url_img: a.url_foto_perfil,
-        artist_name: a.nombre_usuario,
-        artist_rating: a.rating,
-        artist_qreviews: a.q_valoraciones,
+        artist_id: s.artista_id,
+        artist_url_img: '',//a.url_foto_perfil,
+        artist_name: '',//a.nombre_usuario,
+        artist_rating: 0,//a.rating,
+        artist_qreviews: 0,//a.q_valoraciones,
         since_time: s.duracion_esperada.days,
         since_price: s.precio_base
       });
@@ -61,28 +60,41 @@ function ServiceCards(props: { //
         :<></>;
   };
 
+  useEffect(()=>{
+    console.log('lista gen', list); 
+    list.forEach((item,i)=>{
+      if (item.artist_id != undefined) {
+        const a = getArtista(item.artist_id);
+        console.log(a.id);
+        list[i].artist_url_img = a.url_foto_perfil;
+        list[i].artist_name = a.nombre_usuario;
+        list[i].artist_rating = a.rating;
+        list[i].artist_qreviews = a.q_valoraciones;
+      }
+    });
+    setPagination(getPages(list.length));
+  },[list,artistas.length]);
 
   useEffect(()=>{
     if (props.artistid !== undefined) return
     refreshArtistas();
-    console.log(servicio);
+    console.log('servicios gen',servicio);
     refreshServicio();
     setList( toServiceCards(servicio) );
-    setPagination(getPages(servicio.length));
   },[servicio.length === 0,
     servicio === null, servicio === undefined]);
   
-    
+     
   useEffect(()=>{
     if (props.artistid === undefined) return
     refreshArtistas();
-    console.log(servicioByA);
+    console.log('servicios A',servicioByA);
     refreshServicioByA();
     setList( toServiceCards(servicioByA) );
-    setPagination(getPages(servicioByA.length));
   },[servicioByA.length === 0, servicioByA === null,
     servicioByA === undefined]);
 
+    
   
   return (
     <Grid container spacing={1} className="cards">

@@ -8,6 +8,8 @@ import { Box, styled } from '@mui/system';
 import { Usuario } from '../../models/usuario';
 import { Artista } from '../../models/artista';
 import CountryCity from '../../components/form/country-city';
+import { UpdateArtista } from '../../api/apiArtista';
+import { UpdateUsuario } from '../../api/apiUsuario';
 //import { CreateUsuario } from "../../api/apiUsuario";
 
 const avatarsPred = [
@@ -65,8 +67,13 @@ function Settings(props:any) {
       alert("Completar descripción");
       return; 
     }
-    signup(curUser,isArtist);
-    navi('/', { replace: true });
+    
+    if (isArtist){
+      UpdateArtista(curUser as Artista);
+    } else {
+      UpdateUsuario(curUser as Usuario);
+    }
+    alert('¡Guardado!');
   };
   
   const artistDataJsx = ()=>{

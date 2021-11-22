@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Grid, Typography,
   Stepper, Step, StepLabel, Container, StepContent, Divider, Link, TextField, FormControlLabel, FormControl, Checkbox, Stack, Autocomplete, InputAdornment, FormHelperText, Input, InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import NewSGeneralConn from '../../api-conn/new-general-conn';
-import NewSVariationsConn from '../../api-conn/new-variation-conn';
-import FullFeaturedCrudGrid from '../../components/form/data-grid';
+// import NewSGeneralConn from '../../api-conn/new-general-conn';
+// import NewSVariationsConn from '../../api-conn/new-variation-conn';
+// import FullFeaturedCrudGrid from '../../components/form/data-grid';
 import { Formato } from '../../models/formato';
 import { Estilo } from '../../models/estilo';
 import { Tecnica } from '../../models/tecnica';
@@ -26,14 +26,20 @@ import { CreateServicio } from '../../api/apiServicio';
 import { CreateServicioTema } from '../../api/apiServicioTema';
 import { CreateServicioFormato } from '../../api/apiServicioFormato';
 
-function NewService() {
+function NewService(props:any) {
   const navi = useNavigate();
+  const {user} = useUser();
+  const {formato, refreshFormato} = ListFormato();
+  const {estilo, refreshEstilo} = ListEstilo();
+  const {licencia, refreshLicencia} = ListLicencia();
+  const {tecnica, refreshTecnica} = ListTecnica();
+  const {temas, refreshTemas} = ListTema();
   
   const defaultServ = {
     service: {
       nombre: "",
       artista_id: 0,
-      duracion_esperada: new Duracion(),
+      duracion_esperada: {days:2},
       precio_base: 5,
       rating: 0,
       q_valoraciones: 0,
@@ -43,7 +49,7 @@ function NewService() {
       estilo: new Estilo(),
       tecnica: new Tecnica(),
       acerca_servicio: "",
-      licencia: new Licencia(),
+      licencia: licencia.length===0? new Licencia() : licencia[0],
       q_revisiones: 0, //q_reviciones
       url_img: "",
     },
@@ -52,12 +58,6 @@ function NewService() {
   };
 
   const [newServ, setNewServ] = useState(defaultServ);
-  const {user} = useUser();
-  const {formato, refreshFormato} = ListFormato();
-  const {estilo, refreshEstilo} = ListEstilo();
-  const {licencia, refreshLicencia} = ListLicencia();
-  const {tecnica, refreshTecnica} = ListTecnica();
-  const {temas, refreshTemas} = ListTema();
 
   React.useEffect(() => {
     refreshFormato();
@@ -72,6 +72,12 @@ function NewService() {
       duracion_esperada: { ...newServ.service.duracion_esperada, days:4 },
     }});
   }, [temas.length===0])
+
+  if (user === undefined || user.nombre_usuario===""){ // || 
+    console.log("no está logueado");
+    navi('/login', { replace: true });
+    return <></>
+  }
   
   const isOK = (check:any, isList?:boolean) => {
     //console.log(check);
@@ -94,25 +100,25 @@ function NewService() {
     //&& isOK(servGral.chars) && isOK(servGral.chars?.options)
     //&& isOK(servGral.chars?.name)
     ){
-      console.log('ok',newServ);
-      // CreateServicio ({
-      //   id: 0,
-      //   nombre: newServ.service.nombre,
-      //   artista_id: newServ.service.artista_id,
-      //   duracion_esperada: new Duracion(),
-      //   precio_base: newServ.service.precio_base,
-      //   rating: 0,
-      //   q_valoraciones: 0,
-      //   es_virtual: newServ.service.es_virtual,
-      //   porc_adelanto: newServ.service.porc_adelanto,
-      //   acepta_rembolso: newServ.service.acepta_rembolso,
-      //   estilo_id: newServ.service.estilo.id,
-      //   tecnica_id: newServ.service.tecnica.id,
-      //   acerca_servicio: newServ.service.acerca_servicio,
-      //   licencia_id: newServ.service.licencia.id,
-      //   q_revisiones: newServ.service.q_revisiones,
-      //   url_imagen: string = "";
-      // });
+      console.log('nuevo servicio',newServ);
+      CreateServicio ({
+        id: 0,
+        nombre: newServ.service.nombre,
+        artista_id: newServ.service.artista_id,
+        duracion_esperada: {days:0},
+        precio_base: newServ.service.precio_base,
+        rating: 0,
+        q_valoraciones: 0,
+        es_virtual: newServ.service.es_virtual,
+        porc_adelanto: newServ.service.porc_adelanto,
+        acepta_rembolso: newServ.service.acepta_rembolso,
+        estilo_id: newServ.service.estilo.id,
+        tecnica_id: newServ.service.tecnica.id,
+        acerca_servicio: newServ.service.acerca_servicio,
+        licencia_id: newServ.service.licencia.id,
+        q_revisiones: newServ.service.q_revisiones,
+        url_imagen: newServ.service.url_img 
+      });
       // CreateServicioTema( {tema_id: 0, servicio_id: 0} );
       // CreateServicioFormato( {formato_id: 0, servicio_id: 0} );
       //navi('/artist-profile', { replace: true });
@@ -122,7 +128,7 @@ function NewService() {
     }
   };
 
-  return (
+  return ( 
   <Container>
     <Grid container className="filter-up">
       <Grid item xs={6}>

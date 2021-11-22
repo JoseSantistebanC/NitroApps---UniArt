@@ -16,6 +16,7 @@ interface ServiceCardProps {
   id: number,
   url_img: string;
   name: string;
+  artist_id?: number;
   artist_url_img: string;
   artist_name: string;
   artist_rating: number;
@@ -26,9 +27,9 @@ interface ServiceCardProps {
 
 function ServiceCard(props:ServiceCardProps) {
 
-  return (
+  return ( 
     <Card sx={{ maxWidth: 200 }}>
-      <CardActionArea>
+      <CardActionArea href={`/service/:${props.id}`}>
         <CardMedia component="img" height="160"
           image={props.url_img} alt="portada" />
         <CardContent>

@@ -49,8 +49,8 @@ export const GetServicio = (id: number)=>{
     const [servicio, setServicio] = React.useState<Servicio>(new Servicio);
     function refreshServicio(){
         apiServicio.detail(id).then((res)=>{
-            setServicio(res);
             console.log('i servicio:',res);
+            setServicio(res);
         }).catch(()=>{"no listó Servicio"});
     }
     return {servicio, refreshServicio};
