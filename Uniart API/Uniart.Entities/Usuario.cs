@@ -27,6 +27,7 @@ namespace Uniart.Entities
         [StringLength(128)]
         public string Apellido { get; set; }
 
+        public int Ciudad_id { get; set; }
         public Ciudad Ciudad_ { get; set; }
 
         [Required]

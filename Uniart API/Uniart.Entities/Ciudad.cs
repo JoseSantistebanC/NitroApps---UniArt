@@ -13,6 +13,6 @@ namespace Uniart.Entities
         public string Nombre { get; set; }
         public int Pais_id { get; set; }
         public Pais Pais { get; set; }
-   
+        public IList<Usuario> Ciudades { get; set; }
     }
 }

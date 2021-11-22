@@ -33,7 +33,7 @@ namespace Uniart.Services
                     apellido = p.Apellido,
                     url_foto_perfil = p.Url_foto_perfil,
                     fecha_registro = p.Fecha_registro,
-
+                    ciudad_id = p.Ciudad_id
                 })
                 .ToList();
 
@@ -60,6 +60,7 @@ namespace Uniart.Services
                 apellido = usuario.Apellido,
                 url_foto_perfil = usuario.Url_foto_perfil,
                 fecha_registro = usuario.Fecha_registro,
+                ciudad_id = usuario.Ciudad_id
             };
 
             response.Success = true;
@@ -81,6 +82,7 @@ namespace Uniart.Services
                     Apellido = request.apellido,
                     Url_foto_perfil = request.url_foto_perfil,
                     Fecha_registro = request.fecha_registro,
+                    Ciudad_id = request.ciudad_id
                 });
             }
             catch (Exception ex)
@@ -102,6 +104,7 @@ namespace Uniart.Services
                 Apellido = request.apellido,
                 Url_foto_perfil = request.url_foto_perfil,
                 Fecha_registro = request.fecha_registro,
+                Ciudad_id = request.ciudad_id
             });
         }
 

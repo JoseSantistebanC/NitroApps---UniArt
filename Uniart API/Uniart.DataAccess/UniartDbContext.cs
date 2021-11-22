@@ -65,6 +65,7 @@ namespace Uniart.DataAccess
             modelBuilder.Entity<Comision>().HasOne(p => p.Review_id_Cliente).WithMany(b => b.Comisiones).HasForeignKey(p => p.Review_Usuario_id).IsRequired();
             modelBuilder.Entity<Comision>().HasOne(p => p.Usuario_).WithMany(b => b.ComisionesU).HasForeignKey(p => p.Usuario_id);
             modelBuilder.Entity<Comision>().HasOne(p => p.Servicio_Variacio_).WithMany(b => b.ComisionSV).HasForeignKey(p => p.Servicio_Variacion_id).IsRequired();
+            modelBuilder.Entity<Usuario>().HasOne(p => p.Ciudad_).WithMany(b => b.Ciudades).HasForeignKey(p => p.Ciudad_id).IsRequired();
         }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Caracteristica_Opciones> Caracteristicas_Opciones { get; set; }
