@@ -13,15 +13,26 @@ function ArtistCards(props: {max?:number}) {
   const [list, setList] = React.useState(new Array<ArtistCardProps>());
 
   const getPaisByCiudadId = (id: number) => {
-    ciudades.map((c) => {
-      if (c.id === id) {
-        paises.map((p)=>{
-          if (p.id === c.pais_id) {return p.nombre;}
-        })
+    for (let i = 0; i < ciudades.length; i++) {
+      if (ciudades[i].id === id) {
+        for (let j = 0; j < paises.length; j++) {
+          if (paises[j].id === ciudades[i].pais_id){
+            return paises[j].nombre;
+          }
+        }
       }
-    });
+    }
     return "";
   }
+
+  // const getPaisById = (idPais: number) => {
+  //   for (let i = 0; i < paises.length; i++) {
+  //     if (idPais == paises[i].id){
+  //       return paises[i].nombre;
+  //     }
+  //   }
+  //   return "";
+  // }
 
   function refreshCards(){
     artistas.map((a)=>{
@@ -48,6 +59,10 @@ function ArtistCards(props: {max?:number}) {
   // React.useEffect(() => {
   //   console.log("cargó effect",artistas);
   // }, [artistas.length===0]);
+  // useEffect(()=>{
+  //   refreshPaises();
+  //   refreshCiudades();
+  // },[ciudades.length===0]);
 
 
   let end:number = (props.max === undefined)? 10 : props.max;

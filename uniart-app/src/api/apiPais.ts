@@ -32,7 +32,7 @@ export const GetPais = (id: number) => {
 		apiPais.detail(id).then((res) => {
 			setPais(res);
 			console.log('i pais:', res);
-		}).catch(() => { "no listó pais" });
+		}).catch(() => { "no listo pais" });
 	}
 	return { pais, refreshPais };
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Divider,
   Container, Grid, Paper,
   FormControl, InputLabel, Button,
@@ -16,7 +16,7 @@ import Footer from '../../components/dashboard/footer';
 import ServiceCards from '../../components/card-custom/service-cards';
 import ReviewCardsConn from '../../api-conn/review-cards-conn';
 import { useUser } from '../session/userContext';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import apiArtista, { GetArtistaUsername } from '../../api/apiArtista';
 import { ListRedesSociales } from '../../api/apiRedes_Sociales';
 import { ListTema } from '../../api/apiTema';
@@ -37,17 +37,27 @@ function ArtistProfile(props:any) { //{artist:Artista}
 
   const {username} = useParams(); //cambia el username del router en path... :username
   const {user} = useUser();
+  const navi = useNavigate();
   const today = new Date();
   const {artistaBUN,refreshArtistaBUN} = GetArtistaUsername(username===undefined?"":username);
   //const [artista, setArtista] = React.useState<Artista>(auxartist);  
   const {redes, refreshRedesSociales} = ListRedesSociales();
   const {temas, refreshTemas} = ListTema();
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('us',user,'uname',username);
-  }, [])
+  }, []);
   
-  React.useEffect(()=>{
+  useEffect(()=>{
+    refreshArtistaBUN();
+  },[artistaBUN === undefined]);
+
+  useEffect(()=>{
+    if (artistaBUN !== undefined && 
+      artistaBUN.nombre_usuario === ''){
+      console.log('usuario no encontrado');
+      navi("/explore", { replace: true });
+    }
     //en getArtista debería enviar username
     //alert(artista.nombre_usuario);
     // apiArtista.detail(+username).then((res)=>{
@@ -55,16 +65,19 @@ function ArtistProfile(props:any) { //{artist:Artista}
     // }).catch( ()=>{"no mostró artista"} );
     refreshTemas();
     refreshRedesSociales();
-    refreshArtistaBUN();
   },[temas.length === 0]);
   // React.useEffect(()=>{
   //   console.log('art...',artista);
   //   setArtista(artista);
   // },[JSON.stringify(artista)]);
 
-  const isOwner = (user === undefined || user === null?
+  const isOwner = (user === undefined || user === null || artistaBUN === undefined ?
                 false : (user.nombre_usuario === artistaBUN.nombre_usuario?
                 true : false));
+  let urlPortada = `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`;
+  if ( artistaBUN !== undefined &&  artistaBUN.url_foto_portada !== '' ) {
+    urlPortada = artistaBUN.url_foto_portada;
+  }
   
   /*let temas: Tema[] = [
     {id: 0, nombre: "Concept Art"},
@@ -86,8 +99,9 @@ function ArtistProfile(props:any) { //{artist:Artista}
     <>
     <Container sx={{
       backgroundColor: blacks.main,
-      backgroundImage: `url("${artistaBUN.url_foto_portada}")`,
+      backgroundImage: `url("${urlPortada}")`,
       backgroundAttachment: "fixed",
+      backgroundPosition: 'center',
       height: "12em",
     }}></Container>
     
@@ -98,21 +112,21 @@ function ArtistProfile(props:any) { //{artist:Artista}
             
           <Grid container spacing={2} >
             <Grid item xs={4} >
-              <Avatar alt={artistaBUN.nombre_usuario}
-              src={artistaBUN.url_foto_perfil}
+              <Avatar alt={artistaBUN?.nombre_usuario}
+              src={artistaBUN?.url_foto_perfil}
               sx={{ width: "5rem", height:"5rem",
                 marginTop: "-2em", marginLeft:"-0.5em"}}/>
             </Grid>
             <Grid item xs={8}>
               <Grid container spacing={1} >
                 <Grid item xs={12}>
-                  <Typography variant="h4">{artistaBUN.nombre_usuario}</Typography>
+                  <Typography variant="h4">{artistaBUN?.nombre_usuario}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <ListItem>
-                    {artistaBUN.rating === 0? <></> :<>
-                    <ListItemIcon><Rating value={artistaBUN.rating} readOnly/></ListItemIcon>
-                    <ListItemText primary={`${artistaBUN.rating} (${artistaBUN.q_valoraciones})`} />
+                    {artistaBUN?.rating === 0? <></> :<>
+                    <ListItemIcon><Rating value={artistaBUN?.rating} readOnly/></ListItemIcon>
+                    <ListItemText primary={`${artistaBUN?.rating} (${artistaBUN?.q_valoraciones})`} />
                     </>}
                   </ListItem>
                 </Grid>
@@ -120,17 +134,17 @@ function ArtistProfile(props:any) { //{artist:Artista}
             </Grid>
 
             <Grid item xs={12} >
-              <Typography component="p">{artistaBUN.descripcion}</Typography>
+              <Typography component="p">{artistaBUN?.descripcion}</Typography>
               <br/>
                   <ListItem>
                     <ListItemIcon><RoomIcon color="secondary"/></ListItemIcon>
-                    <ListItemText primary={artistaBUN.ciudad_id} />
+                    <ListItemText primary={artistaBUN?.ciudad_id} />
                   </ListItem>
                   <br/>
               <Typography component="p">
                 Se unió {
-                  artistaBUN.fecha_registro === undefined? dateToStr(today) 
-                  : dateToStr(artistaBUN.fecha_registro)
+                  artistaBUN?.fecha_registro === undefined? dateToStr(today) 
+                  : dateToStr(artistaBUN?.fecha_registro)
                 }
               </Typography>
 
@@ -200,7 +214,7 @@ function ArtistProfile(props:any) { //{artist:Artista}
           <Grid container className="filter-up">
             <ListItem>
               <ListItemText><strong>Reseñas como vendedor</strong></ListItemText>
-              <StarIcon color="info"/>{artistaBUN.rating} ({artistaBUN.q_valoraciones})
+              <StarIcon color="info"/>{artistaBUN?.rating} ({artistaBUN?.q_valoraciones})
             </ListItem>
 
             <FormControl >

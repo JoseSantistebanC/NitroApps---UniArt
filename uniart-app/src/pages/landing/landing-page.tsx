@@ -13,9 +13,16 @@ import FactCheckTTIcon from '@mui/icons-material/FactCheckTwoTone';
 import Footer from '../../components/dashboard/footer';
 import ArtistCards from '../../components/card-custom/artist-cards';
 import ServiceCards from '../../components/card-custom/service-cards';
+import { useUser } from '../session/userContext';
 
 
 function LandingPage() {
+
+  //const {user, signup} = useUser();
+
+  // React.useEffect(()=>{
+  //   console.log('desde landng', user);
+  // },[]);
 
   const btnDBGStyle = {
     backgroundColor: whites.main,

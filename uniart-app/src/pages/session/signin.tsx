@@ -10,22 +10,29 @@ import { Artista } from '../../models/artista';
 import CountryCity from '../../components/form/country-city';
 //import { CreateUsuario } from "../../api/apiUsuario";
 
+let defaulArtist = new Artista();
+defaulArtist.ciudad_id = 1610; //LIMA
 
 const Signin = () => {
   const {user, signup} = useUser();
   const navi = useNavigate();
   const [ isArtist, setIsArtist ] = useState(true);
-  const [ newUser, setNewUser ] = useState(new Artista());
+  const [ newUser, setNewUser ] = useState(defaulArtist);
   const [city, setCity] = React.useState(0);
+
+  React.useEffect(()=>{
+    console.log(city);
+    setNewUser({...newUser,ciudad_id:city});
+  },[city]);
   
   if (user !== undefined && user.nombre_usuario!=""){ // || 
     console.log(user);
     navi('/', { replace: true });
     return <></>
   }
-
+  
   const handleSignIn = () => {
-    console.log(newUser);
+    console.log('creando a...',newUser);
     if (newUser.nombre_usuario === "" ||
         newUser.password === "" ||
         newUser.email === "" ||
@@ -40,9 +47,10 @@ const Signin = () => {
       alert("Completar descripción");
       return; 
     }
-    signup(newUser);
+    signup(newUser,isArtist);
     navi('/', { replace: true });
   };
+
 
   const UTypeButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -75,6 +83,12 @@ const Signin = () => {
     value={newUser.descripcion} onChange={
       (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewUser({...newUser, descripcion:event.target.value });
+      }
+    }/>
+    <TextField id="foto_portada" label="URL de foto de portada"
+    value={newUser.url_foto_portada} onChange={
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewUser({...newUser, url_foto_portada:event.target.value });
       }
     }/>
     </>);
@@ -145,14 +159,20 @@ const Signin = () => {
         setNewUser({...newUser, nombre:event.target.value });
       }
     }/>
-    <TextField id="nombre" label="Apellidos" required
+    <TextField id="apellidos" label="Apellidos" required
     value={newUser.apellido} onChange={
       (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewUser({...newUser, apellido:event.target.value });
       }
     }/>
+    <TextField id="foto_perfil" label="URL de foto de perfil"
+    value={newUser.url_foto_perfil} onChange={
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewUser({...newUser, url_foto_perfil:event.target.value });
+      }
+    }/>
     
-    <CountryCity city_id={city} setCity={setCity} />
+    <CountryCity city={city} setCity={setCity} />
 
     {isArtist ? artistDataJsx() : <></>}
     

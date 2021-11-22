@@ -35,7 +35,7 @@ function Settings(props:any) {
     <br/>
     <TextField id="nombres" label="Nombres" required />
     <TextField id="apellidos" label="Apellidos" required />
-    <CountryCity city_id={city} setCity={setCity} />
+    <CountryCity city={city} setCity={setCity} />
     </Container>
     <Footer/>
     </>

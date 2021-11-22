@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ServiceCard, { ServiceCardProps } from './service-card';
 import { Grid, Pagination, } from '@mui/material';
 import { filterProps } from '../../pages/explore/filter';
@@ -6,6 +6,8 @@ import { ListServicios, ListServiciosArtista } from '../../api/apiServicio';
 import { Servicio } from '../../models/servicio';
 import { ListArtistas } from '../../api/apiArtista';
 import { Artista } from '../../models/artista';
+import { ListPaises } from '../../api/apiPais';
+import { ListCiudades } from '../../api/apiCiudad';
 
 
 function ServiceCards(props: { //
@@ -20,17 +22,21 @@ function ServiceCards(props: { //
   const [pagination, setPagination] = React.useState(<></>);
   
   const getArtista = (id:number) =>{
-    let artist = new Artista();
-    artistas.forEach((a)=>{
-      if (a.id === id) { return a; }
-    });
-    return artist;
+    //console.log('serArt:', id, artistas);
+    for (let i = 0; i < artistas.length; i++) {
+      if (artistas[i].id === id) { 
+        console.log('___',artistas[i]); 
+        return artistas[i];
+      }
+    }
+    return new Artista();
   }
   
   const toServiceCards = (servs:Servicio[])=>{
     let aux = new Array<ServiceCardProps>();
-    servs.forEach((s)=>{
+    servs.forEach((s)=>{ 
       const a = getArtista(s.artista_id);
+      console.log(a.id);
       aux.push({
         id: s.id,
         url_img: "",
@@ -55,13 +61,27 @@ function ServiceCards(props: { //
         :<></>;
   };
 
-  React.useEffect(()=>{
-    console.log(servicio);
-    props.artistid === undefined? refreshServicio() : refreshServicioByA();
+
+  useEffect(()=>{
+    if (props.artistid !== undefined) return
     refreshArtistas();
+    console.log(servicio);
+    refreshServicio();
     setList( toServiceCards(servicio) );
     setPagination(getPages(servicio.length));
-  },[servicio.length===0,servicio===null,servicio===undefined]);
+  },[servicio.length === 0,
+    servicio === null, servicio === undefined]);
+  
+    
+  useEffect(()=>{
+    if (props.artistid === undefined) return
+    refreshArtistas();
+    console.log(servicioByA);
+    refreshServicioByA();
+    setList( toServiceCards(servicioByA) );
+    setPagination(getPages(servicioByA.length));
+  },[servicioByA.length === 0, servicioByA === null,
+    servicioByA === undefined]);
 
   
   return (
@@ -73,11 +93,11 @@ function ServiceCards(props: { //
       <br/><br/>
       {pagination}
     </Grid>
-  );
+  ); 
 };
 
 export default ServiceCards;
-
+export {};
 
 /*
 const start:number = (props.min === undefined)? 0 : props.min;

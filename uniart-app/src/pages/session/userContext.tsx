@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useMemo} from "react";
 import { Usuario } from "../../models/usuario";
 import { Artista } from "../../models/artista";
-import { CreateArtista } from "../../api/apiArtista";
+import { CreateArtista, ListArtistas } from "../../api/apiArtista";
+import { CreateUsuario } from "../../api/apiUsuario";
 //import { CreateU } from "../../api/apiUsuario";
 
 
@@ -12,7 +13,7 @@ interface userLog {
 interface userOpts {
   user: Usuario|Artista,
   loadingUser:boolean,
-  signup:(usuario:Usuario|Artista)=>void,
+  signup:(usuario:Usuario|Artista, isArtist?:boolean)=>void,
   login:(username:string, password:string)=>void,
   logout:()=>void,
 }
@@ -22,18 +23,19 @@ const UserContext = React.createContext<userOpts|null>(null);
 export function UserProvider(props:any) {
   const [user,setUser] = React.useState<Usuario|Artista>();
   const [loadingUser,setLoadingUser] = React.useState(true);
-  
-  const uaux:Usuario = { //borrar[
-    id: 0,
-    nombre_usuario: "Context_uwu",
-    password: "WHYYYY",
-    email: "context@upc.edu.pe",
-    nombre: "Context",
-    apellido: "UwU",
-    ciudad_id: 5,
-    url_foto_perfil: "",
-    fecha_registro: new Date(),
-  };  //]borrar
+  const {artistas,refreshArtistas} = ListArtistas();
+
+  // const uaux:Usuario = { //borrar[
+  //   id: 0,
+  //   nombre_usuario: "Context_uwu",
+  //   password: "WHYYYY",
+  //   email: "context@upc.edu.pe",
+  //   nombre: "Context",
+  //   apellido: "UwU",
+  //   ciudad_id: 5,
+  //   url_foto_perfil: "",
+  //   fecha_registro: new Date(),
+  // };  //]borrar
   
   React.useEffect(() => {
     async function loadUser() {
@@ -44,6 +46,7 @@ export function UserProvider(props:any) {
         // apiArtista/ api.... deberia enviar algun token en lugar de id
         // y devolverme el usuario o artista correspondiente
         //setUser(uaux);
+        
         setLoadingUser(false);
       } catch (error) {
         console.log(error);
@@ -69,7 +72,7 @@ export function UserProvider(props:any) {
     if (isArtist) {
       CreateArtista(usuario as Artista);
     } else {
-      //CreateUsuario(usuario as Usuario);
+      CreateUsuario(usuario as Usuario);
     }
     setUser(data.user);//apiArtista. post?
     //setToken(data.token)
@@ -80,6 +83,7 @@ export function UserProvider(props:any) {
   }
 
   const value = useMemo(() => {
+    console.log('Ctx:',user,loadingUser);
     return ({
       user,
       loadingUser,

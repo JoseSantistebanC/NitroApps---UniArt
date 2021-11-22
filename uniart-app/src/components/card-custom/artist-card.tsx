@@ -1,5 +1,5 @@
 import React from 'react';
-import { themeMui } from '../../themes/theme-mui'
+import { themeMui, whites } from '../../themes/theme-mui'
 import Avatar from '@mui/material/Avatar';
 import { CardActionArea } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -25,8 +25,8 @@ function ArtistCard(props:ArtistCardProps) {
   //console.log('artista',props);
   
   return (
-    <Card sx={{ maxWidth: 200 }}>
-      <CardActionArea>
+    <Card sx={{ maxWidth: 200 }}> 
+      <CardActionArea href={'/'+props.name}>
         <CardMedia component="img" height="144"
           image={props.url_cover_img===''?
           `${process.env.PUBLIC_URL}/images/bgs/PortadaBg.svg`:
@@ -40,9 +40,9 @@ function ArtistCard(props:ArtistCardProps) {
                 width: 72, height: 72,
                 marginLeft: "-0.75rem",
                 marginTop: "-1rem",
-                border: " solid 4pt",
-              }}
-                alt={props.name} src=""  />
+                border: whites.light + " solid 4pt",
+              }} src={props.url_artist_img}
+                alt={props.name} />
             </Grid>
             <Grid item xs={7}>
               <Typography variant="h6" component="h6"> {props.name} </Typography>
@@ -64,3 +64,4 @@ function ArtistCard(props:ArtistCardProps) {
 
 export default ArtistCard;
 export type {ArtistCardProps};
+export {};

@@ -27,7 +27,7 @@ interface LinkTabProps {
 };
 
 const Header = () => {
-  const {user, logout} = useUser();
+  const {user} = useUser();
   const navi = useNavigate();
   const defaultName = "Desconocido";
   const nomusu = user === undefined || user === null?
@@ -46,6 +46,7 @@ const Header = () => {
   ] : [ //deberia recoger el username
     { label:"Perfil", href: user === undefined? "/login": `/${user.nombre_usuario}`, icon:<AccountCircle fontSize="small" /> },
     { label:"Configuración", href:"/settings", icon:<Settings fontSize="small" />  },
+    { label:"Cerrar Sesión", href:"/logout", icon:<Logout fontSize="small" />  }
   ];
   //CAMBIAR POR NOMUSU
 
@@ -72,30 +73,22 @@ const Header = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIdx(newValue);
   };
-  const handleLogout = () => {
-    logout();
-    navi('/', { replace: true });
-  };
+
   const [search, setSearch] = useState("");
   
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);  
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-  const handleMenuClose = () => {
+  }; 
+  const handleMenuClose = (href:string) => () => {
+    if (href != '') {
+      navi(href,{replace:true});
+    }
     setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+    //handleMobileMenuClose();
+  }; 
   const menuId = 'primary-search-account-menu';
   const menuPaperProps = {
     elevation: 0,
@@ -177,18 +170,12 @@ const Header = () => {
           <Menu id={menuId} anchorEl={anchorEl} keepMounted PaperProps={menuPaperProps}
           anchorOrigin={{ vertical: 'top', horizontal: 'right', }}
           transformOrigin={{ vertical: 'top', horizontal: 'right', }}
-          open={isMenuOpen} onClose={handleMenuClose} >
+          open={isMenuOpen} onClose={handleMenuClose('')} >
           {userMenuItems.map( (umi,i)=>{return(
-            <Link href={umi.href} underline={'none'}>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={handleMenuClose(umi.href)}>
                 {umi.icon} {umi.label}
               </MenuItem>
-            </Link>
           )} )}
-            { nomusu === defaultName ? <></> :
-              <MenuItem onClick={handleLogout}>
-              <Logout fontSize="small" /> Cerrar Sesión
-            </MenuItem>}
           </Menu>
 
         </Tabs>

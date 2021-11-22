@@ -29,7 +29,7 @@ export const ListArtistas = (from?:number,to?:number) => {
 
 //READ ONE (DETAILS)
 export const GetArtista = (id:number) => {
-	const [artista, setArtista] = React.useState<Artista>(new Artista);
+	const [artista, setArtista] = React.useState<Artista>(new Artista());
 	function refreshArtista(){
 		apiArtista.detail(id).then((res)=>{
 			setArtista(res);
@@ -41,20 +41,21 @@ export const GetArtista = (id:number) => {
 
 //READ ONE (DETAILS) BY NOMBREUSUARIO
 export const GetArtistaUsername = (username:string) => {
-	const [artistaBUN, setArtista] = React.useState<Artista>(new Artista);
+	const [artistaBUN, setArtista] = React.useState<Artista>();
 	function refreshArtistaBUN(){
 		apiArtista.detailByUsername(username).then((res)=>{
+			//if (res[0] !== undefined)
 			setArtista(res[0]);
 			console.log('bu artista:',res[0]);
 		}).catch( ()=>{"no listó artista"} );
 	}
 	return {artistaBUN,refreshArtistaBUN};
-};
+}; 
  
 
 //CREATE
 export const CreateArtista = (artista:Artista) => {
-	apiArtista.add(artista).then(()=>{
+	apiArtista.add(artista).then((res)=>{ console.log('Creó',res);
 	}).catch( ()=>{console.log("no creó artista")} );
 };
 
@@ -70,3 +71,4 @@ export const DeleteArtista = (id:number) => {
 	}).catch( ()=>{"no eliminó artista"} );
 };
 
+export {};
