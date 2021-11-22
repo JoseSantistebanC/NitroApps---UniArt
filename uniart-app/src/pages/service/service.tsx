@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Button, Grid, Typography,
-  Stepper, Step, StepLabel, Container, StepContent, Divider, Link, TextField, FormControlLabel, FormControl, Checkbox, Stack, Autocomplete, InputAdornment, FormHelperText, Input, InputLabel, Select, MenuItem, SelectChangeEvent, Avatar, ListItem, ListItemIcon, ListItemText, Rating } from '@mui/material';
+  Stepper, Step, StepLabel, Container, StepContent, Divider, Link, TextField, FormControlLabel, FormControl, Checkbox, Stack, Autocomplete, InputAdornment, FormHelperText, Input, InputLabel, Select, MenuItem, SelectChangeEvent, Avatar, ListItem, ListItemIcon, ListItemText, Rating, Paper } from '@mui/material';
 import { Servicio } from '../../models/servicio';
 import { Artista } from '../../models/artista';
 import { Review } from '../../models/review';
@@ -12,8 +12,9 @@ import { GetReview, ListReview } from '../../api/apiReview';
 import { Usuario } from '../../models/usuario';
 import { ListUsuarios } from '../../api/apiUsuario';
 import {dateDiff} from '../../utils/dateFx';
-import { GetArtista } from '../../api/apiArtista';
-import { themeMui } from '../../themes/theme-mui';
+import apiArtista, { GetArtista } from '../../api/apiArtista';
+import { blacks, themeMui } from '../../themes/theme-mui';
+import Footer from '../../components/dashboard/footer';
 
 interface ServiceProps {
   service: Servicio;
@@ -22,14 +23,16 @@ interface ServiceProps {
 }
 
 function Service() {
-  let {service} = useParams(); //id del servicio
+  const {service} = useParams(); //id del servicio 
   const [serv, setServ] = useState<ServiceProps>({
-    service:new Servicio, artista: new Artista(), reviews: []
+    service:new Servicio(), artista: new Artista(), reviews: []
   });
   const {comisiones, refreshComisiones} = ListComision();
   const {reviews, refreshReviews} = ListReview();
   const { users, refreshUsuarios } = ListUsuarios();
-  const [reviewCards, setReviewCards] = useState<ReviewCardProps>();
+  //const [reviewCards, setReviewCards] = useState<ReviewCardProps>();
+  const {servicio, refreshServicio} = GetServicio(service? +service:0);
+  const {artista, refreshArtista} = GetArtista(servicio.artista_id+0);
   
 
   const getUserById = (idUser:number) => {
@@ -75,23 +78,68 @@ function Service() {
         // url_img?: string
       });
     });
+
+    return rcs;
   };
 
-  React.useEffect(() => {
-    const {servicio, refreshServicio} = GetServicio(service? +service:0);
-    const {artista, refreshArtista} = GetArtista(servicio.artista_id);
+  // React.useEffect(()=>{
+  //   apiServicio.detail(id).then((res)=>{
+  //     console.log('i servicio:',res);
+  //     setServicio(res);
+  //   }).catch(()=>{"no listó Servicio"});
+  // },[]);
+  
+  useEffect(()=>{
     refreshServicio();
-    refreshComisiones();
-    refreshReviews();
+    refreshArtista();
+  },[]);
 
+  useEffect(()=>{ 
+    console.log("artista...en serv",artista);
+  },[artista]);
+
+  
+  useEffect(()=>{
+    console.log('aid: ', serv.service, serv.service.artista_id);
+    
+    const loadA = async () => {
+      await apiArtista.detail(serv.service.artista_id).then((res)=>{
+        //setArtista(res);
+        setServ({...serv, artista: res })
+        console.log('i artista de serv:',res);
+      }).catch( ()=>{"no listó artista"} );
+    }
+
+    loadA();
+  },[serv.service.artista_id]); // === undefined
+  
+  useEffect(()=>{
+    //refreshServicio();
+    console.log('servs: ', (servicio as Servicio), (servicio as Servicio).artista_id); 
+    setServ({...serv, service:(servicio as Servicio) }); 
+  },[servicio]); // !== undefined 
+  
+  // useEffect(()=>{
+  //   setServ({...serv, artista:artista })
+  // },[artista]); 
+  
+  useEffect(() => {
+    //refreshServicio();
+    refreshUsuarios();
+    //refreshComisiones();
+    refreshReviews();
+    setServ({...serv, reviews:getReviews() })
+    // setServ({...serv, service:servicio });
   }, [reviews.length===0])
 
 
   return (
-    <Grid container>
+    <Container>
+    <Grid container spacing={2}> 
       <Grid item xs={6}>
-        <img src={serv.service.url_imagen} alt="imagen del servicio"/>
-
+        <Paper  sx={{backgroundColor: blacks.dark, backgroundImage: `url(${serv.service.url_imagen})`,
+        backgroundPosition: "center", backgroundSize: "cover",
+        width:'100%', height:'20rem' }} />
         <br/><br/>
         {serv.reviews.map((r)=>{
           return (<ReviewCard {...r} />)
@@ -105,7 +153,7 @@ function Service() {
             <ListItem>
               <ListItemIcon>
                 <Avatar sx={{ bgcolor: themeMui.palette.primary.main,
-                  width: 24, height: 24 }} alt="Foto Artista"
+                  width: 24, height: 24 }} alt={serv.artista.nombre_usuario}
                   src={serv.artista.url_foto_perfil}  />
               </ListItemIcon>
               <ListItemText>
@@ -114,8 +162,14 @@ function Service() {
             </ListItem>
           </Grid>
           <Grid item xs={6}>
-            <Rating value={serv.artista.rating} readOnly/>
+            <ListItem>
+              <ListItemIcon> 
+                <Rating value={serv.artista.rating===undefined?3:serv.artista.rating} readOnly/>
+              </ListItemIcon>
+              <ListItemText>
                   {serv.artista.rating} ({serv.artista.q_valoraciones})
+              </ListItemText>
+            </ListItem>
           </Grid>
         </Grid>
         <br/>
@@ -193,7 +247,12 @@ function Service() {
         </div>
       </Grid>
     </Grid>
-  )
-}
 
-export default Service
+
+    <Footer/>
+    </Container>
+  );
+};
+
+export default Service;
+export {};
