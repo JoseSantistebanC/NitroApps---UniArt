@@ -11,7 +11,7 @@ using Uniart.Entities.identity;
 
 namespace Uniart.DataAccess
 {
-    public class UniartDbContext: IdentityDbContext
+    public class UniartDbContext: IdentityDbContext<ApplicationUser,ApplicationRole,int>
     {
         public UniartDbContext(DbContextOptions<UniartDbContext>options):base(options)
         {
@@ -36,8 +36,9 @@ namespace Uniart.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
                 //"Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b"
-                optionsBuilder.UseSqlServer(@"Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
+                optionsBuilder.UseSqlServer(@"Server = den1.mssql7.gear.host; Database = uniartbd;Trusted_Connection=True;Integrated Security=false;User Id=uniartbd;Password=Vz26Pl9PD8--");
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -65,7 +66,9 @@ namespace Uniart.DataAccess
             modelBuilder.Entity<Comision>().HasOne(p => p.Review_id_Cliente).WithMany(b => b.Comisiones).HasForeignKey(p => p.Review_Usuario_id).IsRequired();
             modelBuilder.Entity<Comision>().HasOne(p => p.Usuario_).WithMany(b => b.ComisionesU).HasForeignKey(p => p.Usuario_id);
             modelBuilder.Entity<Comision>().HasOne(p => p.Servicio_Variacio_).WithMany(b => b.ComisionSV).HasForeignKey(p => p.Servicio_Variacion_id).IsRequired();
-            modelBuilder.Entity<Usuario>().HasOne(p => p.Ciudad_).WithMany(b => b.Ciudades).HasForeignKey(p => p.Ciudad_id).IsRequired();
+            modelBuilder.Entity<ApplicationUser>().HasOne(p => p.Ciudad_).WithMany(b => b.Ciudades).HasForeignKey(p => p.Ciudad_id).IsRequired();
+            modelBuilder.Entity<Artista>().HasOne(p=>p.Artista_).WithMany(b => b.artistas).HasForeignKey(p => p.Id).IsRequired();
+            modelBuilder.Entity<Usuario>().HasOne(p => p.Usuario_).WithMany(b => b.usuarios).HasForeignKey(p => p.Id).IsRequired();
         }
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Caracteristica_Opciones> Caracteristicas_Opciones { get; set; }

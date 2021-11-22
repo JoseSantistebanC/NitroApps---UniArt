@@ -11,8 +11,8 @@ namespace Uniart.DataAccess.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -20,32 +20,6 @@ namespace Uniart.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,7 +166,7 @@ namespace Uniart.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -203,92 +177,6 @@ namespace Uniart.DataAccess.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -309,38 +197,6 @@ namespace Uniart.DataAccess.Migrations
                         name: "FK_Ciudades_Paises_Pais_id",
                         column: x => x.Pais_id,
                         principalTable: "Paises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comisiones",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Porc_avance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Monto_pago_inicial = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Monto_pago_final = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_fin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Review_id_ArtistaId = table.Column<int>(type: "int", nullable: true),
-                    Review_id_ClienteId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comisiones", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comisiones_Reviews_Review_id_ArtistaId",
-                        column: x => x.Review_id_ArtistaId,
-                        principalTable: "Reviews",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comisiones_Reviews_Review_id_ClienteId",
-                        column: x => x.Review_id_ClienteId,
-                        principalTable: "Reviews",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -366,53 +222,239 @@ namespace Uniart.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre_usuario = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Ciudad_Id = table.Column<int>(type: "int", nullable: true),
+                    Ciudad_id = table.Column<int>(type: "int", nullable: false),
                     Url_foto_perfil = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Fecha_registro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    esArtista = table.Column<bool>(type: "bit", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
                     Url_foto_portada = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Rating = table.Column<byte>(type: "tinyint", nullable: true),
-                    Q_valoraciones = table.Column<int>(type: "int", nullable: true)
+                    Rating = table.Column<byte>(type: "tinyint", nullable: false),
+                    Q_valoraciones = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Ciudades_Ciudad_Id",
-                        column: x => x.Ciudad_Id,
+                        name: "FK_AspNetUsers_Ciudades_Ciudad_id",
+                        column: x => x.Ciudad_id,
                         principalTable: "Ciudades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Envios",
+                name: "Artistas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artistas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Artistas_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Comision_Id = table.Column<int>(type: "int", nullable: true),
-                    Url_imagen_enviada = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Envios", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Envios_Comisiones_Comision_Id",
-                        column: x => x.Comision_Id,
-                        principalTable: "Comisiones",
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Redes_Sociales_Artistas",
+                columns: table => new
+                {
+                    Red_social_id = table.Column<int>(type: "int", nullable: false),
+                    Artista_id = table.Column<int>(type: "int", nullable: false),
+                    username = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Redes_Sociales_Artistas", x => new { x.Red_social_id, x.Artista_id });
+                    table.ForeignKey(
+                        name: "FK_Redes_Sociales_Artistas_Artistas_Artista_id",
+                        column: x => x.Artista_id,
+                        principalTable: "Artistas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Redes_Sociales_Artistas_Redes_Sociales_Red_social_id",
+                        column: x => x.Red_social_id,
+                        principalTable: "Redes_Sociales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Servicios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Artista_id = table.Column<int>(type: "int", nullable: false),
+                    Duracion_esperada = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Precio_base = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Rating = table.Column<short>(type: "smallint", nullable: false),
+                    Q_valoraciones = table.Column<int>(type: "int", nullable: false),
+                    Es_virtual = table.Column<bool>(type: "bit", nullable: false),
+                    Porc_adelanto = table.Column<int>(type: "int", nullable: false),
+                    acepta_rembolso = table.Column<bool>(type: "bit", nullable: false),
+                    Estilo_Id = table.Column<int>(type: "int", nullable: true),
+                    Tecnica_Id = table.Column<int>(type: "int", nullable: true),
+                    Acerca_servicio = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Licencia_Id = table.Column<int>(type: "int", nullable: true),
+                    Q_reviciones = table.Column<int>(type: "int", nullable: false),
+                    url_imagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servicios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Servicios_Artistas_Artista_id",
+                        column: x => x.Artista_id,
+                        principalTable: "Artistas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Servicios_Estilos_Estilo_Id",
+                        column: x => x.Estilo_Id,
+                        principalTable: "Estilos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Servicios_Licencias_Licencia_Id",
+                        column: x => x.Licencia_Id,
+                        principalTable: "Licencias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Servicios_Tecnicas_Tecnica_Id",
+                        column: x => x.Tecnica_Id,
+                        principalTable: "Tecnicas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -444,81 +486,6 @@ namespace Uniart.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Redes_Sociales_Artistas",
-                columns: table => new
-                {
-                    Red_social_id = table.Column<int>(type: "int", nullable: false),
-                    Artista_id = table.Column<int>(type: "int", nullable: false),
-                    username = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Redes_Sociales_Artistas", x => new { x.Red_social_id, x.Artista_id });
-                    table.ForeignKey(
-                        name: "FK_Redes_Sociales_Artistas_Redes_Sociales_Red_social_id",
-                        column: x => x.Red_social_id,
-                        principalTable: "Redes_Sociales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Redes_Sociales_Artistas_Usuarios_Artista_id",
-                        column: x => x.Artista_id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Servicios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Artista_Id = table.Column<int>(type: "int", nullable: true),
-                    Duracion_esperada = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Precio_base = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Rating = table.Column<short>(type: "smallint", nullable: false),
-                    Q_valoraciones = table.Column<int>(type: "int", nullable: false),
-                    Es_virtual = table.Column<bool>(type: "bit", nullable: false),
-                    Porc_adelanto = table.Column<int>(type: "int", nullable: false),
-                    acepta_rembolso = table.Column<bool>(type: "bit", nullable: false),
-                    Estilo_Id = table.Column<int>(type: "int", nullable: true),
-                    Tecnica_Id = table.Column<int>(type: "int", nullable: true),
-                    Acerca_servicio = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    Licencia_Id = table.Column<int>(type: "int", nullable: true),
-                    Q_reviciones = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Servicios", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Servicios_Estilos_Estilo_Id",
-                        column: x => x.Estilo_Id,
-                        principalTable: "Estilos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Servicios_Licencias_Licencia_Id",
-                        column: x => x.Licencia_Id,
-                        principalTable: "Licencias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Servicios_Tecnicas_Tecnica_Id",
-                        column: x => x.Tecnica_Id,
-                        principalTable: "Tecnicas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Servicios_Usuarios_Artista_Id",
-                        column: x => x.Artista_Id,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuarios_Tarjetas",
                 columns: table => new
                 {
@@ -533,13 +500,13 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Tarjeta_id,
                         principalTable: "Tarjetas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Usuarios_Tarjetas_Usuarios_Usuario_id",
                         column: x => x.Usuario_id,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -558,32 +525,11 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Review_id,
                         principalTable: "Reviews",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Valoraciones_Usuarios_Usuario_id",
                         column: x => x.Usuario_id,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Mensajes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Chat_Id = table.Column<int>(type: "int", nullable: true),
-                    Hora_mensaje = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Texto_mensaje = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Mensajes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Mensajes_Chats_Chat_Id",
-                        column: x => x.Chat_Id,
-                        principalTable: "Chats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -605,13 +551,13 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Ciudad_id,
                         principalTable: "Ciudades",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Envios_Servicios_Ciudades_Servicios_Servicio_id",
                         column: x => x.Servicio_id,
                         principalTable: "Servicios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -629,13 +575,13 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Formato_id,
                         principalTable: "Formatos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Servicios_Formatos_Servicios_Servicio_id",
                         column: x => x.Servicio_id,
                         principalTable: "Servicios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -653,13 +599,13 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Servicio_id,
                         principalTable: "Servicios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Servicios_Temas_Temas_Tema_id",
                         column: x => x.Tema_id,
                         principalTable: "Temas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -694,28 +640,68 @@ namespace Uniart.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Propuestas",
+                name: "Mensajes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Usuario_Id = table.Column<int>(type: "int", nullable: true),
-                    Servicio_Variacio_Id = table.Column<int>(type: "int", nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Chat_Id = table.Column<int>(type: "int", nullable: true),
+                    Hora_mensaje = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Texto_mensaje = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Propuestas", x => x.Id);
+                    table.PrimaryKey("PK_Mensajes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Propuestas_Servicios_Variaciones_Servicio_Variacio_Id",
-                        column: x => x.Servicio_Variacio_Id,
+                        name: "FK_Mensajes_Chats_Chat_Id",
+                        column: x => x.Chat_Id,
+                        principalTable: "Chats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comisiones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Porc_avance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Monto_pago_inicial = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Monto_pago_final = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Fecha_inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha_fin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha_entrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Servicio_id = table.Column<int>(type: "int", nullable: false),
+                    Review_Usuario_id = table.Column<int>(type: "int", nullable: false),
+                    Usuario_id = table.Column<int>(type: "int", nullable: false),
+                    Servicio_Variacion_id = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comisiones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comisiones_Reviews_Review_Usuario_id",
+                        column: x => x.Review_Usuario_id,
+                        principalTable: "Reviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comisiones_Servicios_Servicio_id",
+                        column: x => x.Servicio_id,
+                        principalTable: "Servicios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comisiones_Servicios_Variaciones_Servicio_Variacion_id",
+                        column: x => x.Servicio_Variacion_id,
                         principalTable: "Servicios_Variaciones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Propuestas_Usuarios_Usuario_Id",
-                        column: x => x.Usuario_Id,
+                        name: "FK_Comisiones_Usuarios_Usuario_id",
+                        column: x => x.Usuario_id,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -736,13 +722,34 @@ namespace Uniart.DataAccess.Migrations
                         column: x => x.Caracteristica_Opciones_id,
                         principalTable: "Caracteristicas_Opciones",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Variacion_Detalles_Servicios_Variaciones_Servicio_Variacion_id",
                         column: x => x.Servicio_Variacion_id,
                         principalTable: "Servicios_Variaciones",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Envios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Comision_Id = table.Column<int>(type: "int", nullable: true),
+                    Url_imagen_enviada = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Envios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Envios_Comisiones_Comision_Id",
+                        column: x => x.Comision_Id,
+                        principalTable: "Comisiones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -778,6 +785,11 @@ namespace Uniart.DataAccess.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Ciudad_id",
+                table: "AspNetUsers",
+                column: "Ciudad_id");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -805,14 +817,24 @@ namespace Uniart.DataAccess.Migrations
                 column: "Pais_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comisiones_Review_id_ArtistaId",
+                name: "IX_Comisiones_Review_Usuario_id",
                 table: "Comisiones",
-                column: "Review_id_ArtistaId");
+                column: "Review_Usuario_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comisiones_Review_id_ClienteId",
+                name: "IX_Comisiones_Servicio_id",
                 table: "Comisiones",
-                column: "Review_id_ClienteId");
+                column: "Servicio_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comisiones_Servicio_Variacion_id",
+                table: "Comisiones",
+                column: "Servicio_Variacion_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comisiones_Usuario_id",
+                table: "Comisiones",
+                column: "Usuario_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Envios_Comision_Id",
@@ -830,24 +852,14 @@ namespace Uniart.DataAccess.Migrations
                 column: "Chat_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Propuestas_Servicio_Variacio_Id",
-                table: "Propuestas",
-                column: "Servicio_Variacio_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Propuestas_Usuario_Id",
-                table: "Propuestas",
-                column: "Usuario_Id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Redes_Sociales_Artistas_Artista_id",
                 table: "Redes_Sociales_Artistas",
                 column: "Artista_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Servicios_Artista_Id",
+                name: "IX_Servicios_Artista_id",
                 table: "Servicios",
-                column: "Artista_Id");
+                column: "Artista_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Servicios_Estilo_Id",
@@ -883,11 +895,6 @@ namespace Uniart.DataAccess.Migrations
                 name: "IX_Servicios_Variaciones_Servicio_Id",
                 table: "Servicios_Variaciones",
                 column: "Servicio_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_Ciudad_Id",
-                table: "Usuarios",
-                column: "Ciudad_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_Tarjetas_Usuario_id",
@@ -932,9 +939,6 @@ namespace Uniart.DataAccess.Migrations
                 name: "Mensajes");
 
             migrationBuilder.DropTable(
-                name: "Propuestas");
-
-            migrationBuilder.DropTable(
                 name: "Redes_Sociales_Artistas");
 
             migrationBuilder.DropTable(
@@ -956,9 +960,6 @@ namespace Uniart.DataAccess.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Comisiones");
 
             migrationBuilder.DropTable(
@@ -977,19 +978,25 @@ namespace Uniart.DataAccess.Migrations
                 name: "Caracteristicas_Opciones");
 
             migrationBuilder.DropTable(
-                name: "Servicios_Variaciones");
-
-            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
+                name: "Servicios_Variaciones");
+
+            migrationBuilder.DropTable(
                 name: "Redes_Sociales");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Servicios_Caracteristicas");
 
             migrationBuilder.DropTable(
                 name: "Servicios");
+
+            migrationBuilder.DropTable(
+                name: "Artistas");
 
             migrationBuilder.DropTable(
                 name: "Estilos");
@@ -1001,7 +1008,7 @@ namespace Uniart.DataAccess.Migrations
                 name: "Tecnicas");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Ciudades");

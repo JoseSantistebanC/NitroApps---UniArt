@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Uniart.DataAccess;
+using Uniart.Entities;
 using Uniart.Entities.identity;
 using Uniart.Services;
 
@@ -45,13 +46,14 @@ namespace UniArt.Api
 
             services.AddDbContext<UniartDbContext>(options =>
             { //Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b
-                options.UseSqlServer("Server = den1.mssql8.gear.host; Database = uniartdb;Trusted_Connection=True;Integrated Security=false;User Id=uniartdb;Password=Yd7u?!eYnN7b");
+                options.UseSqlServer("Server = den1.mssql7.gear.host; Database = uniartbd;Trusted_Connection=True;Integrated Security=false;User Id=uniartbd;Password=Vz26Pl9PD8--");
             });
             //services.AddDbContext<UniartDbContext>(
             //    options => options.UseMySQL(Configuration.GetConnectionString("DBConnection")));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<UniartDbContext>();
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options => {
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<UniartDbContext>();
 
             services.Configure<IdentityOptions>(options =>
             {

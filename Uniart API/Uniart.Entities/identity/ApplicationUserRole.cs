@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Uniart.Entities.identity
 {
-    public class ApplicationUserRole : IdentityUserRole<string>
+    public class ApplicationUserRole : IdentityUserRole<int>
     {
         public ApplicationUser User { get; set; }
         public ApplicationRole Role { get; set; }
