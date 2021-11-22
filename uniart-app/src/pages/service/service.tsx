@@ -181,7 +181,7 @@ function Service() {
         </Grid>
         <br/>
         <Button>Editar servicio</Button>
-        <Button>¡Realizar compra!</Button>
+        <Button variant="contained">¡Realizar compra!</Button>
         <br/>
         <ListItem>
           <ListItemIcon>

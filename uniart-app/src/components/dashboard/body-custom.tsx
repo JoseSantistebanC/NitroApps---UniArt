@@ -14,6 +14,7 @@ import CRUDprueba from '../../api/probar_apis2';
 import Pruebas from '../utils/pruebas';
 import Service from '../../pages/service/service';
 import Logout from '@mui/icons-material/Logout';
+import Service2 from '../../pages/service/service2';
 
 const BodyCustom = () => {
   // const fil = {

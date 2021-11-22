@@ -29,7 +29,7 @@ function ServiceCard(props:ServiceCardProps) {
 
   return ( 
     <Card sx={{ maxWidth: 200 }}>
-      <CardActionArea href={`/service/:${props.id}`}>
+      <CardActionArea href={`/service/${props.id}`}>
         <CardMedia component="img" height="160"
           image={props.url_img} alt="portada" />
         <CardContent>

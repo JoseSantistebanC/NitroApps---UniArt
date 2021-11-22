@@ -46,11 +46,11 @@ export const ListServiciosArtista=(artistaid:number, from?:number,to?:number)=>{
 
 //READ ONE 
 export const GetServicio = (id: number)=>{
-    const [servicio, setServicio] = React.useState<Servicio>(new Servicio);
+    const [servicio, setServicio] = React.useState<Servicio>(new Servicio()); 
     function refreshServicio(){
         apiServicio.detail(id).then((res)=>{
+            setServicio(res );
             console.log('i servicio:',res);
-            setServicio(res);
         }).catch(()=>{"no listó Servicio"});
     }
     return {servicio, refreshServicio};
@@ -73,3 +73,5 @@ export const DeleteServicio=(id:number)=>{
     apiServicio.delete(id).then(()=>{
     }).catch(()=>{"no eliminó servicio"});
 };
+
+export {}

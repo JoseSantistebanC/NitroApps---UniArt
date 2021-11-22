@@ -39,6 +39,20 @@ export const GetArtista = (id:number) => {
 	return {artista,refreshArtista};
 };
 
+//READ ONE DETAILS LATER
+// export const GetArtistaLate = () => {
+// 	const [artista, setArtista] = React.useState<Artista>(new Artista());
+// 	const [artistaId, setArtistaId] = React.useState(0);
+// 	function refreshArtista(){
+// 		apiArtista.detail(artistaId).then((res)=>{
+// 			setArtista(res);
+// 			console.log('i artista:',res);
+// 		}).catch( ()=>{"no listó artista"} );
+// 	}
+// 	return {artista,refreshArtista, artistaId, setArtistaId};
+// };
+
+
 //READ ONE (DETAILS) BY NOMBREUSUARIO
 export const GetArtistaUsername = (username:string) => {
 	const [artistaBUN, setArtista] = React.useState<Artista>();
